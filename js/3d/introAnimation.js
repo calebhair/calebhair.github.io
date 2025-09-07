@@ -55,7 +55,7 @@ function rollCamera(camera, controls, axis, radians) {
   controls.update();
 }
 
-export function setupCameraInitialState(camera, controls) {
+export function setupCameraInitialStateForIntroduction(camera, controls) {
   camera.position.copy(initialCameraPos); // Set position first
   rollCamera(camera, controls, 'X', rad(-30));
   rollCamera(camera, controls, 'Z', rad(70));
@@ -65,7 +65,7 @@ export function setupCameraInitialState(camera, controls) {
 }
 
 let cameraAnimationRan = false;
-export function animateCamera() {
+export function runIntroAnimation() {
   if (cameraAnimationRan) return;
   cameraAnimationRan = true;
   smoothlyMoveCamera(introCameraStartPos, introStartTarget, initialCameraPos, initialTarget, true, 5000, true)

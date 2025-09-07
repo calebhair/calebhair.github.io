@@ -1,7 +1,14 @@
-import js from "@eslint/js";
+import stylistic from '@stylistic/eslint-plugin';
+import js from '@eslint/js';
 import globals from "globals";
-import { defineConfig } from "eslint/config";
 
-export default defineConfig([
-  { files: ["**/*.{js,mjs,cjs,jsx}"], plugins: { js }, extends: ["js/recommended"], languageOptions: { globals: globals.browser } },
-]);
+export default [
+  js.configs.recommended,
+  stylistic.configs.recommended,
+  {
+    rules: {
+      '@stylistic/semi': ['error', 'always'],
+    },
+    languageOptions: { globals: globals.browser }
+  },
+]
