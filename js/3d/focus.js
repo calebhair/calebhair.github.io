@@ -85,7 +85,7 @@ function isObjectValidFocusTarget(object) {
     return object.userData && object.userData.isSelectable && (!followTarget || followTarget && object.uuid !== followTarget.uuid)
   }
   // Probably never happen
-  catch (e) {
+  catch {
     return false;
   }
 }

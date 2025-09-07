@@ -1,18 +1,18 @@
 import * as THREE from "three";
 import { ArcballControls } from 'three/addons/controls/ArcballControls';
 
-import { Planet } from "./planets";
+import { Planet } from "./3d/planet";
 import {
   handlePossibleFocusTarget,
   setupFocusing,
   updateFocus,
-} from "./focus";
-import {addBlackHole, setupAccretionDisk} from "./blackhole";
+} from "./3d/focus";
+import {addBlackHole, setupAccretionDisk} from "./3d/blackhole";
 import {loadPlanets} from "./loadPlanets";
-import {addPostProcessing} from "./postProcessing";
-import {addSidebar} from "./sidebar";
-import {addProjectInfoElements} from "./projectinfo";
-import {animateCamera, setupCameraInitialState} from "./introAnimation";
+import {addPostProcessing} from "./3d/postProcessing";
+import {addSidebar} from "./components/sidebar";
+import {addProjectInfoElements} from "./components/projectinfo";
+import {animateCamera, setupCameraInitialState} from "./3d/introAnimation";
 
 const scene = new THREE.Scene();
 

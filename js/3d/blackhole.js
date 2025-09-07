@@ -12,7 +12,7 @@ import {
 import {Vector3, Vector4} from "three";
 import {OutlinePass} from "three/addons/postprocessing/OutlinePass";
 
-const accretionTexture = await new THREE.TextureLoader().loadAsync("/img/img.png");
+const accretionTexture = await new THREE.TextureLoader().loadAsync("/img/quasar_particle.png");
 const particleSystems = []
 
 // Default configuration for particle systems

@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import {Planet} from "./planets";
+import {Planet} from "./3d/planet";
 
 // All planet data is defined here
 export const planetJsons = [

@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {createRoot} from 'react-dom/client';
-import {setTitleFunction, followTarget, setVisibleFunction} from "./focus";
-import {Planet} from "./planets";
-import {planetJsons} from "./loadPlanets";
+import {setTitleFunction, followTarget, setVisibleFunction} from "../3d/focus";
+import {Planet} from "../3d/planet";
+import {planetJsons} from "../loadPlanets";
 
 
 function ProjectTitle() {

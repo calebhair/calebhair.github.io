@@ -6,9 +6,9 @@ import {
   setFollowTarget,
   setNavStateFunction,
   stopFollowing
-} from "./focus";
-import {Planet} from "./planets";
-import {planetJsons} from "./loadPlanets";
+} from "../3d/focus";
+import {Planet} from "../3d/planet";
+import {planetJsons} from "../loadPlanets";
 
 // Represents the different states the nav button should be in; treat this like an enum
 const NavBtnStates = {
@@ -88,7 +88,7 @@ function Sidebar({planetJsonsToShow}) {
  * @param imageUrl the icon to show for this element.
  * @return {JSX.Element}
  */
-function PlanetEntry({text, onClick, imageUrl="img/img.png"}) {
+function PlanetEntry({text, onClick, imageUrl="img/quasar_particle.png"}) {
   return (
     <div className="sidebar-item" onClick={onClick}>
       <img src={imageUrl} alt="" className="sidebar-item-image" />
