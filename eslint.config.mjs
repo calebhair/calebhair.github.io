@@ -1,6 +1,6 @@
 import stylistic from '@stylistic/eslint-plugin';
 import js from '@eslint/js';
-import globals from "globals";
+import globals from 'globals';
 
 export default [
   js.configs.recommended,
@@ -9,6 +9,6 @@ export default [
     rules: {
       '@stylistic/semi': ['error', 'always'],
     },
-    languageOptions: { globals: globals.browser }
+    languageOptions: { globals: globals.browser },
   },
-]
+];

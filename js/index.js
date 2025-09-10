@@ -3,7 +3,7 @@ import { ArcballControls } from 'three/addons/controls/ArcballControls';
 
 import { Planet } from './3d/planet';
 import {
-  handlePossibleFocusTarget,
+  focusOnSelectedIfValid,
   setupFocusing,
   updateFocus,
 } from './3d/focus';
@@ -62,30 +62,30 @@ const light = new THREE.PointLight(0xffffff, 4, 0, 0);
 light.position.set(0, 0, 0);
 scene.add(light);
 
-// Pointer setup (for detecting clicked objects etc.) TODO could optimise by combining everything into one on-click function?
+// Pointer setup (for detecting clicked objects etc.)
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
-export let intersects = [];
-window.onmousemove = window.ontouchmove = (event) => {
-  camera.updateProjectionMatrix();
-  // Get touch position, or mouse position
-  const clientX = (event.touches && event.touches[0].clientX) || event.clientX;
-  const clientY = (event.touches && event.touches[0].clientY) || event.clientY;
-
+document.onmouseup = document.ontouchend = (event) => {
+  let clientX, clientY;
+  if (event.touches) {
+    clientX = event.touches[0].clientX;
+    clientY = event.touches[0].clientY;
+  }
+  else {
+    clientX = event.clientX;
+    clientY = event.clientY;
+  }
+  // Normalise to -1 and +1
   pointer.x = (clientX / window.innerWidth) * 2 - 1;
   pointer.y = -(clientY / window.innerHeight) * 2 + 1;
-};
-document.onmouseup = document.ontouchend = () => {
-  // If an object was clicked
-  for (const intersection of intersects) {
-    const obj = intersection.object;
-    // Return after the first valid object was found (which will be closest, ie the one the user clicked)
-    if (handlePossibleFocusTarget(obj)) return;
-  }
-};
-const updateRaycaster = () => {
+
   raycaster.setFromCamera(pointer, camera);
-  intersects = raycaster.intersectObjects(Planet.models, true);
+  let intersects = raycaster.intersectObjects(Planet.models, true);
+
+  // Find the first (ie closest) object that is a valid selectable target
+  for (const intersection of intersects) {
+    if (focusOnSelectedIfValid(intersection.object)) return;
+  }
 };
 
 // Do post-processing last
@@ -102,7 +102,6 @@ addProjectInfoElements();
 // Main loop
 function animate() {
   runIntroAnimation();
-  updateRaycaster();
   Planet.updateAllPlanets();
   updateFocus();
   batchedRenderer.update(0.016); // Update black hole particles

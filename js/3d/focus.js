@@ -60,7 +60,7 @@ export let setVisibleFunction = {setVisible: null};
  * @param object the object to check.
  * @returns {boolean} false if a focus target was found, true if the object or its parents are valid..
  */
-export function handlePossibleFocusTarget(object) {
+export function focusOnSelectedIfValid(object) {
   if (animating) return false; // Don't allow focus if animation is happening
 
   if (isObjectValidFocusTarget(object)) {

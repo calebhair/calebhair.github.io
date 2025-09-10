@@ -1,12 +1,12 @@
-import * as THREE from "three";
-import {Planet} from "./3d/planet";
+import * as THREE from 'three';
+import { Planet } from './3d/planet';
 
 // All planet data is defined here
-export const planetJsons = [
+export const planetDefinitions = [
   {
-    name: "Test planet 1",
-    iconPath: "img/test.svg",
-    modelPath: "models/test.glb",
+    name: 'Test planet 1',
+    iconPath: 'img/test.svg',
+    modelPath: 'models/test.glb',
     planetSize: 1.6,
 
     orbitRadius: 50,
@@ -19,9 +19,9 @@ export const planetJsons = [
   },
 
   {
-    name: "Monkey",
-    iconPath: "img/test.svg",
-    modelPath: "models/monkey.glb",
+    name: 'Monkey',
+    iconPath: 'img/test.svg',
+    modelPath: 'models/monkey.glb',
     planetSize: 10,
 
     orbitRadius: 100,
@@ -30,16 +30,16 @@ export const planetJsons = [
 
     planetRotationSpeed: new THREE.Euler(20, 50, 10),
     orbitOrientation: new THREE.Euler(0, 0, 0),
-    orbitCentre: new THREE.Vector3(0, 5, 0)
-  }
-]
+    orbitCentre: new THREE.Vector3(0, 5, 0),
+  },
+];
 
 /**
  * Creates planet objects from the planet JSONs.
  * @param scene the scene to add the planets to.
  */
-export function loadPlanets(scene) {
-  for (const planetJson of planetJsons) {
+export function loadPlanets(scene) { // TODO come back here once Planet object constructor is cleaner
+  for (const planetJson of planetDefinitions) {
     new Planet(
       planetJson.modelPath, scene,
       planetJson.orbitRadius,
@@ -49,7 +49,7 @@ export function loadPlanets(scene) {
       planetJson.planetRotationSpeed,
       planetJson.orbitOrientation,
       planetJson.orbitCentre,
-      planetJson
+      planetJson,
     );
   }
 }

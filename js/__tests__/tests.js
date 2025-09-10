@@ -1,7 +1,7 @@
 /**
- * Tests for any simple units of code.
+ * Tests for any simple units of code. TODO make Jest tests
  */
-import {Planet} from "./3d/planet";
+import {Planet} from "../3d/planet";
 import * as THREE from "three";
 
 function runValidationTests(scene) {
