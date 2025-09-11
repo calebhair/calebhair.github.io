@@ -1,150 +1,142 @@
-import {GLTFLoader} from 'three/addons/loaders/GLTFLoader';
-import * as THREE from "three";
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';
+import * as THREE from 'three';
 
 const loader = new GLTFLoader();
-
-// For calculating orbit positions
 const timePageLoaded = performance.now();
-function getElapsedTime() {
-  // Get current time, subtract from the time the page loaded to get the time since page loaded in milliseconds.
-  // Divide by 1000 to get seconds.
-  return (performance.now() - timePageLoaded) / 1000
-}
-
-// Convert degrees to radians
-function radians(degrees) {
-  return (degrees * Math.PI) / 180.0;
-}
-
-// Degrees to radians for Euler angles
-function radiansEuler(euler) {
-  return new THREE.Euler(radians(euler.x), radians(euler.y), radians(euler.z));
-}
-
 
 /**
  * Handles loading the model of the planet and orbit calculations
  */
 export class Planet {
-  /**
-   * The number of planets that have been created.
-   * @type {number}
-   */
-  static count = 0;
+  // Key config options
+  modelPath; // Path to the model of the planet.
+  orbitRadius; // The radius of the orbit.
+  orbitStartingAngle; // The starting angle of the planet in the orbit in degrees.
+  orbitSpeed; // The speed of the orbit in degrees per second.
+  planetSize; // The diameter of the planet, manually defined.
+  planetRotationSpeed; // The speed that the planet rotates, as an Euler in degrees.
+  orbitOrientation; // The orientation of the orbit, as an Euler in degrees.
+  orbitCentre; // The point that the orbit moves around, as a Vector3.
+  planetConfig; // The full JSON used to construct the planet.
+
+  static planets = []; // List of the planet objects created.
+  static models = []; // List of all the models that have been loaded, as part of a planet.
 
   /**
-   * List of the planet objects created.
-   * @type {[Planet]}
+   * @param {THREE.Scene} scene the scene to add the planet to
+   * @param {object} config planet configuration options.
    */
-  static planets = [];
+  constructor(scene, config) {
+    // Initial assignment
+    Object.assign(this, { ...Planet.defaultConfig, ...config });
+    this.scene = scene;
+    this.planetConfig = config;
+    if (!this.isValid()) throw `Invalid arguments for planet.`;
 
-  /**
-   * List of all the models that have been loaded, as part of a planet.
-   * @type {[]}
-   */
-  static models = [];
+    this.planetRotationSpeedRadians = radiansEulerFromDegreesEuler(this.planetRotationSpeed);
+    this.orbitOrientationRadians = radiansEulerFromDegreesEuler(this.orbitOrientation);
+    Planet.planets.push(this);
 
-  /**
-   *
-   * @param modelPath path to the model of the planet.
-   * @param scene the scene to add the planet to.
-   * @param orbitRadius the radius of the orbit.
-   * @param orbitStartingAngle the starting angle of the orbit in degrees.
-   * @param orbitSpeed the speed of the orbit in degrees per second.
-   * @param planetSize the diameter of the planet.
-   * @param planetRotationSpeed the speed that the planet rotates, as an Euler in degrees.
-   * @param orbitOrientation the orientation of the orbit, as an Euler in degrees.
-   * @param orbitCentre the point that the orbit moves around, as a Vector3.
-   * @param planetJson the full JSON used to construct the planet.
-   */
-  constructor(modelPath, scene, orbitRadius, orbitStartingAngle, orbitSpeed, planetSize,
-              planetRotationSpeed = new THREE.Euler(0, 0.1, 0),
-              orbitOrientation = new THREE.Euler(0, 0, 0),
-              orbitCentre = new THREE.Vector3(0, 0, 0),
-              planetJson) {
-    // Validate
-    if (!scene || orbitRadius <= 0 || planetSize <= 0 ||
-      !planetRotationSpeed.isEuler || !orbitOrientation.isEuler || !orbitCentre.isVector3) {
-      throw "Invalid arguments for planet.";
-    }
+    // Placeholder parent to store, position, and orient both the planet and its orbit. This is at the centre of the orbit.
+    this.centreParent = new THREE.Object3D();
+    this.centreParent.position.set(...this.orbitCentre);
+    this.centreParent.rotation.set(...this.orbitOrientationRadians);
 
-    this.orbitDistance = orbitRadius;
-    this.orbitStartingAngle = orbitStartingAngle;
-    this.orbitSpeed = orbitSpeed;
-    this.planetSize = planetSize;
-    this.planetRotationSpeed = radiansEuler(planetRotationSpeed);
-    this.orbitOrientation = radiansEuler(orbitOrientation);
-    this.centre = orbitCentre;
-    this.planetJson = planetJson;
-
-    this.model = null;
+    // Add orbit line
+    this.orbitLine = this.makeOrbitLine();
+    this.orbitLine.position.y = -this.planetSize;
+    this.centreParent.add(this.orbitLine);
 
     // Load model
-    loader.load(modelPath,
-      (gltf) => {
-        this.model = gltf.scene;
-        Planet.models.push(this.model);
-        this.model.userData.isSelectable = true;
-        this.model.userData.planetSize = this.planetSize;
-        this.model.userData.planetJson = this.planetJson;
+    loader.load(this.modelPath, gltf => this.onPlanetModelLoaded(gltf), undefined, console.error);
+  }
 
-        // Placeholder parent to store, position, and orient both the planet and its orbit. This is at the centre of the orbit.
-        this.parent = new THREE.Object3D();
-        this.parent.position.set(...this.centre);
-        this.parent.rotation.set(...this.orbitOrientation);
-        this.parent.add(this.model);
+  static get defaultConfig() {
+    return {
+      orbitRadius: 10,
+      orbitStartingAngle: 0,
+      orbitSpeed: 5,
+      planetSize: 3,
+      planetRotationSpeed: new THREE.Euler(0, 0.1, 0),
+      orbitOrientation: new THREE.Euler(0, 0, 0),
+      orbitCentre: new THREE.Vector3(0, 0, 0),
+    };
+  }
 
-        // Add orbit line
-        this.orbitLine = this.makeOrbitLine();
-        this.orbitLine.position.y = -planetSize
-        this.parent.add(this.orbitLine);
+  isValid() {
+    let errorMessage = '';
+    if (!this.scene) errorMessage += 'Bad scene.\n';
+    if (this.orbitRadius <= 0) errorMessage += 'Bad orbit radius.\n';
+    if (this.planetSize <= 0) errorMessage += 'Bad planet size.\n';
+    if (!this.planetRotationSpeed?.isEuler) errorMessage += 'Bad planet rotation speed.\n';
+    if (!this.orbitOrientation?.isEuler) errorMessage += 'Bad orbit orientation.\n';
+    if (!this.orbitCentre?.isVector3) errorMessage += 'Bad orbit centre.\n';
 
-        // Update orbit and add to scene
-        this.updatePlanet();
-        scene.add(this.parent);
-      },
-      undefined,
-      (error) => {
-        console.error(error);
-      }
-    );
+    if (errorMessage.length > 0) {
+      console.error(`For planet '${this.name}':\n` + errorMessage);
+      return false;
+    }
+    return true;
+  }
 
-    Planet.count++;
-    Planet.planets.push(this);
+  onPlanetModelLoaded(gltf) {
+    this.model = gltf.scene;
+    this.model.userData = {
+      isSelectable: true,
+      planetSize: this.planetSize,
+      planetConfig: this.planetConfig,
+    };
+    Planet.models.push(this.model);
+    this.centreParent.add(this.model);
+
+    // Update orbit and add to scene
+    this.updatePlanet();
+    this.scene.add(this.centreParent);
   }
 
   // Updates the orbit position and rotation
   updatePlanet() {
-    // In case model is not yet loaded
-    if (this.model == null) return
+    // If model hasn't loaded
+    if (!this.model) return;
 
-    const time = getElapsedTime();
+    const time = getElapsedTimeSeconds();
 
     // Update orbit
     let angle = radians(this.orbitStartingAngle + this.orbitSpeed * time);
-    this.model.position.x = this.orbitDistance * Math.cos(angle) + this.centre.x;
-    this.model.position.z = this.orbitDistance * Math.sin(angle) + this.centre.z;
+    this.model.position.x = this.orbitRadius * Math.cos(angle) + this.orbitCentre.x;
+    this.model.position.z = this.orbitRadius * Math.sin(angle) + this.orbitCentre.z;
 
     // Update rotation
-    this.model.rotation.x = this.planetRotationSpeed.x * time;
-    this.model.rotation.y = this.planetRotationSpeed.y * time;
-    this.model.rotation.z = this.planetRotationSpeed.z * time;
+    this.model.rotation.x = this.planetRotationSpeedRadians.x * time;
+    this.model.rotation.y = this.planetRotationSpeedRadians.y * time;
+    this.model.rotation.z = this.planetRotationSpeedRadians.z * time;
   }
 
-  // Construct orbit line
   static orbitLineWidth = 0.08;
   makeOrbitLine() {
-    const geometry = new THREE.TorusGeometry( this.orbitDistance, Planet.orbitLineWidth, 10, 100 );
-    const material = new THREE.MeshBasicMaterial( { color: 0xdddddd, side: THREE.DoubleSide } );
-    const mesh = new THREE.Mesh( geometry, material );
+    const geometry = new THREE.TorusGeometry(this.orbitRadius, Planet.orbitLineWidth, 10, 100);
+    const material = new THREE.MeshBasicMaterial({ color: 0xdddddd, side: THREE.DoubleSide });
+    const mesh = new THREE.Mesh(geometry, material);
     mesh.rotation.x = Math.PI / 2;
     return mesh;
   }
 
-  // Calls the update method of all planets
   static updateAllPlanets() {
     for (const planet of Planet.planets) {
       planet.updatePlanet();
     }
   }
+}
+
+// Util
+function getElapsedTimeSeconds() {
+  return (performance.now() - timePageLoaded) / 1000;
+}
+
+function radians(degrees) {
+  return (degrees * Math.PI) / 180.0;
+}
+
+function radiansEulerFromDegreesEuler(euler) {
+  return new THREE.Euler(radians(euler.x), radians(euler.y), radians(euler.z));
 }

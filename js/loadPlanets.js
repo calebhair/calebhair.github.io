@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { Planet } from './3d/planet';
 
-// All planet data is defined here
 export const planetDefinitions = [
   {
     name: 'Test planet 1',
@@ -36,20 +35,10 @@ export const planetDefinitions = [
 
 /**
  * Creates planet objects from the planet JSONs.
- * @param scene the scene to add the planets to.
+ * @param scene {THREE.Scene} the scene to add the planets to.
  */
-export function loadPlanets(scene) { // TODO come back here once Planet object constructor is cleaner
+export function loadPlanets(scene) {
   for (const planetJson of planetDefinitions) {
-    new Planet(
-      planetJson.modelPath, scene,
-      planetJson.orbitRadius,
-      planetJson.orbitStartingAngle,
-      planetJson.orbitSpeed,
-      planetJson.planetSize,
-      planetJson.planetRotationSpeed,
-      planetJson.orbitOrientation,
-      planetJson.orbitCentre,
-      planetJson,
-    );
+    new Planet(scene, planetJson);
   }
 }

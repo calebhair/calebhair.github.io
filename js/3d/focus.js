@@ -99,7 +99,7 @@ export function setFollowTarget(object) {
   dimParticles();
   followTarget = object;
   if (setNavStateFunction.setFollowing) setNavStateFunction.setFollowing(2); // 2 is following state
-  if (setTitleFunction.setTitle) setTitleFunction.setTitle(followTarget.userData.planetJson.name);
+  if (setTitleFunction.setTitle) setTitleFunction.setTitle(followTarget.userData.planetConfig.name);
   if (setVisibleFunction.setVisible) setVisibleFunction.setVisible(true);
   controls.enablePan = false;
   controls.enableZoom = false;
