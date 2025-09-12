@@ -1,72 +1,51 @@
-import * as THREE from "three";
-import {Vector3} from "three";
-import {smoothlyMoveCamera} from "./focus";
+import { Vector3, Quaternion } from 'three';
+import { smoothlyMoveCamera } from './focus';
 
+export function runIntroAnimation() {
+  smoothlyMoveCamera(initialCameraPos, introTarget, finalCameraPos, finalTarget, true, 5000, true);
+}
 
-const initialCameraPos = new Vector3(0, 40, 80);
-const initialTarget = new Vector3(0, 10, 0);
+const initialCameraPos = new Vector3(50, -100, -100);
+const introTarget = new Vector3(0, 10, 0);
+const finalCameraPos = new Vector3(0, 40, 80);
+const finalTarget = new Vector3().copy(introTarget);
 
-const introCameraStartPos = new Vector3(50, -100, -100);
-const introStartTarget = initialTarget.clone();
+const axis = { x: 'x', y: 'y', z: 'z' };
 
-function rad(degrees){
-  return (degrees * Math.PI) / 180.0;
+export function setupCameraInitialStateForIntroduction(camera, controls) {
+  rollCamera(camera, controls, axis.x, -30);
+  rollCamera(camera, controls, axis.z, 70);
 }
 
 /**
+ * Rotate a camera controlled by an arcball controller.
  * From https://discourse.threejs.org/t/camera-rotation-with-arcballcontrols/50024/7
+ * @param camera the camera to rotate.
+ * @param controls arcball controls that manage the camera.
+ * @param axis {axis} the axis to rotate around.
+ * @param degrees how many degrees to rotate the camera around the given axis.
  */
-function rollCamera(camera, controls, axis, radians) {
-  //check the axis and set the vector
-  let vector;
-  if (axis === "Z") {
-    vector = new THREE.Vector3(0, 0, 1);
-  } else if (axis === "Y") {
-    vector = new THREE.Vector3(0, 1, 0);
-  } else if (axis === "X") {
-    vector = new THREE.Vector3(1, 0, 0);
-  } else {
-    vector = new THREE.Vector3(0, 0, 1);
-  }
+function rollCamera(camera, controls, axis, degrees) {
+  const radians = (degrees * Math.PI) / 180.0;
+  const axisVector = new Vector3(0, 0, 0);
+  axisVector[axis] = 1;
 
   // Get the vector from the camera to the target (controls.target)
-  const direction = new THREE.Vector3().subVectors(camera.position, controls.target).normalize();
+  const cameraDirection = new Vector3().subVectors(camera.position, controls.target).normalize();
 
-  // Create a quaternion representing the rotation around the Z axis
-  const quaternion = new THREE.Quaternion();
-  quaternion.setFromAxisAngle(vector, radians);
-
-  // Rotate the direction vector
-  direction.applyQuaternion(quaternion);
+  // Create a quaternion representing the rotation and apply to the camera direction
+  const quaternion = new Quaternion().setFromAxisAngle(axisVector, radians);
+  cameraDirection.applyQuaternion(quaternion);
 
   // Calculate the new position of the camera
   const distance = camera.position.distanceTo(controls.target);
-  const newPosition = new THREE.Vector3().addVectors(controls.target, direction.multiplyScalar(distance));
+  const newPosition = new Vector3().addVectors(controls.target, cameraDirection.multiplyScalar(distance));
 
   // Apply the new position and up vector to the camera
   camera.position.copy(newPosition);
   camera.up.applyQuaternion(quaternion);
-
-  // Look at the target
   camera.lookAt(controls.target);
 
-  // Update the camera's matrix and the controls
   camera.updateMatrixWorld();
   controls.update();
-}
-
-export function setupCameraInitialStateForIntroduction(camera, controls) {
-  camera.position.copy(initialCameraPos); // Set position first
-  rollCamera(camera, controls, 'X', rad(-30));
-  rollCamera(camera, controls, 'Z', rad(70));
-  controls.target.copy(initialTarget);
-  camera.updateProjectionMatrix();
-  controls.update();
-}
-
-let cameraAnimationRan = false;
-export function runIntroAnimation() {
-  if (cameraAnimationRan) return;
-  cameraAnimationRan = true;
-  smoothlyMoveCamera(introCameraStartPos, introStartTarget, initialCameraPos, initialTarget, true, 5000, true)
 }

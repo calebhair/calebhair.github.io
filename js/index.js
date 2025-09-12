@@ -100,8 +100,8 @@ addSidebar();
 addProjectInfoElements();
 
 // Main loop
+runIntroAnimation();
 function animate() {
-  runIntroAnimation();
   Planet.updateAllPlanets();
   updateFocus();
   batchedRenderer.update(0.016); // Update black hole particles
