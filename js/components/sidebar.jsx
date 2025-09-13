@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
+// eslint-disable-next-line no-unused-vars
+import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   focusOnObjectIfValid,
-  setFollowTarget,
   setNavStateFunction,
-  stopFollowing
-} from "../3d/focus";
-import {Planet} from "../3d/planet";
-import {planetDefinitions} from "../loadPlanets";
-import {moveToOverviewPos} from "../3d/cameraAnimation";
+  stopFollowing,
+} from '../3d/focus';
+import { Planet } from '../3d/planet';
+import { planetDefinitions } from '../loadPlanets';
+import { moveToOverviewPos } from '../3d/cameraAnimation';
 
 // Represents the different states the nav button should be in; treat this like an enum
 const NavBtnStates = {
@@ -18,24 +18,27 @@ const NavBtnStates = {
 
   // The icons to show for each state, where the ID of the state represents the index of the icon name from Google icons
   icons: [
-    "planet",
-    "planet",
-    "arrows_output",
-  ]
+    'planet',
+    'planet',
+    'arrows_output',
+  ],
 };
 
-
-function NavBtn({navState, onClick}) {
-  const clickedClass = navState === NavBtnStates.Sidebar ? 'clicked' : ''
+function NavBtn({ navState, onClick }) {
+  const clickedClass = navState === NavBtnStates.Sidebar ? 'clicked' : '';
   return (
     <button
       // Only show the clicked style if the sidebar is shown, not when focussed (and obviously not when in default state)
       className={`nav-btn border twinkle-border ${clickedClass}`}
-      onClick={onClick}>
+      onClick={onClick}
+    >
       <i className={`material-symbols-outlined nav-btn-icon prevent-select
-      ${clickedClass}`}>{NavBtnStates.icons.at(navState)}</i>
+      ${clickedClass}`}
+      >
+        {NavBtnStates.icons.at(navState)}
+      </i>
     </button>
-  )
+  );
 }
 
 /**
@@ -43,7 +46,7 @@ function NavBtn({navState, onClick}) {
  * @param planetJsonsToShow the list of planet JSON data
  * @return {JSX.Element}
  */
-function Sidebar({planetJsonsToShow}) {
+function Sidebar({ planetJsonsToShow }) {
   // Define the navigation state
   const [navState, setNavState] = useState(NavBtnStates.Default);
   // Setup functions that the code handling focus can use; use this round about way to control state outside the function
@@ -61,24 +64,32 @@ function Sidebar({planetJsonsToShow}) {
         stopFollowing();
         break;
     }
-  }
+  };
 
   // Create planet entries from JSON
-  const planetEntries = planetJsonsToShow.map((planetJson, index) => <PlanetEntry text={planetJson.name}
-                                                                                  onClick={() => focusOnObjectIfValid(Planet.planets[index].model)}
-                                                                                  imageUrl={planetJson.iconPath}
-                                                                                  key={index} />)
+  const planetEntries = planetJsonsToShow.map((planetJson, index) => (
+    <PlanetEntry
+      text={planetJson.name}
+      onClick={() => focusOnObjectIfValid(Planet.planets[index].model)}
+      imageUrl={planetJson.iconPath}
+      key={index}
+    />
+  ));
 
-  return <div style={{position: "relative"}}>
-    <NavBtn navState={navState} onClick={onNavButtonClicked}/>
-    <div className={`sidebar prevent-select ${navState === NavBtnStates.Sidebar ? 'show-sidebar' : ''}`}>
-      {/* Back button and re-centre */}
-      <PlanetEntry imageUrl={window.innerWidth < 600 ? "img/up.svg" : "img/back.svg" }
-                   onClick={() => setNavState(NavBtnStates.Default)} />
-      <PlanetEntry text="Re-centre" imageUrl="img/quasar.svg" onClick={moveToOverviewPos} />
-      {planetEntries}
+  return (
+    <div style={{ position: 'relative' }}>
+      <NavBtn navState={navState} onClick={onNavButtonClicked} />
+      <div className={`sidebar prevent-select ${navState === NavBtnStates.Sidebar ? 'show-sidebar' : ''}`}>
+        {/* Back button and re-centre */}
+        <PlanetEntry
+          imageUrl={window.innerWidth < 600 ? 'img/up.svg' : 'img/back.svg'}
+          onClick={() => setNavState(NavBtnStates.Default)}
+        />
+        <PlanetEntry text="Re-centre" imageUrl="img/quasar.svg" onClick={moveToOverviewPos} />
+        {planetEntries}
+      </div>
     </div>
-  </div>
+  );
 }
 
 /**
@@ -88,7 +99,7 @@ function Sidebar({planetJsonsToShow}) {
  * @param imageUrl the icon to show for this element.
  * @return {JSX.Element}
  */
-function PlanetEntry({text, onClick, imageUrl="img/quasar_particle.png"}) {
+function PlanetEntry({ text, onClick, imageUrl = 'img/quasar_particle.png' }) {
   return (
     <div className="sidebar-item" onClick={onClick}>
       <img src={imageUrl} alt="" className="sidebar-item-image" />
@@ -101,6 +112,6 @@ function PlanetEntry({text, onClick, imageUrl="img/quasar_particle.png"}) {
  * Adds the sidebar to the HTML document.
  */
 export function addSidebar() {
-  const sidebarNode = document.getElementsByClassName("sidebar-container")[0];
+  const sidebarNode = document.getElementsByClassName('sidebar-container')[0];
   createRoot(sidebarNode).render(<Sidebar planetJsonsToShow={planetDefinitions} />);
 }

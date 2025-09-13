@@ -12,7 +12,7 @@ import { addBlackHole, setupAccretionDisk } from './3d/quasar/blackhole';
 import { loadPlanets } from './loadPlanets';
 import { addPostProcessing } from './3d/postProcessing';
 import { addSidebar } from './components/sidebar';
-import { addProjectInfoElements } from './components/projectinfo';
+import { addProjectInfoElements } from './components/titleBox';
 import { runIntroAnimation, setupCameraInitialStateForIntroduction } from './3d/introAnimation';
 import { setupCameraAnimation } from './3d/cameraAnimation';
 
@@ -69,9 +69,9 @@ const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 document.onmouseup = document.ontouchend = (event) => {
   let clientX, clientY;
-  if (event.touches) {
-    clientX = event.touches[0].clientX;
-    clientY = event.touches[0].clientY;
+  if (event.changedTouches) {
+    clientX = event.changedTouches[0].clientX;
+    clientY = event.changedTouches[0].clientY;
   }
   else {
     clientX = event.clientX;
