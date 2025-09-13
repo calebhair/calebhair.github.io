@@ -76,7 +76,7 @@ export class Planet {
     if (!this.orbitCentre?.isVector3) errorMessage += 'Bad orbit centre.\n';
 
     if (errorMessage.length > 0) {
-      console.error(`For planet '${this.name}':\n` + errorMessage);
+      console.error(`For planet '${this.planetConfig.name}':\n` + errorMessage);
       return false;
     }
     return true;

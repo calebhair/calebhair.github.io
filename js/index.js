@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import * as QUARKS from 'three.quarks';
 import { ArcballControls } from 'three/addons/controls/ArcballControls';
 
 import { Planet } from './3d/planet';
@@ -7,13 +8,13 @@ import {
   setupFocusing,
   updateFocus,
 } from './3d/focus';
-import { addBlackHole, setupAccretionDisk } from './3d/blackhole';
+import { addBlackHole, setupAccretionDisk } from './3d/quasar/blackhole';
 import { loadPlanets } from './loadPlanets';
 import { addPostProcessing } from './3d/postProcessing';
 import { addSidebar } from './components/sidebar';
 import { addProjectInfoElements } from './components/projectinfo';
 import { runIntroAnimation, setupCameraInitialStateForIntroduction } from './3d/introAnimation';
-import {setupCameraAnimation} from "./3d/cameraAnimation";
+import { setupCameraAnimation } from './3d/cameraAnimation';
 
 const scene = new THREE.Scene();
 
@@ -96,7 +97,8 @@ const composer = addPostProcessing(scene, camera, renderer);
 setupFocusing(camera, controls);
 setupCameraAnimation(camera, controls);
 addBlackHole(scene, composer, camera);
-const batchedRenderer = await setupAccretionDisk(scene); // For particles
+const batchedRenderer = new QUARKS.BatchedRenderer();
+await setupAccretionDisk(scene, batchedRenderer); // For particles
 loadPlanets(scene);
 addSidebar();
 addProjectInfoElements();
@@ -107,7 +109,7 @@ function animate() {
   Planet.updateAllPlanets();
   updateFocus();
   batchedRenderer.update(0.016); // Update black hole particles
-  composer.render(); // Render with post processing
+  composer.render(); // Render with post-processing
 }
 
 renderer.setAnimationLoop(animate);

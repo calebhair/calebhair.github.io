@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { clearOutline, setOutlinedObject } from './postProcessing';
-import { dimParticles, undimParticles } from './blackhole';
+import { dimParticles, undimParticles } from './quasar/blackhole';
 import { smoothlyMoveCamera, animating, sceneOriginPosition } from './cameraAnimation';
 
 export let followTarget = null; // The object that the camera will attempt to follow.

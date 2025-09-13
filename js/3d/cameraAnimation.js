@@ -1,5 +1,7 @@
 import * as THREE from 'three';
-import {getCameraDirectionAsPos, setNavStateFunction} from "./focus";
+import { getCameraDirectionAsPos, setNavStateFunction } from './focus';
+
+const overviewAnimationDuration = 2000;
 
 let camera, controls;
 export function setupCameraAnimation(camera_, controls_) {
@@ -9,12 +11,12 @@ export function setupCameraAnimation(camera_, controls_) {
   controls = controls_;
 }
 
-export let animating = false;
-
+// Keep track of if the screen is being touched
 let touchDown = false;
 document.addEventListener('touchstart', () => touchDown = true);
 document.addEventListener('touchend', () => touchDown = false);
 
+export let animating = false;
 /**
  * Smoothly focuses on an object, by changing the camera position control target
  * @param cameraStartPos {THREE.Vector3} the camera position to animate from.
@@ -95,7 +97,8 @@ function easeInOut(t) {
 
 const overviewPosition = new THREE.Vector3(0, 20, 60);
 export const sceneOriginPosition = new THREE.Vector3(0.01, 0.01, 0.01);
-// NOTE: Pinching or panning when the target is 0, 0, 0 breaks things (replaced with NaN values, potential div by 0)
+// Pinching or panning when the target is 0, 0, 0 breaks things (gets replaced by NaN values, potential div by 0)
+
 /**
  * Moves the camera from the current position to a defined overview position.
  */
@@ -107,5 +110,7 @@ export function moveToOverviewPos() {
   controls.enablePan = false;
   controls.enableZoom = false;
 
-  smoothlyMoveCamera(camPos, target, overviewPosition, sceneOriginPosition, true, 2000, true, true);
+  smoothlyMoveCamera(camPos, target,
+    overviewPosition, sceneOriginPosition,
+    true, overviewAnimationDuration, true, true);
 }
