@@ -3,7 +3,7 @@ import { ArcballControls } from 'three/addons/controls/ArcballControls';
 
 import { Planet } from './3d/planet';
 import {
-  focusOnSelectedIfValid,
+  focusOnObjectIfValid,
   setupFocusing,
   updateFocus,
 } from './3d/focus';
@@ -13,6 +13,7 @@ import { addPostProcessing } from './3d/postProcessing';
 import { addSidebar } from './components/sidebar';
 import { addProjectInfoElements } from './components/projectinfo';
 import { runIntroAnimation, setupCameraInitialStateForIntroduction } from './3d/introAnimation';
+import {setupCameraAnimation} from "./3d/cameraAnimation";
 
 const scene = new THREE.Scene();
 
@@ -84,7 +85,7 @@ document.onmouseup = document.ontouchend = (event) => {
 
   // Find the first (ie closest) object that is a valid selectable target
   for (const intersection of intersects) {
-    if (focusOnSelectedIfValid(intersection.object)) return;
+    if (focusOnObjectIfValid(intersection.object)) return;
   }
 };
 
@@ -93,6 +94,7 @@ const composer = addPostProcessing(scene, camera, renderer);
 
 // Other setup
 setupFocusing(camera, controls);
+setupCameraAnimation(camera, controls);
 addBlackHole(scene, composer, camera);
 const batchedRenderer = await setupAccretionDisk(scene); // For particles
 loadPlanets(scene);

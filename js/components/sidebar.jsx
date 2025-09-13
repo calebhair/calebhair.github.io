@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  focusOnSelectedIfValid,
-  moveToOverviewPos,
+  focusOnObjectIfValid,
   setFollowTarget,
   setNavStateFunction,
   stopFollowing
 } from "../3d/focus";
 import {Planet} from "../3d/planet";
 import {planetDefinitions} from "../loadPlanets";
+import {moveToOverviewPos} from "../3d/cameraAnimation";
 
 // Represents the different states the nav button should be in; treat this like an enum
 const NavBtnStates = {
@@ -65,7 +65,7 @@ function Sidebar({planetJsonsToShow}) {
 
   // Create planet entries from JSON
   const planetEntries = planetJsonsToShow.map((planetJson, index) => <PlanetEntry text={planetJson.name}
-                                                                                  onClick={() => focusOnSelectedIfValid(Planet.planets[index].model)}
+                                                                                  onClick={() => focusOnObjectIfValid(Planet.planets[index].model)}
                                                                                   imageUrl={planetJson.iconPath}
                                                                                   key={index} />)
 

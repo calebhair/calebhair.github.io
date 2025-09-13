@@ -1,17 +1,16 @@
 import { Vector3, Quaternion } from 'three';
-import { smoothlyMoveCamera } from './focus';
-
-export function runIntroAnimation() {
-  smoothlyMoveCamera(initialCameraPos, introTarget, finalCameraPos, finalTarget, true, 5000, true);
-}
+import { smoothlyMoveCamera } from './cameraAnimation';
 
 const initialCameraPos = new Vector3(50, -100, -100);
 const introTarget = new Vector3(0, 10, 0);
 const finalCameraPos = new Vector3(0, 40, 80);
 const finalTarget = new Vector3().copy(introTarget);
 
-const axis = { x: 'x', y: 'y', z: 'z' };
+export function runIntroAnimation() {
+  smoothlyMoveCamera(initialCameraPos, introTarget, finalCameraPos, finalTarget, true, 5000, true);
+}
 
+const axis = { x: 'x', y: 'y', z: 'z' };
 export function setupCameraInitialStateForIntroduction(camera, controls) {
   rollCamera(camera, controls, axis.x, -30);
   rollCamera(camera, controls, axis.z, 70);
