@@ -48,7 +48,10 @@ export class Planet {
     this.centreParent.add(this.orbitLine);
 
     // Load model
-    loader.load(this.modelPath, gltf => this.onPlanetModelLoaded(gltf), undefined, console.error);
+    loader.load(this.modelPath,
+      gltf => this.onPlanetModelLoaded(gltf),
+      undefined,
+      console.error);
   }
 
   static get defaultConfig() {

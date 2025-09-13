@@ -5,7 +5,18 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass';
 import { OutlinePass } from 'three/addons/postprocessing/OutlinePass';
 import { SMAAPass } from 'three/addons/postprocessing/SMAAPass';
 
-export let outlinePass = null; // Expose outline pass for focus
+let outlinePass = null; // Expose outline pass for focus
+/**
+ * Sets the outline post-processing to only be applied to the provided object.
+ * @param object {THREE.Object3D} the object to apply the outline to.
+ */
+export function setOutlinedObject(object) {
+  outlinePass.selectedObjects = [object];
+}
+
+export function clearOutline() {
+  outlinePass.selectedObjects = [];
+}
 
 /**
  * @return {EffectComposer} the post-processing effect composer, so that it can be updated in the main animation loop.

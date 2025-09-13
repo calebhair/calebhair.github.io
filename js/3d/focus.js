@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import { outlinePass } from './postProcessing';
+import { clearOutline, setOutlinedObject } from './postProcessing';
 import { dimParticles, undimParticles } from './blackhole';
-import { smoothlyMoveCamera, animating } from './cameraAnimation';
+import { smoothlyMoveCamera, animating, sceneOriginPosition } from './cameraAnimation';
 
 export let followTarget = null; // The object that the camera will attempt to follow.
 const targetPos = new THREE.Vector3(); // The global position of the target object
@@ -57,12 +57,10 @@ export function setupFocusing(camera_, controls_) {
  * @returns {boolean} false if a valid focus target was found, true if the object or its parents are valid.
  */
 export function focusOnObjectIfValid(object) {
-  if (animating) return false; // Don't allow focus if animation is happening
+  if (!object || animating) return false; // Don't allow focus if animation is happening
 
-  // Use the parent of the clicked object, as this has the required planet data (not the model mesh that was clicked)
-  const { parent } = object;
-  if (parent && canObjectBeFocussedOn(parent)) {
-    setFollowTarget(parent);
+  if (object && canObjectBeFocussedOn(object)) {
+    setFollowTarget(object);
     return true;
   }
   return false;
@@ -96,7 +94,7 @@ export function setFollowTarget(object) {
   cameraStartPos = camera.position.clone();
   targetStartPos = getCameraDirectionAsPos();
 
-  outlinePass.selectedObjects = [object];
+  setOutlinedObject(object);
   updateFocus(false); // Get target values for animation, but don't apply them because it will snap to them
   smoothlyMoveCamera(cameraStartPos, targetStartPos, cameraPos, targetPos, false);
 }
@@ -108,7 +106,7 @@ export function stopFollowing() {
   followTarget = null;
   if (setVisibleFunction.setVisible) setVisibleFunction.setVisible(false);
 
-  outlinePass.selectedObjects = [];
+  clearOutline();
   undimParticles();
   smoothlyUnfocus(unfocusAnimationDuration);
   setTimeout(() => {
@@ -182,5 +180,5 @@ function smoothlyUnfocus(animationDuration) {
   cameraDistanceFromCentre.multiplyScalar(1.5);
 
   smoothlyMoveCamera(camera.position.clone(), controls.target.clone(),
-    cameraDistanceFromCentre, origin, true, animationDuration);
+    cameraDistanceFromCentre, sceneOriginPosition, true, animationDuration);
 }

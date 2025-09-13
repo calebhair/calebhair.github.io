@@ -94,7 +94,7 @@ function easeInOut(t) {
 }
 
 const overviewPosition = new THREE.Vector3(0, 20, 60);
-const origin = new THREE.Vector3(0.01, 0.01, 0.01);
+export const sceneOriginPosition = new THREE.Vector3(0.01, 0.01, 0.01);
 // NOTE: Pinching or panning when the target is 0, 0, 0 breaks things (replaced with NaN values, potential div by 0)
 /**
  * Moves the camera from the current position to a defined overview position.
@@ -107,5 +107,5 @@ export function moveToOverviewPos() {
   controls.enablePan = false;
   controls.enableZoom = false;
 
-  smoothlyMoveCamera(camPos, target, overviewPosition, origin, true, 2000, true, true);
+  smoothlyMoveCamera(camPos, target, overviewPosition, sceneOriginPosition, true, 2000, true, true);
 }

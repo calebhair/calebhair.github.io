@@ -85,7 +85,7 @@ document.onmouseup = document.ontouchend = (event) => {
 
   // Find the first (ie closest) object that is a valid selectable target
   for (const intersection of intersects) {
-    if (focusOnObjectIfValid(intersection.object)) return;
+    if (focusOnObjectIfValid(intersection?.object?.parent)) return;
   }
 };
 
