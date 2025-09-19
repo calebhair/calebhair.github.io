@@ -5,19 +5,6 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass';
 import { OutlinePass } from 'three/addons/postprocessing/OutlinePass';
 import { SMAAPass } from 'three/addons/postprocessing/SMAAPass';
 
-let outlinePass = null; // Expose outline pass for focus
-/**
- * Sets the outline post-processing to only be applied to the provided object.
- * @param object {THREE.Object3D} the object to apply the outline to.
- */
-export function setOutlinedObject(object) {
-  outlinePass.selectedObjects = [object];
-}
-
-export function clearOutline() {
-  outlinePass.selectedObjects = [];
-}
-
 /**
  * @return {EffectComposer} the post-processing effect composer, so that it can be updated in the main animation loop.
  */
@@ -42,6 +29,30 @@ export function addPostProcessing(scene, camera, renderer) {
   });
 
   return composer;
+}
+
+export function addBlackholeOutline(scene, camera, composer, blackholeSphere) {
+  const blackHoleOutline = new OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), scene, camera);
+  blackHoleOutline.edgeStrength = 5;
+  blackHoleOutline.edgeGlow = 5;
+  blackHoleOutline.edgeThickness = 7;
+  blackHoleOutline.visibleEdgeColor = new THREE.Color(0xaaff11);
+  blackHoleOutline.hiddenEdgeColor = new THREE.Color(0x000000); // Hide when eclipsed
+  blackHoleOutline.selectedObjects = [blackholeSphere];
+  composer.addPass(blackHoleOutline);
+}
+
+let outlinePass = null; // Expose outline pass for focus
+/**
+ * Sets the outline post-processing to only be applied to the provided object.
+ * @param object {THREE.Object3D} the object to apply the outline to.
+ */
+export function setOutlinedObject(object) {
+  outlinePass.selectedObjects = [object];
+}
+
+export function clearOutline() {
+  outlinePass.selectedObjects = [];
 }
 
 /**

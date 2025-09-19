@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import * as QUARKS from 'three.quarks';
-import { OutlinePass } from 'three/addons/postprocessing/OutlinePass';
 import {
   accretionDisKConfig1,
   accretionDisKConfig2,
@@ -17,12 +16,10 @@ const accretionDiskBaseY = 0;
 /**
  * Creates a black sphere and adds it to the scene.
  * @param scene the scene to add the black hole to.
- * @param composer the post-processing composer; this adds the outline of the black hole.
  * @param camera the camera, for adding post-processing.
  */
-export function addBlackHole(scene, composer, camera) {
+export function addBlackHole(scene, camera) {
   if (!scene) throw `Bad scene: ${scene}`;
-  if (!composer) throw `Bad composer: ${scene}`;
   if (!camera) throw `Bad camera: ${scene}`;
 
   const geometry = new THREE.SphereGeometry(6, 32, 16);
@@ -30,14 +27,7 @@ export function addBlackHole(scene, composer, camera) {
   const sphere = new THREE.Mesh(geometry, material);
   scene.add(sphere);
 
-  const blackHoleOutline = new OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), scene, camera);
-  blackHoleOutline.edgeStrength = 5;
-  blackHoleOutline.edgeGlow = 5;
-  blackHoleOutline.edgeThickness = 7;
-  blackHoleOutline.visibleEdgeColor = new THREE.Color(0xaaff11);
-  blackHoleOutline.hiddenEdgeColor = new THREE.Color(0x000000); // Hide when eclipsed
-  blackHoleOutline.selectedObjects = [sphere];
-  composer.addPass(blackHoleOutline);
+  return sphere;
 }
 
 /**
