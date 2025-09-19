@@ -8,6 +8,7 @@ import { Planet } from '../3d/planet';
 import { planetDefinitions } from '../loadPlanets';
 import { moveToOverviewPos, animating } from '../3d/cameraAnimation';
 import { EVENTS } from '../constants';
+import { SidebarEntry } from './sidebarEntry';
 
 /**
  * Sidebar component
@@ -18,20 +19,7 @@ function Sidebar({ planetJsonsToShow }) {
   const [visible, setVisible] = useState(false);
   addEventListeners(setVisible);
 
-  // Create planet entries from JSON
-  const planetEntries = planetJsonsToShow.map((planetJson, index) => (
-    <SidebarEntry
-      text={planetJson.name}
-      onClick={() => {
-        if (!animating) {
-          focusOnObjectIfValid(Planet.planets[index].model);
-          setVisible(false);
-        }
-      }}
-      imageUrl={planetJson.iconPath}
-      key={index}
-    />
-  ));
+  const planetEntries = makePlanetEntries(planetJsonsToShow, setVisible);
 
   const onCloseBtnClicked = () => {
     setVisible(false);
@@ -72,20 +60,19 @@ function addEventListeners(setVisible) {
   });
 }
 
-/**
- * Entry component in the sidebar
- * @param text the text to show on the sidebar
- * @param onClick the function to call when the entry is clicked
- * @param imageUrl the icon to show for this element.
- * @return {JSX.Element}
- */
-function SidebarEntry({ text, onClick, imageUrl = 'img/quasar_particle.png' }) {
-  return (
-    <div className="sidebar-item" onClick={onClick}>
-      <img src={imageUrl} alt="" className="sidebar-item-image" />
-      <h2 className="sidebar-item-text">{text}</h2>
-    </div>
-  );
+function makePlanetEntries(planetJsons, setVisible) {
+  return planetJsons.map((planetJson, planetIndex) => (
+    <SidebarEntry
+      text={planetJson.name}
+      onClick={() => {
+        if (animating) return;
+        focusOnObjectIfValid(Planet.planets[planetIndex].model);
+        setVisible(false);
+      }}
+      imageUrl={planetJson.iconPath}
+      key={planetIndex}
+    />
+  ));
 }
 
 /**

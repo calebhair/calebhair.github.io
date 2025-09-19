@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { stopFollowing } from '../3d/focus';
-import {EVENTS, NAV_BTN_STATES} from '../constants';
+import { EVENTS, NAV_BTN_STATES } from '../constants';
 
 // The icons to show for each state, where the ID of the state represents the index of the icon name from Google icons
 const navBtnIcons = [

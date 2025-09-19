@@ -1,12 +1,14 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   const updateRate = 30; // times per second
-  const quasarBorderElements = document.getElementsByClassName("quasar-border");
-  const twinkleBorderElements = document.getElementsByClassName("twinkle-border");
+  const quasarBorderElements = document.getElementsByClassName('quasar-border');
+  const twinkleBorderElements = document.getElementsByClassName('twinkle-border');
 
-  setInterval( () => {animateQuasarGradient(quasarBorderElements)},
-    1/updateRate);
-  setInterval(() => {animateTwinkleGradient(twinkleBorderElements)},
-    1/updateRate);
+  setInterval(() => {
+    animateQuasarGradient(quasarBorderElements);
+  }, 1 / updateRate);
+  setInterval(() => {
+    animateTwinkleGradient(twinkleBorderElements);
+  }, 1 / updateRate);
 });
 
 let quasarBorderProgress = 0; // this doesn't have any particular unit or upper limit
@@ -25,8 +27,8 @@ function animateQuasarGradient(elements) {
 }
 
 function setQuasarGradient(element, direction) {
-  element.style.borderImageSource =
-    `linear-gradient(${direction}deg,
+  element.style.borderImageSource
+    = `linear-gradient(${direction}deg,
         rgba(0, 0, 0, 1) ${0}px,
         rgba(255, 255, 43, 1) ${5}%,
         rgba(0, 255, 30, 1) ${17}%,
@@ -35,10 +37,8 @@ function setQuasarGradient(element, direction) {
         rgba(66, 66, 66, 1) ${94}%)`;
 }
 
-
-
 const minimumOpacity = 0.5;
-const minimumOpacityAtProgress = 0.6
+const minimumOpacityAtProgress = 0.6;
 const opacityRateOfChange = 100;
 let twinkleBorderProgress = 0; // 0 to 1
 function animateTwinkleGradient(elements) {
@@ -51,14 +51,14 @@ function animateTwinkleGradient(elements) {
     }
 
     // opacity = 5(progress - 0.7)^2+0.7
-    const opacity = opacityRateOfChange * Math.pow(twinkleBorderProgress - minimumOpacityAtProgress, 2) + minimumOpacity
+    const opacity = opacityRateOfChange * Math.pow(twinkleBorderProgress - minimumOpacityAtProgress, 2) + minimumOpacity;
     setTwinkleGradient(element, opacity);
   }
 }
 
 function setTwinkleGradient(element, opacity) {
-  element.style.borderImageSource =
-    `conic-gradient(
+  element.style.borderImageSource
+    = `conic-gradient(
     rgba(255, 255, 255, ${1}) 6%,
     rgba(255, 255, 255, ${opacity}) 22%,
     rgba(255, 255, 255, ${1}) 40%,
