@@ -47,7 +47,6 @@ function animateTwinkleGradient(elements) {
 
     if (twinkleBorderProgress >= 1) {
       twinkleBorderProgress = 0;
-      // todo randomise
     }
 
     // opacity = 5(progress - 0.7)^2+0.7

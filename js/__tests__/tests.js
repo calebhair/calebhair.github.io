@@ -1,5 +1,5 @@
 /**
- * Tests for any simple units of code. TODO make Jest tests
+ * Tests for any simple units of code.
  */
 import {Planet} from "../3d/planet";
 import * as THREE from "three";

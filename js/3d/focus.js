@@ -26,7 +26,7 @@ export function setupFocusing(camera_, controls_) {
   camera = camera_;
   controls = controls_;
 
-  // Force the user to let go after they hold for a while to limit jittering todo solve core issue, then remove this
+  // Force the user to let go after they hold for a while to limit jittering
   let timeLastLetGo = 0;
   const rotateDurationLimitWhenFocussed = 3000; // ms
   controls.addEventListener('change', () => {
