@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { getCameraDirectionAsPos, setNavStateFunction } from './focus';
+import { getCameraDirectionAsPos } from './focus';
 
 const overviewAnimationDuration = 2000;
 
@@ -103,7 +103,6 @@ export const sceneOriginPosition = new THREE.Vector3(0.01, 0.01, 0.01);
  * Moves the camera from the current position to a defined overview position.
  */
 export function moveToOverviewPos() {
-  if (setNavStateFunction.setDefault) setNavStateFunction.setDefault();
   const camPos = camera.position.clone();
   const target = getCameraDirectionAsPos();
 

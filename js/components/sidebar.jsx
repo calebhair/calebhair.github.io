@@ -3,43 +3,11 @@ import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   focusOnObjectIfValid,
-  setNavStateFunction,
-  stopFollowing,
 } from '../3d/focus';
 import { Planet } from '../3d/planet';
 import { planetDefinitions } from '../loadPlanets';
-import { moveToOverviewPos } from '../3d/cameraAnimation';
-
-// Represents the different states the nav button should be in; treat this like an enum
-const NavBtnStates = {
-  Default: 0,
-  Sidebar: 1,
-  Focussed: 2,
-
-  // The icons to show for each state, where the ID of the state represents the index of the icon name from Google icons
-  icons: [
-    'planet',
-    'planet',
-    'arrows_output',
-  ],
-};
-
-function NavBtn({ navState, onClick }) {
-  const clickedClass = navState === NavBtnStates.Sidebar ? 'clicked' : '';
-  return (
-    <button
-      // Only show the clicked style if the sidebar is shown, not when focussed (and obviously not when in default state)
-      className={`nav-btn border twinkle-border ${clickedClass}`}
-      onClick={onClick}
-    >
-      <i className={`material-symbols-outlined nav-btn-icon prevent-select
-      ${clickedClass}`}
-      >
-        {NavBtnStates.icons.at(navState)}
-      </i>
-    </button>
-  );
-}
+import { moveToOverviewPos, animating } from '../3d/cameraAnimation';
+import { EVENTS } from '../constants';
 
 /**
  * Sidebar component
@@ -47,49 +15,61 @@ function NavBtn({ navState, onClick }) {
  * @return {JSX.Element}
  */
 function Sidebar({ planetJsonsToShow }) {
-  // Define the navigation state
-  const [navState, setNavState] = useState(NavBtnStates.Default);
-  // Setup functions that the code handling focus can use; use this round about way to control state outside the function
-  setNavStateFunction.setFollowing = () => setNavState(NavBtnStates.Focussed);
-  setNavStateFunction.setDefault = () => setNavState(NavBtnStates.Default);
-
-  // Setup how the nav button should react to being clicked
-  const onNavButtonClicked = () => {
-    switch (navState) {
-      case NavBtnStates.Default:
-        setNavState(NavBtnStates.Sidebar);
-        break;
-      case NavBtnStates.Focussed:
-        setNavState(NavBtnStates.Default);
-        stopFollowing();
-        break;
-    }
-  };
+  const [visible, setVisible] = useState(false);
+  addEventListeners(setVisible);
 
   // Create planet entries from JSON
   const planetEntries = planetJsonsToShow.map((planetJson, index) => (
-    <PlanetEntry
+    <SidebarEntry
       text={planetJson.name}
-      onClick={() => focusOnObjectIfValid(Planet.planets[index].model)}
+      onClick={() => {
+        if (!animating) {
+          focusOnObjectIfValid(Planet.planets[index].model);
+          setVisible(false);
+        }
+      }}
       imageUrl={planetJson.iconPath}
       key={index}
     />
   ));
 
+  const onCloseBtnClicked = () => {
+    setVisible(false);
+    document.dispatchEvent(new Event(EVENTS.SET_NAV_BTN_DEFAULT));
+  };
+
+  const onOverviewClick = () => {
+    moveToOverviewPos();
+    setVisible(false);
+    document.dispatchEvent(new Event(EVENTS.SET_NAV_BTN_DEFAULT));
+  };
+
   return (
     <div style={{ position: 'relative' }}>
-      <NavBtn navState={navState} onClick={onNavButtonClicked} />
-      <div className={`sidebar prevent-select ${navState === NavBtnStates.Sidebar ? 'show-sidebar' : ''}`}>
+      <div className={`sidebar prevent-select ${visible ? 'show-sidebar' : ''}`}>
         {/* Back button and re-centre */}
-        <PlanetEntry
+        <SidebarEntry
           imageUrl={window.innerWidth < 600 ? 'img/up.svg' : 'img/back.svg'}
-          onClick={() => setNavState(NavBtnStates.Default)}
+          onClick={onCloseBtnClicked}
         />
-        <PlanetEntry text="Re-centre" imageUrl="img/quasar.svg" onClick={moveToOverviewPos} />
+        <SidebarEntry text="Re-centre" imageUrl="img/quasar.svg" onClick={onOverviewClick} />
         {planetEntries}
       </div>
     </div>
   );
+}
+
+let eventListenersAdded = false;
+function addEventListeners(setVisible) {
+  if (eventListenersAdded) return;
+  eventListenersAdded = true;
+
+  document.addEventListener(EVENTS.SIDEBAR_OPENED, () => {
+    setVisible(true);
+  });
+  document.addEventListener(EVENTS.SIDEBAR_CLOSED, () => {
+    setVisible(false);
+  });
 }
 
 /**
@@ -99,7 +79,7 @@ function Sidebar({ planetJsonsToShow }) {
  * @param imageUrl the icon to show for this element.
  * @return {JSX.Element}
  */
-function PlanetEntry({ text, onClick, imageUrl = 'img/quasar_particle.png' }) {
+function SidebarEntry({ text, onClick, imageUrl = 'img/quasar_particle.png' }) {
   return (
     <div className="sidebar-item" onClick={onClick}>
       <img src={imageUrl} alt="" className="sidebar-item-image" />

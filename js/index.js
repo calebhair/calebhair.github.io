@@ -11,10 +11,9 @@ import {
 import { addBlackHole, setupAccretionDisk } from './3d/quasar/blackhole';
 import { loadPlanets } from './loadPlanets';
 import { addPostProcessing } from './3d/postProcessing';
-import { addSidebar } from './components/sidebar';
-import { addProjectInfoElements } from './components/titleBox';
 import { runIntroAnimation, setupCameraInitialStateForIntroduction } from './3d/introAnimation';
 import { setupCameraAnimation } from './3d/cameraAnimation';
+import { addComponents } from './components/loader';
 
 const scene = new THREE.Scene();
 
@@ -100,8 +99,7 @@ addBlackHole(scene, composer, camera);
 const batchedRenderer = new QUARKS.BatchedRenderer();
 await setupAccretionDisk(scene, batchedRenderer); // For particles
 loadPlanets(scene);
-addSidebar();
-addProjectInfoElements();
+addComponents();
 
 // Main loop
 runIntroAnimation();

@@ -41,8 +41,9 @@
   color: white;
   z-index: 101;
 
-  position: absolute; /* Force sidebar to overlap nav button*/
+  position: fixed; /* Force sidebar to overlap nav button*/
   top: 0;
+  left: 0;
   overflow: auto; /* Prevent sidebar items from wrapping */
   white-space: nowrap;
   transform: translateX(-100%); /* Hide sidebar by default */

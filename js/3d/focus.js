@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { clearOutline, setOutlinedObject } from './postProcessing';
 import { dimParticles, undimParticles } from './quasar/blackhole';
 import { smoothlyMoveCamera, animating, sceneOriginPosition } from './cameraAnimation';
+import { EVENTS } from '../constants';
 
 export let followTarget = null; // The object that the camera will attempt to follow.
 const targetPos = new THREE.Vector3(); // The global position of the target object
@@ -12,11 +13,6 @@ let targetStartPos = null; // On focus, this is set to a position the camera is 
 const focusMarginFactor = 2.5; // Increase to increase the space around the planet.
 const unfocusAnimationDuration = 1000;
 const minimumCameraAspectRatioForFocusShift = 1.2;
-
-// For updating UI
-export let setNavStateFunction = { setFollowing: null, setDefault: null };
-export let setTitleFunction = { setTitle: null };
-export let setVisibleFunction = { setVisible: null };
 
 let camera, controls;
 /**
@@ -84,9 +80,8 @@ export function setFollowTarget(object) {
   if (!object) throw `Bad object ${object}`;
   dimParticles();
   followTarget = object;
-  if (setNavStateFunction.setFollowing) setNavStateFunction.setFollowing(2); // 2 is following state
-  if (setTitleFunction.setTitle) setTitleFunction.setTitle(followTarget.userData.planetConfig.name);
-  if (setVisibleFunction.setVisible) setVisibleFunction.setVisible(true);
+  document.dispatchEvent(new CustomEvent(EVENTS.SIDEBAR_CLOSED, { detail: followTarget.userData.planetConfig }));
+  document.dispatchEvent(new CustomEvent(EVENTS.PLANET_FOCUSSED, { detail: followTarget.userData.planetConfig }));
   controls.enablePan = false;
   controls.enableZoom = false;
 
@@ -103,8 +98,8 @@ export function setFollowTarget(object) {
  * Unfocuses and stops following the object that was currently being followed.
  */
 export function stopFollowing() {
+  document.dispatchEvent(new CustomEvent(EVENTS.PLANET_UNFOCUSSED, followTarget.userData.planetConfig));
   followTarget = null;
-  if (setVisibleFunction.setVisible) setVisibleFunction.setVisible(false);
 
   clearOutline();
   undimParticles();

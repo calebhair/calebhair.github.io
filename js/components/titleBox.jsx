@@ -1,13 +1,12 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { setTitleFunction, setVisibleFunction } from '../3d/focus';
+import { EVENTS } from '../constants';
 
 function ProjectTitle() {
   const [title, setTitle] = useState('');
   const [visible, setVisible] = useState(false);
-  setTitleFunction.setTitle = setTitle;
-  setVisibleFunction.setVisible = setVisible;
+  addEventListeners(setTitle, setVisible);
 
   return (
     <div>
@@ -24,10 +23,25 @@ function ProjectTitle() {
   );
 }
 
+let eventListenersAdded = false;
+function addEventListeners(setTitle, setVisible) {
+  if (eventListenersAdded) return;
+  eventListenersAdded = true;
+
+  document.addEventListener(EVENTS.PLANET_FOCUSSED, (event) => {
+    setTitle(event.detail.name);
+    setVisible(true);
+  });
+
+  document.addEventListener(EVENTS.PLANET_UNFOCUSSED, () => {
+    setVisible(false);
+  });
+}
+
 /**
  * Add info box stuff to DOM.
  */
-export function addProjectInfoElements() {
+export function addTitleBox() {
   const sidebarNode = document.getElementsByClassName('project-info')[0];
   createRoot(sidebarNode).render(<ProjectTitle />);
 }
