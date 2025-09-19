@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   focusOnObjectIfValid,
-} from '../3d/focus';
-import { Planet } from '../3d/planet';
-import { planetDefinitions } from '../planets';
-import { moveToOverviewPos, animating } from '../3d/cameraAnimation';
-import { EVENTS } from '../constants';
+} from '../../3d/focus';
+import { Planet } from '../../3d/planet';
+import { planetDefinitions } from '../../planets';
+import { moveToOverviewPos, animating } from '../../3d/cameraAnimation';
+import { EVENTS } from '../../constants';
 import { SidebarEntry } from './sidebarEntry';
 
 /**

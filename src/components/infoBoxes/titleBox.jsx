@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { EVENTS } from '../constants';
+import { EVENTS } from '../../constants';
 
 function ProjectTitle() {
   const [title, setTitle] = useState('');

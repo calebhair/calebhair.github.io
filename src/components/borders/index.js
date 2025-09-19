@@ -1,5 +1,5 @@
-import { animateQuasarGradients } from './borders/quasar';
-import { animateTwinkleGradient } from './borders/twinkle';
+import { animateQuasarGradients } from './quasar';
+import { animateTwinkleGradient } from './twinkle';
 
 document.addEventListener('DOMContentLoaded', () => {
   const updateRate = 30; // times per second

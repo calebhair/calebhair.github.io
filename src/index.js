@@ -8,7 +8,7 @@ import { addPlanets } from './planets';
 import { addBlackholeOutline, addPostProcessing } from './3d/postProcessing';
 import { runIntroAnimation, setupCameraInitialStateForIntroduction } from './3d/introAnimation';
 import { setupCameraAnimation } from './3d/cameraAnimation';
-import { setupComponents } from './components/loader';
+import { setupComponents } from './components/componentLoader';
 import { addLight, addCubeMap, makeCamera, makeControls, makeRenderer, onWindowResized, setupPointer } from './3d/sceneSetup';
 
 // Foundation
