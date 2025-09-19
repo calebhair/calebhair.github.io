@@ -35,7 +35,7 @@ export function addBlackHole(scene, camera) {
  * @param scene
  * @param batchedRenderer {QUARKS.BatchedRenderer}
  */
-export async function setupAccretionDisk(scene, batchedRenderer) {
+export async function addAccretionDisk(scene, batchedRenderer) {
   // Accretion disk
   makeParticleSystem(accretionDisKConfig1, 50, batchedRenderer, scene, -0.5);
   makeParticleSystem(accretionDisKConfig2, 50, batchedRenderer, scene, -0.8);

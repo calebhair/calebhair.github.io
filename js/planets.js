@@ -37,7 +37,7 @@ export const planetDefinitions = [
  * Creates planet objects from the planet JSONs.
  * @param scene {THREE.Scene} the scene to add the planets to.
  */
-export function loadPlanets(scene) {
+export function addPlanets(scene) {
   for (const planetJson of planetDefinitions) {
     new Planet(scene, planetJson);
   }

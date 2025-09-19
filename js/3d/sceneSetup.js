@@ -3,7 +3,7 @@ import { ArcballControls } from 'three/addons/controls/ArcballControls';
 import { Planet } from './planet';
 import { focusOnObjectIfValid } from './focus';
 
-export async function loadCubeMap(scene) {
+export async function addCubeMap(scene) {
   // Background (made with https://jaxry.github.io/panorama-to-cubemap/ and https://www.spacespheremaps.com/silver-and-gold-nebulae-spheremaps/)
   const cubeTextureLoader = new THREE.CubeTextureLoader();
   cubeTextureLoader.setPath('img/cubemap_images/');
