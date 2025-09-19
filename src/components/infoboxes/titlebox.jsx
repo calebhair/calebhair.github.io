@@ -10,14 +10,14 @@ function ProjectTitle() {
 
   return (
     <div>
-      <div className={'infobox title border quasar-border ' + (visible ? 'showInfobox' : '')}>
+      <div className={'infobox title border quasar-border ' + (visible ? 'show-infobox' : '')}>
         <h1 className="info">
           { title }
         </h1>
       </div>
 
       <div className="scroll-arrow">
-        <i className={'material-symbols-outlined ' + (visible ? 'showArrow' : '')}>arrow_drop_down</i>
+        <i className={'material-symbols-outlined ' + (visible ? 'show-arrow' : '')}>arrow_drop_down</i>
       </div>
     </div>
   );
