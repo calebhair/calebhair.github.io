@@ -7,7 +7,7 @@ import {
 import { Planet } from '../../3d/planet';
 import { planetDefinitions } from '../../planets';
 import { moveToOverviewPos, animating } from '../../3d/cameraAnimation';
-import { EVENTS } from '../../constants';
+import { EVENTS, PATHS } from '../../constants';
 import { SidebarEntry } from './sidebarEntry';
 
 /**
@@ -37,10 +37,10 @@ function Sidebar({ planetJsonsToShow }) {
       <div className={`sidebar prevent-select ${visible ? 'show-sidebar' : ''}`}>
         {/* Back button and re-centre */}
         <SidebarEntry
-          imageUrl={window.innerWidth < 600 ? 'img/up.svg' : 'img/back.svg'}
+          imageUrl={window.innerWidth < 600 ? PATHS.UP_ARROW : PATHS.BACK_ARROW}
           onClick={onCloseBtnClicked}
         />
-        <SidebarEntry text="Re-centre" imageUrl="img/quasar.svg" onClick={onOverviewClick} />
+        <SidebarEntry text="Re-centre" imageUrl={PATHS.QUASAR_ICON} onClick={onOverviewClick} />
         {planetEntries}
       </div>
     </div>

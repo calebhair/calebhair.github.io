@@ -9,6 +9,7 @@ import {
   accretionDiskConfig6,
   defaultSettings, jetConfig, textDebrisConfig, textDebrisConfigurations,
 } from './configurations';
+import { PATHS } from '../../constants';
 
 const particleSystems = [];
 const accretionDiskBaseY = 0;
@@ -90,7 +91,7 @@ function makeParticleSystem(overwrittenSettings, length, batchedRenderer, scene,
 export async function setupTextDebris(scene, batchedRenderer) {
   // Load in materials
   const zeroMaterial = new THREE.MeshBasicMaterial({
-    map: await new THREE.TextureLoader().loadAsync('/img/zero.png'),
+    map: await new THREE.TextureLoader().loadAsync(PATHS.ZERO),
     color: 0x09C405,
     transparent: true,
     opacity: 1,
@@ -98,7 +99,7 @@ export async function setupTextDebris(scene, batchedRenderer) {
     blending: THREE.AdditiveBlending,
   });
   const oneMaterial = new THREE.MeshBasicMaterial({
-    map: await new THREE.TextureLoader().loadAsync('/img/one.png'),
+    map: await new THREE.TextureLoader().loadAsync(PATHS.ONE),
     color: 0x09C405,
     transparent: true,
     opacity: 1,

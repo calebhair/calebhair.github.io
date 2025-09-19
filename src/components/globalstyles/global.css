@@ -1,5 +1,6 @@
 body {
   background: black;
+  font-family: "Source Code Pro", "Courier New", monospace;
 }
 
 .above-threejs-canvas {
@@ -14,6 +15,7 @@ body {
   width: 100%;
   pointer-events: none;
 }
+
 @media only screen and (max-width: 600px) {
   .above-threejs-canvas {
     flex-direction: column;

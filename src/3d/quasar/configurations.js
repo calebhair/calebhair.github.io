@@ -11,8 +11,9 @@ import {
   RenderMode,
 } from 'three.quarks';
 import { Vector3, Vector4 } from 'three';
+import { PATHS } from '../../constants';
 
-const accretionTexture = await new THREE.TextureLoader().loadAsync('/img/quasar_particle.png');
+const accretionTexture = await new THREE.TextureLoader().loadAsync(PATHS.QUASAR_TEXTURE);
 
 // Default configuration for particle systems
 export const defaultSettings = {

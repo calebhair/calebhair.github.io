@@ -14,3 +14,13 @@ export const EVENTS = {
   PLANET_UNFOCUSSED: 'unfocusPlanet',
   PLANET_FOCUSSED: 'focusPlanet',
 };
+
+export const PATHS = {
+  ZERO: '/img/quasar/zero.png',
+  ONE: '/img/quasar/one.png',
+  QUASAR_TEXTURE: '/img/quasar/quasar_texture.png',
+
+  BACK_ARROW: '/img/sidebar/back.svg',
+  UP_ARROW: '/img/sidebar/up.svg',
+  QUASAR_ICON: '/img/sidebar/quasar.svg',
+};

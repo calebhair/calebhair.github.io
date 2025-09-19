@@ -1,0 +1,24 @@
+.infobox {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0.1em 2em; /* Top and bottom, sides */
+
+  transform: rotateX(-90deg);
+  transition: transform 0.2s;
+
+  color: white;
+}
+
+.showInfobox {
+  transform: rotateX(0deg);
+}
+
+@media only screen and (max-width: 600px) {
+  .project-info {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    text-align: center;
+
+    height: 100%;
+  }
+}

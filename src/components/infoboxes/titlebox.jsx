@@ -10,7 +10,7 @@ function ProjectTitle() {
 
   return (
     <div>
-      <div className={'infobox title border quasar-border ' + (visible ? 'showTitle' : '')}>
+      <div className={'infobox title border quasar-border ' + (visible ? 'showInfobox' : '')}>
         <h1 className="info">
           { title }
         </h1>

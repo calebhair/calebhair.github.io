@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
+import { PATHS } from '../../constants';
 
 /**
  * Entry component in the sidebar
@@ -8,7 +9,7 @@ import React from 'react';
  * @param imageUrl the icon to show for this element.
  * @return {JSX.Element}
  */
-export function SidebarEntry({ text, onClick, imageUrl = 'img/quasar_particle.png' }) {
+export function SidebarEntry({ text, onClick, imageUrl = PATHS.QUASAR_TEXTURE }) {
   return (
     <div className="sidebar-item" onClick={onClick}>
       <img src={imageUrl} alt="" className="sidebar-item-image" />
