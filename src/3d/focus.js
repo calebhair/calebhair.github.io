@@ -91,7 +91,7 @@ export function setFollowTarget(object) {
   document.dispatchEvent(new CustomEvent(EVENTS.SIDEBAR_CLOSED, { detail: planetConfig }));
 
   dimParticles();
-  setOutlinedObject(object);
+  setOutlinedObject(object.userData.model);
 
   // Save these for animation
   cameraStartPos = camera.position.clone();

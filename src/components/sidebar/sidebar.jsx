@@ -78,7 +78,7 @@ function makePlanetEntries(planetJsons, setVisible) {
       text={planetJson.name}
       onClick={() => {
         if (animating) return;
-        focusOnObjectIfValid(Planet.planets[planetIndex].model);
+        focusOnObjectIfValid(Planet.planets[planetIndex].planetHitbox);
         setVisible(false);
       }}
       imageUrl={planetJson.iconPath}
