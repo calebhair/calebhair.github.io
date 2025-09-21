@@ -78,18 +78,27 @@ function canObjectBeFocussedOn(object) {
  */
 export function setFollowTarget(object) {
   if (!object) throw `Bad object ${object}`;
-  dimParticles();
+  const planetChanged = Boolean(followTarget);
   followTarget = object;
-  document.dispatchEvent(new CustomEvent(EVENTS.SIDEBAR_CLOSED, { detail: followTarget.userData.planetConfig }));
-  document.dispatchEvent(new CustomEvent(EVENTS.PLANET_FOCUSSED, { detail: followTarget.userData.planetConfig }));
-  controls.enablePan = false;
-  controls.enableZoom = false;
+  const { planetConfig } = followTarget.userData;
+
+  if (planetChanged) {
+    document.dispatchEvent(new CustomEvent(EVENTS.PLANET_CHANGED, { detail: planetConfig }));
+  }
+  else {
+    document.dispatchEvent(new CustomEvent(EVENTS.PLANET_FOCUSSED, { detail: planetConfig }));
+  }
+  document.dispatchEvent(new CustomEvent(EVENTS.SIDEBAR_CLOSED, { detail: planetConfig }));
+
+  dimParticles();
+  setOutlinedObject(object);
 
   // Save these for animation
   cameraStartPos = camera.position.clone();
   targetStartPos = getCameraDirectionAsPos();
 
-  setOutlinedObject(object);
+  controls.enablePan = false;
+  controls.enableZoom = false;
   updateFocus(false); // Get target values for animation, but don't apply them because it will snap to them
   smoothlyMoveCamera(cameraStartPos, targetStartPos, cameraPos, targetPos, false);
 }

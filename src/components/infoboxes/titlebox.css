@@ -3,6 +3,13 @@
   margin: 1em;
   text-align: center;
   align-self: flex-end;
+
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.title > h1 {
+  transition: opacity 0.3s;
 }
 
 .show-arrow {
@@ -16,9 +23,9 @@
 
 @media only screen and (max-width: 600px) {
   .title {
-    position: static;
-    margin: 0 2em;
-
+    /*max-width: fit-content;*/
+    margin-left: auto;
+    margin-right: auto;
     font-size: 1em;
   }
 
