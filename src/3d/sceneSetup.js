@@ -2,11 +2,12 @@ import * as THREE from 'three';
 import { ArcballControls } from 'three/addons/controls/ArcballControls';
 import { Planet } from './planet';
 import { focusOnObjectIfValid } from './focus';
+import { PATHS } from '../constants';
 
 export async function addCubeMap(scene) {
   // Background (made with https://jaxry.github.io/panorama-to-cubemap/ and https://www.spacespheremaps.com/silver-and-gold-nebulae-spheremaps/)
   const cubeTextureLoader = new THREE.CubeTextureLoader();
-  cubeTextureLoader.setPath('img/cubemap_images/');
+  cubeTextureLoader.setPath(PATHS.CUBEMAP);
   const textureCube = await cubeTextureLoader.loadAsync([
     'px.png', 'nx.png',
     'py.png', 'ny.png',

@@ -26,4 +26,6 @@ export const PATHS = {
   BACK_ARROW: '/img/sidebar/back.svg',
   UP_ARROW: '/img/sidebar/up.svg',
   QUASAR_ICON: '/img/sidebar/quasar.svg',
+
+  CUBEMAP: '/img/',
 };
