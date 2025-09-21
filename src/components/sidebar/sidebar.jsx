@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  focusOnObjectIfValid,
+  focusOnObjectIfValid, followTarget,
 } from '../../3d/focus';
 import { Planet } from '../../3d/planet';
 import { planetDefinitions } from '../../planets';
@@ -12,7 +12,7 @@ import { SidebarEntry } from './sidebarEntry';
 
 /**
  * Sidebar component
- * @param planetJsonsToShow the list of planet JSON data
+ * @param {Array} planetJsonsToShow the list of planet JSON data
  * @return {JSX.Element}
  */
 function Sidebar({ planetJsonsToShow }) {
@@ -55,9 +55,21 @@ function addEventListeners(setVisible) {
   document.addEventListener(EVENTS.SIDEBAR_OPENED, () => {
     setVisible(true);
   });
+
   document.addEventListener(EVENTS.SIDEBAR_CLOSED, () => {
     setVisible(false);
   });
+
+  // Clicking away from the sidebar closes it
+  document.querySelector('#threejs-canvas')
+    .addEventListener('click', () => {
+      setVisible(false);
+
+      // Only set the nav btn state if a planet wasn't clicked; delay a little until followTarget would be set
+      setTimeout(() => {
+        if (!followTarget) document.dispatchEvent(new Event(EVENTS.SET_NAV_BTN_DEFAULT));
+      }, 100);
+    });
 }
 
 function makePlanetEntries(planetJsons, setVisible) {

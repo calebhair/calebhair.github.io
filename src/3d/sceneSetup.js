@@ -21,6 +21,7 @@ export function makeRenderer() {
   renderer.toneMapping = THREE.ReinhardToneMapping;
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.domElement.classList.add('prevent-select');
+  renderer.domElement.id = 'threejs-canvas';
   document.body.appendChild(renderer.domElement);
   renderer.capabilities.logarithmicDepthBuffer = false;
   return renderer;
