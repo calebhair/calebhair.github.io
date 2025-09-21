@@ -39,13 +39,17 @@ window.addEventListener('resize', () => {
   onWindowResized(renderer, camera);
 });
 
+const clock = new THREE.Clock();
+let delta;
+
 // Main loop
 runIntroAnimation();
 function animate() {
+  delta = clock.getDelta();
   Planet.updateAllPlanets();
   updateFocus();
-  batchedRenderer.update(0.016); // Update black hole particles
-  composer.render(); // Render with post-processing
+  batchedRenderer.update(delta); // Update black hole particles
+  composer.render(delta); // Render with post-processing
 }
 
 renderer.setAnimationLoop(animate);
