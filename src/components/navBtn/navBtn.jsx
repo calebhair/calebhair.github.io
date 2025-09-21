@@ -13,13 +13,14 @@ const navBtnIcons = [
 
 function NavBtn() {
   const [navState, setNavState] = useState(NAV_BTN_STATES.Default);
-  addEventListeners(navState, setNavState);
+  const [moveOffscreen, setMoveOffscreen] = useState(true);
+  addEventListeners(navState, setNavState, setMoveOffscreen);
 
   const isClicked = navState === NAV_BTN_STATES.Sidebar;
   return (
     <button
       // Only show the clicked style if the sidebar is shown, not when focussed (and obviously not when in default state)
-      className={`nav-btn border twinkle-border ${isClicked ? 'clicked' : ''}`}
+      className={`nav-btn border twinkle-border ${isClicked ? 'clicked' : ''} ${moveOffscreen ? 'offscreen' : ''}`}
       onClick={() => onNavButtonClicked(navState, setNavState)}
     >
       <i className={`material-symbols-outlined nav-btn-icon prevent-select ${isClicked}`}>
@@ -30,15 +31,20 @@ function NavBtn() {
 }
 
 let eventListenersAdded = false;
-function addEventListeners(navState, setNavState) {
+function addEventListeners(navState, setNavState, setMoveOffscreen) {
   if (eventListenersAdded) return;
   eventListenersAdded = true;
 
   document.addEventListener(EVENTS.PLANET_FOCUSSED, () => {
     setNavState(NAV_BTN_STATES.Focussed);
   });
+
   document.addEventListener(EVENTS.SET_NAV_BTN_DEFAULT, () => {
     setNavState(NAV_BTN_STATES.Default);
+  });
+
+  document.addEventListener(EVENTS.INTRO_COMPLETE, () => {
+    setMoveOffscreen(false);
   });
 }
 

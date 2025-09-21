@@ -29,10 +29,11 @@ export let animating = false;
  * otherwise just disables rotating.
  * @param duration {number} how long to take in milliseconds.
  * @param stabilise {boolean} if controls are being updated, level the camera.
+ * @param onComplete {CallableFunction} a function called once the animation is complete.
  */
 export function smoothlyMoveCamera(cameraStartPos, targetStartPos,
   cameraEndPos, targetEndPos, updateControls, duration = 1000,
-  disableAllControls = false, stabilise = true) {
+  disableAllControls = false, stabilise = true, onComplete = null) {
   if (!cameraStartPos) throw `Bad cameraStartPos: ${cameraStartPos}`;
   if (!targetStartPos) throw `Bad targetStartPos: ${targetStartPos}`;
   if (!cameraEndPos) throw `Bad cameraEndPos: ${cameraEndPos}`;
@@ -71,6 +72,7 @@ export function smoothlyMoveCamera(cameraStartPos, targetStartPos,
       controls.update();
       if (disableAllControls) allowUserToControlCamera(true); // Re-enable
       else controls.enableRotate = true;
+      if (onComplete) onComplete();
     }
   }
 

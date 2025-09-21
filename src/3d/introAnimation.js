@@ -1,5 +1,6 @@
 import { Vector3, Quaternion } from 'three';
 import { smoothlyMoveCamera } from './cameraAnimation';
+import { EVENTS } from '../constants';
 
 const initialCameraPos = new Vector3(50, -100, -100);
 const introTarget = new Vector3(0, 10, 0);
@@ -7,7 +8,12 @@ const finalCameraPos = new Vector3(0, 40, 80);
 const finalTarget = new Vector3().copy(introTarget);
 
 export function runIntroAnimation() {
-  smoothlyMoveCamera(initialCameraPos, introTarget, finalCameraPos, finalTarget, true, 5000, true);
+  smoothlyMoveCamera(initialCameraPos, introTarget,
+    finalCameraPos, finalTarget,
+    true, 5000, true, true,
+    () => {
+      document.dispatchEvent(new Event(EVENTS.INTRO_COMPLETE));
+    });
 }
 
 const axis = { x: 'x', y: 'y', z: 'z' };

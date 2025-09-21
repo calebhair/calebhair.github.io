@@ -13,7 +13,7 @@ function ProjectTitle() {
   addEventListeners(setTitle, setVisible, setWidthEm, setTextOpacity);
 
   return (
-    <div>
+    <div className="titlebox-container">
       <div
         className={`infobox title border quasar-border ${visible ? 'show-infobox' : ''}`}
         style={{ width: `${widthEm}em` }}

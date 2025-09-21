@@ -14,6 +14,8 @@ export const EVENTS = {
   PLANET_UNFOCUSSED: 'unfocusPlanet',
   PLANET_FOCUSSED: 'focusPlanet',
   PLANET_CHANGED: 'changePlanet',
+
+  INTRO_COMPLETE: 'introComplete',
 };
 
 export const PATHS = {
