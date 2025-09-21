@@ -89,7 +89,7 @@ export class Planet {
 
     // Assign hitbox
     const sphereGeometry = new THREE.SphereGeometry(this.planetSize + hitboxMargin);
-    const blankMaterial = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
+    const blankMaterial = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false });
     this.planetHitbox = new THREE.Mesh(sphereGeometry, blankMaterial);
 
     this.model.userData.hitbox = this.planetHitbox;
