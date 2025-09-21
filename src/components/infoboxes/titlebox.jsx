@@ -36,7 +36,7 @@ function addEventListeners(setTitle, setVisible, setWidthEm, setTextOpacity) {
   eventListenersAdded = true;
 
   // Showing or hiding the title has two parts, the box and the text
-  const secondAnimationDelay = 300;
+  const secondAnimationDelay = 200;
   document.addEventListener(EVENTS.PLANET_FOCUSSED, (event) => {
     const { name } = event.detail;
     setVisible(true);

@@ -4,7 +4,7 @@
 
   display: block;
   transform: rotateX(-90deg) scaleY(0);
-  transition: transform 0.3s, width 0.3s;
+  transition: transform 0.2s, width 0.2s;
 
   color: white;
 }
