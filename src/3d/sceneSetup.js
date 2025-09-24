@@ -76,11 +76,11 @@ export function setupPointer(camera) {
     pointer.y = -(clientY / window.innerHeight) * 2 + 1;
 
     raycaster.setFromCamera(pointer, camera);
-    const intersects = raycaster.intersectObjects(Planet.hitboxes, true);
+    const intersects = raycaster.intersectObjects(Planet.models, true);
 
     // Find the first (ie closest) object that is a valid selectable target
     for (const intersection of intersects) {
-      if (focusOnObjectIfValid(intersection?.object)) return;
+      if (focusOnObjectIfValid(intersection?.object.parent)) return;
     }
   };
 

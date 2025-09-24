@@ -4,8 +4,6 @@ import * as THREE from 'three';
 const loader = new GLTFLoader();
 const timePageLoaded = performance.now();
 
-const hitboxMargin = 2;
-
 /**
  * Handles loading the model of the planet and orbit calculations
  */
@@ -22,7 +20,7 @@ export class Planet {
   planetConfig; // The full JSON used to construct the planet.
 
   static planets = []; // List of the planet objects created.
-  static hitboxes = []; // List of all the models that have been loaded, as part of a planet.
+  static models = []; // List of all the models that have been loaded, as part of a planet.
 
   /**
    * @param {THREE.Scene} scene the scene to add the planet to
@@ -86,22 +84,12 @@ export class Planet {
 
   onPlanetModelLoaded(gltf) {
     this.model = gltf.scene;
-
-    // Assign hitbox
-    const sphereGeometry = new THREE.SphereGeometry(this.planetSize + hitboxMargin);
-    const blankMaterial = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false });
-    this.planetHitbox = new THREE.Mesh(sphereGeometry, blankMaterial);
-
-    this.model.userData.hitbox = this.planetHitbox;
-
-    this.planetHitbox.userData = {
+    this.model.userData = {
       isSelectable: true,
       planetSize: this.planetSize,
       planetConfig: this.planetConfig,
-      model: this.model,
     };
-    Planet.hitboxes.push(this.planetHitbox);
-    this.centreParent.add(this.planetHitbox);
+    Planet.models.push(this.model);
     this.centreParent.add(this.model);
 
     // Update orbit and add to scene
@@ -125,9 +113,6 @@ export class Planet {
     this.model.rotation.x = this.planetRotationSpeedRadians.x * time;
     this.model.rotation.y = this.planetRotationSpeedRadians.y * time;
     this.model.rotation.z = this.planetRotationSpeedRadians.z * time;
-
-    // Update hitbox
-    this.planetHitbox.position.copy(this.model.position);
   }
 
   static orbitLineWidth = 0.08;
