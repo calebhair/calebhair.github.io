@@ -17,7 +17,9 @@ export async function addCubeMap(scene) {
 }
 
 export function makeRenderer() {
-  const renderer = new THREE.WebGLRenderer();
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+  });
   renderer.toneMapping = THREE.ReinhardToneMapping;
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.domElement.classList.add('prevent-select');

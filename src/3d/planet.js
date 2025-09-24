@@ -115,10 +115,10 @@ export class Planet {
     this.model.rotation.z = this.planetRotationSpeedRadians.z * time;
   }
 
-  static orbitLineWidth = 0.08;
+  static baseOrbitLineWidth = 0.03;
   makeOrbitLine() {
-    const geometry = new THREE.TorusGeometry(this.orbitRadius, Planet.orbitLineWidth, 10, 100);
-    const material = new THREE.MeshBasicMaterial({ color: 0xdddddd, side: THREE.DoubleSide });
+    const geometry = new THREE.TorusGeometry(this.orbitRadius, Planet.baseOrbitLineWidth * this.planetSize, 10, 100);
+    const material = new THREE.MeshBasicMaterial({ color: 0x888888, side: THREE.DoubleSide });
     const mesh = new THREE.Mesh(geometry, material);
     mesh.rotation.x = Math.PI / 2;
     return mesh;
