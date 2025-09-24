@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import { ArcballControls } from 'three/addons/controls/ArcballControls';
 import { Planet } from './planet';
-import { focusOnObjectIfValid } from './focus';
-import { PATHS } from '../constants';
+import { focusOnObjectIfValid, followTarget } from './focus';
+import { MINIMUM_DISTANCE_FROM_PLANET_TO_FOCUS, PATHS } from '../constants';
 
 export async function addCubeMap(scene) {
   // Background (made with https://jaxry.github.io/panorama-to-cubemap/ and https://www.spacespheremaps.com/silver-and-gold-nebulae-spheremaps/)
@@ -76,16 +76,34 @@ export function setupPointer(camera) {
     pointer.y = -(clientY / window.innerHeight) * 2 + 1;
 
     raycaster.setFromCamera(pointer, camera);
-    const intersects = raycaster.intersectObjects(Planet.models, true);
-
-    // Find the first (ie closest) object that is a valid selectable target
-    for (const intersection of intersects) {
-      if (focusOnObjectIfValid(intersection?.object.parent)) return;
-    }
+    const { closestModel, closestDistance } = findClosestPlanet(raycaster.ray);
+    if (closestDistance > MINIMUM_DISTANCE_FROM_PLANET_TO_FOCUS) return;
+    focusOnObjectIfValid(closestModel);
   };
 
   document.addEventListener('mouseup', onInteraction);
   document.addEventListener('touchend', onInteraction);
+}
+
+/**
+ * Finds the closest planet to a ray from a raycaster.
+ * @param ray {THREE.Ray} the ray from a raycaster
+ * @return {{closestModel: object, closestDistance: number | null}}
+ */
+function findClosestPlanet(ray) {
+  let closestModel = null;
+  let closestDistance = Infinity;
+
+  for (const model of Planet.models) {
+    if (model === followTarget) continue;
+    const distanceFromRay = ray.distanceToPoint(model.position);
+    if (distanceFromRay - model.userData.planetSize > closestDistance) continue;
+
+    closestDistance = distanceFromRay;
+    closestModel = model;
+  }
+
+  return { closestModel, closestDistance };
 }
 
 function getClientCoords(event) {
