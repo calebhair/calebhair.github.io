@@ -12,6 +12,8 @@
   transition: transform 0.3s; /* Animate */
 
   pointer-events: auto;
+  overflow-y: scroll;
+  height: 100%;
 }
 
 @media only screen and (max-width: 600px) {

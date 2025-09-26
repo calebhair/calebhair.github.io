@@ -33,6 +33,14 @@ export const planetDefinitions = [
   },
 ];
 
+const test = false;
+if (test) {
+  const duplicate = planetDefinitions[0];
+  for (let i = 0; i < 10; i++) {
+    planetDefinitions.push(duplicate);
+  }
+}
+
 /**
  * Creates planet objects from the planet JSONs.
  * @param scene {THREE.Scene} the scene to add the planets to.
