@@ -1,19 +1,18 @@
 import * as THREE from 'three';
-import { ArcballControls } from 'three/addons/controls/ArcballControls';
-import { Planet } from './planet';
-import { focusOnObjectIfValid, followTarget } from './focus';
-import { MINIMUM_DISTANCE_FROM_PLANET_TO_FOCUS, PATHS } from '../constants';
+import {ArcballControls} from 'three/addons/controls/ArcballControls';
+import {Planet} from './planet';
+import {focusOnObjectIfValid, followTarget} from './focus';
+import {MINIMUM_DISTANCE_FROM_PLANET_TO_FOCUS, PATHS} from '../constants';
 
 export async function addCubeMap(scene) {
   // Background (made with https://jaxry.github.io/panorama-to-cubemap/ and https://www.spacespheremaps.com/silver-and-gold-nebulae-spheremaps/)
   const cubeTextureLoader = new THREE.CubeTextureLoader();
   cubeTextureLoader.setPath(PATHS.CUBEMAP);
-  const textureCube = await cubeTextureLoader.loadAsync([
+  scene.background = await cubeTextureLoader.loadAsync([
     'px.png', 'nx.png',
     'py.png', 'ny.png',
     'pz.png', 'nz.png',
   ]);
-  scene.background = textureCube;
 }
 
 export function makeRenderer() {
@@ -83,8 +82,9 @@ export function setupPointer(camera) {
     focusOnObjectIfValid(closestModel);
   };
 
-  document.addEventListener('mouseup', onInteraction);
-  document.addEventListener('touchend', onInteraction);
+  const canvas = document.querySelector('#threejs-canvas');
+  canvas.addEventListener('mouseup', onInteraction);
+  canvas.addEventListener('touchend', onInteraction);
 }
 
 /**
