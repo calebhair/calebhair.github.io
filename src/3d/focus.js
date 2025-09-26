@@ -14,6 +14,8 @@ const focusMarginFactor = 2.5; // Increase to increase the space around the plan
 const unfocusAnimationDuration = 1000;
 const minimumCameraAspectRatioForFocusShift = 1.2;
 
+const translateCamera = false;
+
 let camera, controls;
 /**
  * Sets up focussing for the camera.
@@ -25,26 +27,6 @@ export function setupFocusing(camera_, controls_) {
   if (!controls_) throw `Bad control: ${controls_}`;
   camera = camera_;
   controls = controls_;
-
-  // Force the user to let go after they hold for a while to limit jittering
-  let timeLastLetGo = 0;
-  const rotateDurationLimitWhenFocussed = 3000; // ms
-  controls.addEventListener('change', () => {
-    updateFocus(); // Seems to help reduce the jittering
-    // If a target is being followed and sufficient time has passed, disable rotation
-    if (followTarget && performance.now() - timeLastLetGo > rotateDurationLimitWhenFocussed) {
-      controls.enableRotate = false;
-    }
-  });
-
-  // Re-enable rotation and reset the timer when the user lets go or grabs
-  const enableRotation = () => {
-    timeLastLetGo = performance.now();
-    if (animating) return; // Animating disables rotating; prioritise that
-    controls.enableRotate = true;
-  };
-  controls.addEventListener('start', enableRotation);
-  controls.addEventListener('end', enableRotation);
 }
 
 /**
@@ -126,7 +108,7 @@ export function stopFollowing() {
 export function updateFocus(applyNewValues = true) {
   if (followTarget === null) return;
   followTarget.getWorldPosition(targetPos);
-  targetPos.copy(getTranslatedTargetPos());
+  if (translateCamera) targetPos.copy(getTranslatedTargetPos());
 
   // Calculate camera position
   const targetDistance = followTarget.userData.planetSize * focusMarginFactor;
