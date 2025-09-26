@@ -1,8 +1,8 @@
 import * as THREE from 'three';
-import {ArcballControls} from 'three/addons/controls/ArcballControls';
-import {Planet} from './planet';
-import {focusOnObjectIfValid, followTarget} from './focus';
-import {MINIMUM_DISTANCE_FROM_PLANET_TO_FOCUS, PATHS} from '../constants';
+import { ArcballControls } from 'three/addons/controls/ArcballControls';
+import { Planet } from './planet';
+import { focusOnObjectIfValid, followTarget } from './focus';
+import { MINIMUM_DISTANCE_FROM_PLANET_TO_FOCUS, PATHS } from '../constants';
 
 export async function addCubeMap(scene) {
   // Background (made with https://jaxry.github.io/panorama-to-cubemap/ and https://www.spacespheremaps.com/silver-and-gold-nebulae-spheremaps/)
