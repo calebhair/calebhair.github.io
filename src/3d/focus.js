@@ -27,6 +27,8 @@ export function setupFocusing(camera_, controls_) {
   if (!controls_) throw `Bad control: ${controls_}`;
   camera = camera_;
   controls = controls_;
+
+  controls.addEventListener('change', updateFocus); // Fixes snapping issue
 }
 
 /**
