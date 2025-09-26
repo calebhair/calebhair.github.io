@@ -88,9 +88,10 @@ export function setupPointer(camera) {
 }
 
 /**
- * Finds the closest planet to a ray from a raycaster.
+ * Finds the closest planet to a ray from a raycaster, allowing for the planet size,
+ * excluding the already focussed planet.
  * @param ray {THREE.Ray} the ray from a raycaster
- * @return {{closestModel: object, closestDistance: number | null}}
+ * @return {{closestModel: object, closestDistance: number | null}} the closest planet and the distance from its edge to the ray
  */
 function findClosestPlanet(ray) {
   let closestModel = null;
@@ -98,10 +99,10 @@ function findClosestPlanet(ray) {
 
   for (const model of Planet.models) {
     if (model === followTarget) continue;
-    const distanceFromRay = ray.distanceToPoint(model.position);
-    if (distanceFromRay - model.userData.planetSize > closestDistance) continue;
+    const distanceFromFromPlanetEdgeToRay = ray.distanceToPoint(model.position) - model.userData.planetSize;
+    if (distanceFromFromPlanetEdgeToRay > closestDistance) continue;
 
-    closestDistance = distanceFromRay;
+    closestDistance = distanceFromFromPlanetEdgeToRay;
     closestModel = model;
   }
 
