@@ -1,27 +1,17 @@
-import { FontLoader, TextGeometry } from 'three/addons';
+import { TextGeometry } from 'three/addons';
 import * as THREE from 'three';
 import { Flow } from 'three/addons/modifiers/CurveModifier';
 
 const rad = deg => (deg * Math.PI) / 180.0;
-const loader = new FontLoader();
 const flows = [];
 
 const baseRotationSpeed = 0.1;
-
-export function addTextAccretionDisk(scene) {
-  loader.load('/SourceCodePro.json', (font) => {
-    createTextFlow(scene, 'This is a test', font, 5,
-      new THREE.MeshBasicMaterial({ color: 0xffffff }), 30);
-  });
-
-  return updateFlows;
-}
 
 /**
  * Updates the positions of all generated disks.
  * @param delta the time since the last frame.
  */
-function updateFlows(delta) {
+export function updateFlows(delta) {
   flows.forEach(flow => flow.moveAlongCurve(delta * baseRotationSpeed));
 }
 
@@ -38,7 +28,7 @@ const RIGHT_ANGLE_IN_RADIANS = rad(90);
  * @param radius {number} the distance from the centre the closest edge of the text should be.
  * @param fontDepth {number} the deep th e font is.
  */
-function createTextFlow(scene, text, font, fontSize, fontMaterial, radius, fontDepth = 1) {
+export function createTextFlow(scene, text, font, fontSize, fontMaterial, radius, fontDepth = 1) {
   const geometry = new TextGeometry(text, {
     font: font,
     size: fontSize,
@@ -48,6 +38,7 @@ function createTextFlow(scene, text, font, fontSize, fontMaterial, radius, fontD
 
   const textMesh = new THREE.Mesh(geometry, fontMaterial);
   geometry.rotateX(RIGHT_ANGLE_IN_RADIANS);
+  geometry.translate(0, fontDepth / 2, 0);
 
   // Curve for path
   const curve = new THREE.CatmullRomCurve3(generateCirclePointPositions(NUM_CIRCLE_POINTS, radius));

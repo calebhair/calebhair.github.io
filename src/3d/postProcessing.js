@@ -13,6 +13,7 @@ export function addPostProcessing(scene, camera, renderer) {
   composer.addPass(new RenderPass(scene, camera));
 
   const bloomPass = getBloom();
+  bloomPass.strength = 0.3;
   composer.addPass(bloomPass);
 
   outlinePass = getOutlinePass(scene, camera);
