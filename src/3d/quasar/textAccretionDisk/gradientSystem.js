@@ -1,5 +1,5 @@
 import { MeshBasicMaterial, Color } from 'three';
-import { materialGradient } from './gradientConfig';
+import { depthGradient, fontSizeGradient, materialGradient, orbitSpeedGradient } from '../quasarConfig';
 
 /**
  * Finds the material from the gradient for an element at this distance.
@@ -10,10 +10,17 @@ export function getMaterialForDistance(distance) {
   return new MeshBasicMaterial(getInterpolatedValueFromDistance(distance, materialGradient, interpolateMaterialConfig));
 }
 
-// https://www.trysmudford.com/blog/linear-interpolation-functions/
-const lerp = (x, y, a) => x * (1 - a) + y * a;
-const clamp = (a, min = 0, max = 1) => Math.min(max, Math.max(min, a));
-const invlerp = (x, y, a) => clamp((a - x) / (y - x));
+export function getOrbitSpeedForDistance(distance) {
+  return getInterpolatedValueFromDistance(distance, orbitSpeedGradient, lerp);
+}
+
+export function getFontSizeForDistance(distance) {
+  return getInterpolatedValueFromDistance(distance, fontSizeGradient, lerp);
+}
+
+export function getDepthForDistance(distance) {
+  return getInterpolatedValueFromDistance(distance, depthGradient, interpolateDepth);
+}
 
 /**
  * Interpolates between two material configurations.
@@ -29,6 +36,10 @@ function interpolateMaterialConfig(mat1Config, mat2Config, alpha) {
   return { color };
 }
 
+function interpolateDepth(depthConfig1, depthConfig2, alpha) {
+  return lerp(depthConfig1.depth, depthConfig2.depth, alpha);
+}
+
 /**
  * Linearly interpolates a value for the provided distance, depending on the gradient.
  * @param distance
@@ -40,6 +51,7 @@ function getInterpolatedValueFromDistance(distance, gradient, lerpFunc) {
   const { lowerBound, upperBound } = getGradientBoundariesFromDistance(distance, gradient);
   const lowerBoundValue = lowerBound.value;
   let alpha = invlerp(lowerBound.distance, upperBound.distance, distance);
+  if (isNaN(alpha)) alpha = 0;
   if (lowerBoundValue.easeFunction) {
     alpha = lowerBoundValue.easeFunction(alpha);
   }
@@ -84,3 +96,8 @@ function getBoundsWithValues(lowerBound, upperBound, gradient) {
     upperBound: { distance: upperBound, value: gradient[upperBound] },
   };
 }
+
+// https://www.trysmudford.com/blog/linear-interpolation-functions/
+const lerp = (x, y, a) => x * (1 - a) + y * a;
+const clamp = (a, min = 0, max = 1) => Math.min(max, Math.max(min, a));
+const invlerp = (x, y, a) => clamp((a - x) / (y - x));

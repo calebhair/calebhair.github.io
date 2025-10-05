@@ -3,7 +3,7 @@ import * as QUARKS from 'three.quarks';
 
 import { Planet } from './3d/planet';
 import { setupFocusing, updateFocus } from './3d/focus';
-import { addBlackHole } from './3d/quasar/blackhole';
+import { addBlackHole } from './3d/quasar/blackHole';
 import { addPlanets } from './planets';
 import { addBlackholeOutline, addPostProcessing } from './3d/postProcessing';
 import { runIntroAnimation, setupCameraInitialStateForIntroduction } from './3d/introAnimation';
