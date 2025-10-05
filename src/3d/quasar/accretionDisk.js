@@ -8,10 +8,12 @@ const loader = new FontLoader();
 
 export function addTextAccretionDisk(scene) {
   loader.load('/SourceCodePro.json', (font) => {
-    const radius = 70;
+    const radius = 10;
     const fontSize = 3;
+    const x = getMaterialForDistance(radius);
+    console.log(x);
     createTextFlow(scene, consumeAccretionText(radius, fontSize), font, fontSize,
-      getMaterialForDistance(radius), radius, 1);
+      x, radius, 1);
   });
 
   return updateFlows;
