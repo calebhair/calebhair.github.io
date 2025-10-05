@@ -10,7 +10,7 @@ import { runIntroAnimation, setupCameraInitialStateForIntroduction } from './3d/
 import { setupCameraAnimation } from './3d/cameraAnimation';
 import { setupComponents } from './components/componentLoader';
 import { addLight, addCubeMap, makeCamera, makeControls, makeRenderer, onWindowResized, setupPointer } from './3d/sceneSetup';
-import { addTextAccretionDisk } from './3d/quasar/accretionDisk';
+import { addTextAccretionDisk } from './3d/quasar/textAccretionDisk';
 
 // Foundation
 const scene = new THREE.Scene();

@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { clearOutline, setOutlinedObject } from './postProcessing';
-import { dimParticles, undimParticles } from './quasar/blackhole';
 import { smoothlyMoveCamera, animating, sceneOriginPosition } from './cameraAnimation';
 import { EVENTS } from '../constants';
 
@@ -74,7 +73,6 @@ export function setFollowTarget(object) {
   }
   document.dispatchEvent(new CustomEvent(EVENTS.SIDEBAR_CLOSED, { detail: planetConfig }));
 
-  dimParticles();
   setOutlinedObject(object);
 
   // Save these for animation
@@ -95,7 +93,6 @@ export function stopFollowing() {
   followTarget = null;
 
   clearOutline();
-  undimParticles();
   smoothlyUnfocus(unfocusAnimationDuration);
   setTimeout(() => {
     controls.enablePan = true;

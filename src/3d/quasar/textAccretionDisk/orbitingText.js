@@ -12,7 +12,7 @@ const baseRotationSpeed = 0.1;
  * @param delta the time since the last frame.
  */
 export function updateFlows(delta) {
-  flows.forEach(flow => flow.moveAlongCurve(delta * baseRotationSpeed));
+  flows.forEach(flow => flow.moveAlongCurve(flow.orbitSpeed * delta));
 }
 
 const NUM_CIRCLE_POINTS = 16;
@@ -27,8 +27,9 @@ const RIGHT_ANGLE_IN_RADIANS = rad(90);
  * @param fontMaterial {MeshBasicMaterial} the material of the font.
  * @param radius {number} the distance from the centre the closest edge of the text should be.
  * @param fontDepth {number} the deep th e font is.
+ * @param orbitSpeed {number} a fast text orbits around the black hole..
  */
-export function createTextFlow(scene, text, font, fontSize, fontMaterial, radius, fontDepth = 1) {
+export function createTextFlow(scene, text, font, fontSize, fontMaterial, radius, fontDepth = 1, orbitSpeed = baseRotationSpeed) {
   const geometry = new TextGeometry(text, {
     font: font,
     size: fontSize,
@@ -47,6 +48,7 @@ export function createTextFlow(scene, text, font, fontSize, fontMaterial, radius
 
   // Flow for movement
   const flow = new Flow(textMesh);
+  flow.orbitSpeed = orbitSpeed;
   flow.updateCurve(0, curve);
   scene.add(flow.object3D);
   flows.push(flow);

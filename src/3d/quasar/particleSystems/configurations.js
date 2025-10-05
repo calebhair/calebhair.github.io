@@ -11,7 +11,7 @@ import {
   RenderMode,
 } from 'three.quarks';
 import { Vector3, Vector4 } from 'three';
-import { PATHS } from '../../constants';
+import { PATHS } from '../../../constants';
 
 const accretionTexture = await new THREE.TextureLoader().loadAsync(PATHS.QUASAR_TEXTURE);
 
