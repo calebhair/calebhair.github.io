@@ -22,9 +22,9 @@ const RIGHT_ANGLE_IN_RADIANS = rad(90);
  * Creates a circular text flow; this is a path that text follows.
  * @param scene
  * @param text {string} the text to show.
- * @param font {THREE.Font} a loaded font.
+ * @param font {Font} a loaded font.
  * @param fontSize {number} the size of the font; this appears to be in scene units, not font px.
- * @param fontMaterial {THREE.MeshBasicMaterial} the material of the font.
+ * @param fontMaterial {MeshBasicMaterial} the material of the font.
  * @param radius {number} the distance from the centre the closest edge of the text should be.
  * @param fontDepth {number} the deep th e font is.
  */

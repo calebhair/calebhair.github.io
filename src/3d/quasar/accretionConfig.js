@@ -1,10 +1,10 @@
 import { MeshBasicMaterial, Color } from 'three';
-// import Color from 'colorjs.io';
 
 // Materials greater than or equal to the distance specified by the key are configured according to the value at that key.
 const materialGradient = {
   6: { color: 0x00ff00 },
-  20: { color: 0x0000ff },
+  // 22: { color: 0xff0000 },
+  36: { color: 0x0000ff },
 };
 
 /**
@@ -16,19 +16,10 @@ export function getMaterialForDistance(distance) {
   return new MeshBasicMaterial(getInterpolatedValueFromDistance(distance, materialGradient, interpolateMaterialConfig));
 }
 
-function easeInOutCubic(x) {
-  return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
-}
-
 // https://www.trysmudford.com/blog/linear-interpolation-functions/
 const lerp = (x, y, a) => x * (1 - a) + y * a;
 const clamp = (a, min = 0, max = 1) => Math.min(max, Math.max(min, a));
 const invlerp = (x, y, a) => clamp((a - x) / (y - x));
-
-for (let i = 0; i < 20; i++) {
-  const x = invlerp(0, 20, i);
-  console.log(easeInOutCubic(x));
-}
 
 /**
  * Interpolates between two material configurations.
@@ -41,7 +32,6 @@ function interpolateMaterialConfig(mat1Config, mat2Config, alpha) {
     new Color(mat1Config.color),
     new Color(mat2Config.color),
     alpha);
-  console.warn(color);
   return { color };
 }
 
@@ -54,11 +44,12 @@ function interpolateMaterialConfig(mat1Config, mat2Config, alpha) {
  */
 function getInterpolatedValueFromDistance(distance, gradient, lerpFunc) {
   const { lowerBound, upperBound } = getGradientBoundariesFromDistance(distance, gradient);
+  const lowerBoundValue = lowerBound.value;
   let alpha = invlerp(lowerBound.distance, upperBound.distance, distance);
-  if (lowerBound.easeFunction) {
-    alpha = lowerBound.easeFunction(alpha);
+  if (lowerBoundValue.easeFunction) {
+    alpha = lowerBoundValue.easeFunction(alpha);
   }
-  return lerpFunc(lowerBound.value, upperBound.value, alpha);
+  return lerpFunc(lowerBoundValue, upperBound.value, alpha);
 }
 
 /**
