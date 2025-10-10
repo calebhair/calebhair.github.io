@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { Planet } from './3d/planet';
+import { loading } from './3d/loadingState';
 
 export const planetDefinitions = [
   {
@@ -40,6 +41,8 @@ if (test) {
     planetDefinitions.push(duplicate);
   }
 }
+
+loading.planets.totalPlanets = planetDefinitions.length;
 
 /**
  * Creates planet objects from the planet JSONs.

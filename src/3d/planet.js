@@ -1,5 +1,6 @@
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';
 import * as THREE from 'three';
+import { loading } from './loadingState';
 
 const loader = new GLTFLoader();
 const timePageLoaded = performance.now();
@@ -95,6 +96,8 @@ export class Planet {
     // Update orbit and add to scene
     this.updatePlanet();
     this.scene.add(this.centreParent);
+
+    loading.planets.planetsLoaded++;
   }
 
   // Updates the orbit position and rotation

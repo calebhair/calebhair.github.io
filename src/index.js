@@ -11,6 +11,7 @@ import { setupCameraAnimation } from './3d/cameraAnimation';
 import { setupComponents } from './components/componentLoader';
 import { addLight, addCubeMap, makeCamera, makeControls, makeRenderer, onWindowResized, setupPointer } from './3d/sceneSetup';
 import { addTextAccretionDisk } from './3d/quasar/textAccretionDisk';
+import { loading } from './3d/loadingState';
 
 // Foundation
 const scene = new THREE.Scene();
@@ -44,6 +45,8 @@ const clock = new THREE.Clock();
 let delta;
 
 logCameraPosAndRotation(camera);
+
+loading.sceneSetup.progress = 1;
 
 // Main loop
 runIntroAnimation();

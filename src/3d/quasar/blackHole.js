@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { BLACK_HOLE_RADIUS } from './quasarConfig';
+import {loading} from "../loadingState";
 
 /**
  * Creates a black sphere and adds it to the scene.
@@ -14,6 +15,7 @@ export function addBlackHole(scene, camera) {
   const material = new THREE.MeshBasicMaterial({ color: 0x000000 });
   const sphere = new THREE.Mesh(geometry, material);
   scene.add(sphere);
+  loading.blackHole.eventHorizon = 1;
 
   return sphere;
 }

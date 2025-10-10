@@ -27,7 +27,8 @@ export const materialGradient = {
   80: { color: 0xffaa00 },
   95: { color: 0x884411 },
   120: { color: 0xaaaaaa, easeFunction: easeOutExpo },
-  [ACCRETION_WIDTH]: { color: 0x555555 },
+  190: { color: 0x666666 },
+  [ACCRETION_WIDTH]: { color: 0x333333 },
 };
 
 export const orbitSpeedGradient = {
@@ -39,7 +40,8 @@ export const orbitSpeedGradient = {
 export const fontSizeGradient = {
   [BLACK_HOLE_RADIUS]: 4,
   100: 5,
-  [ACCRETION_WIDTH]: 5,
+  180: 5,
+  [ACCRETION_WIDTH]: 3,
 };
 
 export const depthGradient = {

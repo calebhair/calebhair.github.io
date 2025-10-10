@@ -8,12 +8,14 @@ import {
   getOrbitSpeedForDistance,
 } from './gradientSystem';
 import { ACCRETION_WIDTH, BLACK_HOLE_RADIUS, WIDTH_SCALE_FACTOR } from '../quasarConfig';
+import { loading } from '../../loadingState';
 
 const loader = new FontLoader();
 
 export function addTextAccretionDisk(scene) {
   loader.load('/SourceCodePro.json', (font) => {
     let radius = BLACK_HOLE_RADIUS;
+    loading.blackHole.accretionDiskSize = ACCRETION_WIDTH - BLACK_HOLE_RADIUS;
 
     while (radius < ACCRETION_WIDTH * WIDTH_SCALE_FACTOR) {
       const fontSize = getFontSizeForDistance(radius);
@@ -24,6 +26,7 @@ export function addTextAccretionDisk(scene) {
 
       createTextFlow(scene, text, font, fontSize, material, radius, depth, orbitSpeed);
       radius += fontSize;
+      loading.blackHole.accretionDiskDistanceLoaded += fontSize;
     }
   });
 

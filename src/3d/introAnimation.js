@@ -1,6 +1,8 @@
 import { Vector3, Quaternion } from 'three';
-import {allowUserToControlCamera, smoothlyMoveCamera} from './cameraAnimation';
+import { allowUserToControlCamera, smoothlyMoveCamera } from './cameraAnimation';
 import { EVENTS } from '../constants';
+
+const cameraTrackerEnabled = false;
 
 const initialCameraPos = new Vector3(8.5, 26, -29.6);
 const introTarget = new Vector3(0, 0, 0);
@@ -9,14 +11,14 @@ const finalTarget = new Vector3().copy(introTarget);
 
 export function runIntroAnimation() {
   allowUserToControlCamera(false);
-  setTimeout(() => {
+  document.addEventListener(EVENTS.LOADING_COMPLETE, () => {
     smoothlyMoveCamera(initialCameraPos, introTarget,
       finalCameraPos, finalTarget,
-      true, 5000, true, false,
+      true, 4000, true, false,
       () => {
         document.dispatchEvent(new Event(EVENTS.INTRO_COMPLETE));
       });
-  }, 2000);
+  });
 }
 
 const axis = { x: 'x', y: 'y', z: 'z' };
@@ -59,6 +61,7 @@ function rollCamera(camera, controls, axis, degrees) {
 }
 
 export function logCameraPosAndRotation(camera) {
+  if (!cameraTrackerEnabled) return;
   setInterval(() => {
     console.log(`Position x: ${camera.position.x}, y: ${camera.position.y}, z: ${camera.position.z}`);
     console.log(`Rotation x: ${camera.rotation.x}, y: ${camera.rotation.y}, z: ${camera.rotation.z}`);
