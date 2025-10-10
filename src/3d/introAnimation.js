@@ -1,5 +1,5 @@
 import { Vector3, Quaternion } from 'three';
-import { smoothlyMoveCamera } from './cameraAnimation';
+import {allowUserToControlCamera, smoothlyMoveCamera} from './cameraAnimation';
 import { EVENTS } from '../constants';
 
 const initialCameraPos = new Vector3(8.5, 26, -29.6);
@@ -8,6 +8,7 @@ const finalCameraPos = new Vector3(72.8, 25.6, -203);
 const finalTarget = new Vector3().copy(introTarget);
 
 export function runIntroAnimation() {
+  allowUserToControlCamera(false);
   setTimeout(() => {
     smoothlyMoveCamera(initialCameraPos, introTarget,
       finalCameraPos, finalTarget,

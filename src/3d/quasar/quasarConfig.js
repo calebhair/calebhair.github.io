@@ -5,6 +5,7 @@ export const WIDTH_SCALE_FACTOR = 1;
 export const ACCRETION_WIDTH = 200;
 
 // WARNING: distances that are not round are ignored TODO fix
+// TODO make configurations consistent
 
 /**
  * Values greater than or equal to the distance specified by the key
@@ -25,8 +26,8 @@ export const materialGradient = {
   30: { color: 0xffff99 },
   80: { color: 0xffaa00 },
   95: { color: 0x884411 },
-  120: { color: 0xaaaaaa },
-  [ACCRETION_WIDTH]: { color: 0x111111 },
+  120: { color: 0xaaaaaa, easeFunction: easeOutExpo },
+  [ACCRETION_WIDTH]: { color: 0x555555 },
 };
 
 export const orbitSpeedGradient = {
@@ -47,8 +48,8 @@ export const depthGradient = {
   [ACCRETION_WIDTH]: { depth: 0.2 },
 };
 
-function easeInOutQuint(x) {
-  return (x < 0.5 ? 16 * x * x * x * x * x : 1 - Math.pow(-2 * x + 2, 5) / 2);
+function easeOutQuad(x) {
+  return 1 - (1 - x) * (1 - x);
 }
 
 function easeOutExpo(x) {
