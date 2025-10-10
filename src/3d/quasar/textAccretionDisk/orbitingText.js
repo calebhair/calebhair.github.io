@@ -52,6 +52,8 @@ export function createTextFlow(scene, text, font, fontSize, fontMaterial, radius
   flow.updateCurve(0, curve);
   scene.add(flow.object3D);
   flows.push(flow);
+
+  return flow;
 }
 
 /**

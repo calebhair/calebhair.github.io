@@ -6,7 +6,7 @@ import { setupFocusing, updateFocus } from './3d/focus';
 import { addBlackHole } from './3d/quasar/blackHole';
 import { addPlanets } from './planets';
 import { addBlackholeOutline, addPostProcessing } from './3d/postProcessing';
-import { runIntroAnimation, setupCameraInitialStateForIntroduction } from './3d/introAnimation';
+import { logCameraPosAndRotation, runIntroAnimation, setupCameraInitialStateForIntroduction } from './3d/introAnimation';
 import { setupCameraAnimation } from './3d/cameraAnimation';
 import { setupComponents } from './components/componentLoader';
 import { addLight, addCubeMap, makeCamera, makeControls, makeRenderer, onWindowResized, setupPointer } from './3d/sceneSetup';
@@ -42,6 +42,8 @@ window.addEventListener('resize', () => {
 
 const clock = new THREE.Clock();
 let delta;
+
+logCameraPosAndRotation(camera);
 
 // Main loop
 runIntroAnimation();

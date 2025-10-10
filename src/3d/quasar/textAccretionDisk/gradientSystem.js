@@ -33,7 +33,11 @@ function interpolateMaterialConfig(mat1Config, mat2Config, alpha) {
     new Color(mat1Config.color),
     new Color(mat2Config.color),
     alpha);
-  return { color };
+
+  const transparent = Boolean(mat2Config.opacity);
+  const opacity = mat2Config.opacity || 0;
+
+  return { color, transparent, opacity };
 }
 
 function interpolateDepth(depthConfig1, depthConfig2, alpha) {

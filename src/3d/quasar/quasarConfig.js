@@ -1,8 +1,8 @@
 import { postprocessGradient } from './textAccretionDisk/configPostprocessing';
 
-export const BLACK_HOLE_RADIUS = 10;
+export const BLACK_HOLE_RADIUS = 40;
 export const WIDTH_SCALE_FACTOR = 1;
-export const ACCRETION_WIDTH = 100;
+export const ACCRETION_WIDTH = 200;
 
 // WARNING: distances that are not round are ignored TODO fix
 
@@ -14,29 +14,45 @@ export const ACCRETION_WIDTH = 100;
  *    that describes how to transition to the next value.
  */
 
+// export const materialGradient = {
+//   [BLACK_HOLE_RADIUS]: { color: 0xaaffaa },
+//   50: { color: 0x77bb38 },
+//   [ACCRETION_WIDTH]: { color: 0xEEEEEE },
+// };
+
 export const materialGradient = {
-  [BLACK_HOLE_RADIUS]: { color: 0x00ff00 },
-  50: { color: 0xff0000 },
-  [ACCRETION_WIDTH]: { color: 0x0000ff },
+  [BLACK_HOLE_RADIUS]: { color: 0xffffff },
+  30: { color: 0xffff99 },
+  80: { color: 0xffaa00 },
+  95: { color: 0x884411 },
+  120: { color: 0xaaaaaa },
+  [ACCRETION_WIDTH]: { color: 0x111111 },
 };
 
 export const orbitSpeedGradient = {
-  [BLACK_HOLE_RADIUS]: 0.7,
-  [ACCRETION_WIDTH]: 0.0001,
+  [BLACK_HOLE_RADIUS]: 1,
+  100: 0.04,
+  [ACCRETION_WIDTH]: 0.001,
 };
 
 export const fontSizeGradient = {
-  [BLACK_HOLE_RADIUS]: 2,
+  [BLACK_HOLE_RADIUS]: 4,
+  100: 5,
   [ACCRETION_WIDTH]: 5,
 };
 
 export const depthGradient = {
-  [BLACK_HOLE_RADIUS]: { depth: 6, easeFunction: easeInOutQuint },
+  [BLACK_HOLE_RADIUS]: { depth: 20, easeFunction: easeOutExpo },
+  // 100: { depth: 0.2 },
   [ACCRETION_WIDTH]: { depth: 0.2 },
 };
 
 function easeInOutQuint(x) {
   return (x < 0.5 ? 16 * x * x * x * x * x : 1 - Math.pow(-2 * x + 2, 5) / 2);
+}
+
+function easeOutExpo(x) {
+  return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
 }
 
 [materialGradient, orbitSpeedGradient, fontSizeGradient, depthGradient]

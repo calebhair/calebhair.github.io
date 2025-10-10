@@ -13,7 +13,6 @@ export function addPostProcessing(scene, camera, renderer) {
   composer.addPass(new RenderPass(scene, camera));
 
   const bloomPass = getBloom();
-  bloomPass.strength = 0.3;
   composer.addPass(bloomPass);
 
   outlinePass = getOutlinePass(scene, camera);
@@ -34,10 +33,10 @@ export function addPostProcessing(scene, camera, renderer) {
 
 export function addBlackholeOutline(scene, camera, composer, blackholeSphere) {
   const blackHoleOutline = new OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), scene, camera);
-  blackHoleOutline.edgeStrength = 5;
-  blackHoleOutline.edgeGlow = 5;
+  blackHoleOutline.edgeStrength = 10;
+  blackHoleOutline.edgeGlow = 10;
   blackHoleOutline.edgeThickness = 7;
-  blackHoleOutline.visibleEdgeColor = new THREE.Color(0xaaff11);
+  blackHoleOutline.visibleEdgeColor = new THREE.Color(0xffcc77);
   blackHoleOutline.hiddenEdgeColor = new THREE.Color(0x000000); // Hide when eclipsed
   blackHoleOutline.selectedObjects = [blackholeSphere];
   composer.addPass(blackHoleOutline);
@@ -66,7 +65,7 @@ function getScreenResolution() {
 function getBloom() {
   return new UnrealBloomPass(
     getScreenResolution(),
-    0.1,
+    0.3,
     0.1,
     0.5,
   );

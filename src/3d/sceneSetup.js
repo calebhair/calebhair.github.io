@@ -59,7 +59,7 @@ export function makeControls(scene, renderer, camera) {
 }
 
 export function addLight(scene) {
-  const light = new THREE.PointLight(0xffffff, 4, 0, 0);
+  const light = new THREE.PointLight(0xffffff, 1, 0, 0);
   light.position.set(0, 0, 0);
   scene.add(light);
 
