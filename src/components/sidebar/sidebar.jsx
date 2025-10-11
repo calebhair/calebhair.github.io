@@ -40,7 +40,7 @@ function Sidebar({ planetJsonsToShow }) {
           imageUrl={window.innerWidth < 600 ? PATHS.UP_ARROW : PATHS.BACK_ARROW}
           onClick={onCloseBtnClicked}
         />
-        <SidebarEntry text="Re-centre" imageUrl={PATHS.QUASAR_ICON} onClick={onOverviewClick} />
+        <SidebarEntry text="Re-centre" imageUrl={PATHS.QUASAR_ICON} onClick={onOverviewClick} classes="overview-entry" />
         {planetEntries}
       </div>
     </div>
@@ -81,6 +81,7 @@ function makePlanetEntries(planetJsons, setVisible) {
         focusOnObjectIfValid(Planet.planets[planetIndex].model);
         setVisible(false);
       }}
+      classes="planet-entry"
       imageUrl={planetJson.iconPath}
       key={planetIndex}
     />

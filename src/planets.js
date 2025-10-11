@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { Planet } from './3d/planet';
+import { loading } from './3d/loadingState';
 
 export const planetDefinitions = [
   {
@@ -8,13 +9,13 @@ export const planetDefinitions = [
     modelPath: 'models/test.glb',
     planetSize: 1.6,
 
-    orbitRadius: 50,
+    orbitRadius: 130,
     orbitStartingAngle: 0,
     orbitSpeed: 5,
 
     planetRotationSpeed: new THREE.Euler(50, 0, 0),
     orbitOrientation: new THREE.Euler(0, 0, 0),
-    orbitCentre: new THREE.Vector3(0, 5, 0),
+    orbitCentre: new THREE.Vector3(0, 10, 0),
   },
 
   {
@@ -29,7 +30,7 @@ export const planetDefinitions = [
 
     planetRotationSpeed: new THREE.Euler(20, 50, 10),
     orbitOrientation: new THREE.Euler(0, 0, 0),
-    orbitCentre: new THREE.Vector3(0, 5, 0),
+    orbitCentre: new THREE.Vector3(0, 10, 0),
   },
 ];
 
@@ -40,6 +41,8 @@ if (test) {
     planetDefinitions.push(duplicate);
   }
 }
+
+loading.planets.totalPlanets = planetDefinitions.length;
 
 /**
  * Creates planet objects from the planet JSONs.

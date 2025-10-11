@@ -97,7 +97,7 @@ function easeInOut(t) {
   return t > 0.5 ? 4 * Math.pow((t - 1), 3) + 1 : 4 * Math.pow(t, 3);
 }
 
-const overviewPosition = new THREE.Vector3(0, 20, 60);
+const overviewPosition = new THREE.Vector3(0, 25, -200);
 export const sceneOriginPosition = new THREE.Vector3(0.01, 0.01, 0.01);
 // Pinching or panning when the target is 0, 0, 0 breaks things (gets replaced by NaN values, potential div by 0)
 

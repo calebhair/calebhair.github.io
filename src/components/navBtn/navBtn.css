@@ -5,7 +5,9 @@
 
   cursor: pointer;
 
-  background-color: rgba(0, 0, 0, 0.6); /* default */
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   transition: opacity 0.3s linear, transform 1s ease-in-out;
 
   pointer-events: auto;
@@ -22,13 +24,13 @@
 
 .nav-btn-icon {
   color: white;
-  transition: color 0.3s, font-size 0.3s;
+  transition: color 0.3s, font-size 0.3s, text-shadow 0.3s;
 }
 
 /* When the button is hovered over, change icon style */
 .nav-btn:hover .nav-btn-icon {
   font-size: 5em;
-  color: #82ff39;
+  text-shadow: rgba(255,255,255,1) 0px 0px 14px;
 }
 
 .nav-btn:active .nav-btn-icon {

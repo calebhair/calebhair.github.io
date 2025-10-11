@@ -1,5 +1,7 @@
 .sidebar {
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   color: white;
   z-index: 101;
 
@@ -7,7 +9,7 @@
   top: 0;
   left: 0;
   overflow: auto; /* Prevent sidebar items from wrapping */
-  white-space: nowrap;
+  /*white-space: nowrap;*/
   transform: translateX(-100%); /* Hide sidebar by default */
   transition: transform 0.3s; /* Animate */
 
@@ -28,20 +30,18 @@
 }
 
 .sidebar-item {
+  font-size: 1em;
   padding: 1em;
   padding-right: 3em;
   border-bottom: #555 1px solid;
   cursor: pointer;
 
-  transition: color 0.3s;
+  transition: font-size 0.3s, text-shadow 0.3s;
 }
 
 .sidebar-item:hover {
-  color: #82ff39;
-}
-
-.sidebar-item:hover .sidebar-item-image {
-  filter: sepia(1) hue-rotate(45deg);
+  text-shadow: rgba(255,255,255,1) 0 0 20px;
+  font-size: 1.1em;
 }
 
 .sidebar-item-text {
@@ -51,6 +51,28 @@
 .sidebar-item-image {
   width: 4em;
   height: 4em;
-  padding-right: 2em;
-  transition: filter 0.3s;
+  margin-right: 2em;
+  transition: transform 0.3s;
+}
+
+.planet-entry:hover .sidebar-item-image {
+  transform: rotateZ(-5deg);
+}
+
+.overview-entry .sidebar-item-image {
+  animation: spin 1s linear infinite reverse;
+  animation-play-state: paused;
+}
+
+.overview-entry:hover .sidebar-item-image {
+  animation-play-state: running;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
 }

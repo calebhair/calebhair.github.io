@@ -18,6 +18,7 @@ export const EVENTS = {
   PLANET_CHANGED: 'changePlanet',
 
   INTRO_COMPLETE: 'introComplete',
+  LOADING_COMPLETE: 'loadingComplete',
 };
 
 export const PATHS = {
