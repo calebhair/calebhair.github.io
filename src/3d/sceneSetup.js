@@ -47,7 +47,7 @@ export function onWindowResized(renderer, camera) {
 
 export function makeCamera() {
   return new THREE.PerspectiveCamera(
-    90,
+    80,
     window.innerWidth / window.innerHeight,
     0.1, 1000);
 }
