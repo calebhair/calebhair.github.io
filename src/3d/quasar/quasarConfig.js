@@ -27,7 +27,7 @@ export const materialGradient = {
   80: { color: 0xffaa00 },
   95: { color: 0x884411 },
   120: { color: 0xaaaaaa, easeFunction: easeOutExpo },
-  190: { color: 0x666666 },
+  185: { color: 0x666666 },
   [ACCRETION_WIDTH]: { color: 0x333333 },
 };
 
@@ -49,10 +49,6 @@ export const depthGradient = {
   // 100: { depth: 0.2 },
   [ACCRETION_WIDTH]: { depth: 0.2 },
 };
-
-function easeOutQuad(x) {
-  return 1 - (1 - x) * (1 - x);
-}
 
 function easeOutExpo(x) {
   return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
