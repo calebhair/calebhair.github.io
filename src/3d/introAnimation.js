@@ -5,7 +5,7 @@ import { EVENTS } from '../constants';
 const cameraTrackerEnabled = false;
 
 const initialCameraPos = new Vector3(8.5, 26, -29.6);
-const introTarget = new Vector3(0, 0, 0);
+const introTarget = new Vector3(0.1, 0.1, 0.1);
 const finalCameraPos = new Vector3(72.8, 25.6, -203);
 const finalTarget = new Vector3().copy(introTarget);
 

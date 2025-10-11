@@ -24,9 +24,11 @@ export function addTextAccretionDisk(scene) {
       const orbitSpeed = getOrbitSpeedForDistance(radius);
       const depth = getDepthForDistance(radius);
 
-      createTextFlow(scene, text, font, fontSize, material, radius, depth, orbitSpeed);
+      const flow = createTextFlow(scene, text, font, fontSize, material, radius, depth, orbitSpeed);
       radius += fontSize;
       loading.blackHole.accretionDiskDistanceLoaded += fontSize;
+      const { object3D } = flow;
+      object3D.frustumCulled = false;
     }
   });
 
