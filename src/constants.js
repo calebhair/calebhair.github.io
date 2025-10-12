@@ -32,3 +32,5 @@ export const PATHS = {
 
   CUBEMAP: '/img/',
 };
+
+export const ENABLE_ANIMATED_GRADIENTS = false;
