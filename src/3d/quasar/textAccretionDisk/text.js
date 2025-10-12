@@ -1,4 +1,4 @@
-const accretionDiskText = await getAccretionDiskText('/src/3d/focus.js');
+const accretionDiskText = await getAccretionDiskText('https://raw.githubusercontent.com/SimonsBrother/simonsbrother.github.io/refs/heads/main/src/3d/focus.js');
 let accretionTextProgress = 0;
 
 /**
