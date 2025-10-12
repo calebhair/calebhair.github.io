@@ -9,7 +9,7 @@ const cameraPos = new THREE.Vector3();
 let cameraStartPos = null; // On focus, this is set to the current camera position
 let targetStartPos = null; // On focus, this is set to a position the camera is currently pointing at
 
-const focusMarginFactor = 2.5; // Increase to increase the space around the planet.
+const focusMarginFactor = 3; // Increase to increase the space around the planet.
 const unfocusAnimationDuration = 1000;
 const minimumCameraAspectRatioForFocusShift = 1.2;
 
