@@ -15,7 +15,7 @@ function ProjectTitle() {
   return (
     <div className="titlebox-container">
       <div
-        className={`infobox title border quasar-border ${visible ? 'show-infobox' : ''}`}
+        className={`infobox title border ${visible ? 'show-infobox' : ''}`}
         style={{ width: `${widthEm}em` }}
       >
         <h1 className="info" style={{ opacity: textOpacity }}>

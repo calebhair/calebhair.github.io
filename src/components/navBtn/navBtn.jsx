@@ -20,7 +20,7 @@ function NavBtn() {
   return (
     <button
       // Only show the clicked style if the sidebar is shown, not when focussed (and obviously not when in default state)
-      className={`nav-btn border twinkle-border ${isClicked ? 'clicked' : ''} ${moveOffscreen ? 'offscreen' : ''}`}
+      className={`border nav-btn ${isClicked ? 'clicked' : ''} ${moveOffscreen ? 'offscreen' : ''}`}
       onClick={() => onNavButtonClicked(navState, setNavState)}
     >
       <i className={`material-symbols-outlined nav-btn-icon prevent-select ${isClicked}`}>

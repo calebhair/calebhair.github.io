@@ -4,11 +4,11 @@
   text-align: center;
 
   white-space: nowrap;
-  overflow: hidden;
 }
 
 .title > h1 {
   transition: opacity 0.2s;
+  overflow: hidden;
 }
 
 .show-arrow {

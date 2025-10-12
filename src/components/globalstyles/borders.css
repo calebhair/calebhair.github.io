@@ -1,0 +1,29 @@
+.border::before {
+  /*https://dev.to/afif/border-with-gradient-and-radius-387f*/
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  padding: 4px;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  border-radius: 10px;
+
+  background: linear-gradient(45deg,
+  #000000 0%,
+  #ffff99 8%,
+  #ffbb22 14%,
+  #aaaaaa 15%,
+  #fff 100%
+  );
+}
+
+.nav-btn::before {
+  inset: -5px;
+}
+
+.infobox::before {
+  inset: -3px;
+}
