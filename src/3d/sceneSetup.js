@@ -31,7 +31,7 @@ export function makeRenderer() {
   renderer.domElement.classList.add('prevent-select');
   renderer.domElement.id = 'threejs-canvas';
   document.body.appendChild(renderer.domElement);
-  renderer.capabilities.logarithmicDepthBuffer = false;
+  renderer.capabilities.logarithmicDepthBuffer = true;
   return renderer;
 }
 
@@ -49,7 +49,7 @@ export function makeCamera() {
   return new THREE.PerspectiveCamera(
     80,
     window.innerWidth / window.innerHeight,
-    0.1, 1000);
+    0.1, 200000);
 }
 
 export function makeControls(scene, renderer, camera) {
