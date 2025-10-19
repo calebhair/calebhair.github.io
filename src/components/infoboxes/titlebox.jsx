@@ -5,7 +5,7 @@ import { EVENTS } from '../../constants';
 
 const marginEm = 4;
 
-function ProjectTitle() {
+export function TitleBox() {
   const [title, setTitle] = useState('placeholder');
   const [visible, setVisible] = useState(false);
   const [widthEm, setWidthEm] = useState(0);
@@ -64,12 +64,4 @@ function addEventListeners(setTitle, setVisible, setWidthEm, setTextOpacity) {
       setTextOpacity(1);
     }, secondAnimationDelay);
   });
-}
-
-/**
- * Add info box stuff to DOM.
- */
-export function addTitleBox() {
-  const sidebarNode = document.getElementsByClassName('project-info-container')[0];
-  createRoot(sidebarNode).render(<ProjectTitle />);
 }

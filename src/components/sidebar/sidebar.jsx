@@ -1,11 +1,9 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
-import { createRoot } from 'react-dom/client';
 import {
   focusOnObjectIfValid, followTarget,
 } from '../../3d/focus';
 import { Planet } from '../../3d/planet';
-import { planetDefinitions } from '../../planets';
 import { moveToOverviewPos, animating } from '../../3d/cameraAnimation';
 import { EVENTS, PATHS } from '../../constants';
 import { SidebarEntry } from './sidebarEntry';
@@ -15,7 +13,7 @@ import { SidebarEntry } from './sidebarEntry';
  * @param {Array} planetJsonsToShow the list of planet JSON data
  * @return {JSX.Element}
  */
-function Sidebar({ planetJsonsToShow }) {
+export function Sidebar({ planetJsonsToShow }) {
   const [visible, setVisible] = useState(false);
   addEventListeners(setVisible);
 
@@ -86,12 +84,4 @@ function makePlanetEntries(planetJsons, setVisible) {
       key={planetIndex}
     />
   ));
-}
-
-/**
- * Adds the sidebar to the HTML document.
- */
-export function addSidebar() {
-  const sidebarNode = document.getElementsByClassName('sidebar-container')[0];
-  createRoot(sidebarNode).render(<Sidebar planetJsonsToShow={planetDefinitions} />);
 }
