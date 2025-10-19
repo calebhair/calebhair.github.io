@@ -11,11 +11,6 @@ export function setupCameraAnimation(camera_, controls_) {
   controls = controls_;
 }
 
-// Keep track of if the screen is being touched
-let touchDown = false;
-document.addEventListener('touchstart', () => touchDown = true);
-document.addEventListener('touchend', () => touchDown = false);
-
 export let animating = false;
 /**
  * Smoothly focuses on an object, by changing the camera position control target
@@ -44,7 +39,7 @@ export function smoothlyMoveCamera(cameraStartPos, targetStartPos,
   animating = true;
 
   if (disableAllControls) allowUserToControlCamera(false);
-  else controls.enableRotate = false; // Must disable rotation
+  else controls.safeEnableRotate = false; // Must disable rotation
 
   const startTime = performance.now();
   function animate() {
@@ -71,7 +66,7 @@ export function smoothlyMoveCamera(cameraStartPos, targetStartPos,
       animating = false;
       controls.update();
       if (disableAllControls) allowUserToControlCamera(true); // Re-enable
-      else controls.enableRotate = true;
+      else controls.safeEnableRotate = true;
       if (onComplete) onComplete();
     }
   }
@@ -80,12 +75,7 @@ export function smoothlyMoveCamera(cameraStartPos, targetStartPos,
 }
 
 export function allowUserToControlCamera(state) {
-  // Force user to stop touching before re-enabling.
-  if (state && touchDown) {
-    setTimeout(() => allowUserToControlCamera(state), 100);
-    return;
-  }
-  controls.enablePan = controls.enableRotate = controls.enableZoom = state;
+  controls.safeEnablePan = controls.safeEnableRotate = controls.safeEnableZoom = state;
 }
 
 /**
@@ -108,8 +98,8 @@ export function moveToOverviewPos() {
   const camPos = camera.position.clone();
   const target = getCameraDirectionAsPos();
 
-  controls.enablePan = false;
-  controls.enableZoom = false;
+  controls.safeEnablePan = false;
+  controls.safeEnableZoom = false;
 
   smoothlyMoveCamera(camPos, target,
     overviewPosition, sceneOriginPosition,

@@ -43,6 +43,10 @@ function addEventListeners(navState, setNavState, setMoveOffscreen) {
     setNavState(NAV_BTN_STATES.Default);
   });
 
+  document.addEventListener(EVENTS.PLANET_UNFOCUSSED, () => {
+    setNavState(NAV_BTN_STATES.Default);
+  });
+
   document.addEventListener(EVENTS.INTRO_COMPLETE, () => {
     setMoveOffscreen(false);
   });

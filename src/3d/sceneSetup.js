@@ -1,9 +1,9 @@
 import * as THREE from 'three';
-import { ArcballControls } from 'three/addons/controls/ArcballControls';
 import { Planet } from './planet';
-import { focusOnObjectIfValid, followTarget } from './focus';
+import { focusOnObjectIfValid, followTarget, setupFocusZooming } from './focus';
 import { MINIMUM_DISTANCE_FROM_PLANET_TO_FOCUS, PATHS } from '../constants';
 import { loading } from './loadingState';
+import { CustomArcballControls } from './controller';
 
 export async function addCubeMap(scene) {
   // Background (made with https://jaxry.github.io/panorama-to-cubemap/ and https://www.spacespheremaps.com/silver-and-gold-nebulae-spheremaps/)
@@ -32,6 +32,8 @@ export function makeRenderer() {
   renderer.domElement.id = 'threejs-canvas';
   document.body.appendChild(renderer.domElement);
   renderer.capabilities.logarithmicDepthBuffer = true;
+
+  setupFocusZooming(renderer.domElement);
   return renderer;
 }
 
@@ -53,7 +55,7 @@ export function makeCamera() {
 }
 
 export function makeControls(scene, renderer, camera) {
-  const controls = new ArcballControls(camera, renderer.domElement, scene);
+  const controls = new CustomArcballControls(camera, renderer.domElement, scene);
   controls.cursorZoom = true;
   controls.setGizmosVisible(false);
   controls.enableFocus = false;
@@ -87,8 +89,8 @@ export function setupPointer(camera) {
   };
 
   const canvas = document.querySelector('#threejs-canvas');
-  canvas.addEventListener('mouseup', onInteraction);
-  canvas.addEventListener('touchend', onInteraction);
+  canvas.addEventListener('mousedown', onInteraction);
+  canvas.addEventListener('touchstart', onInteraction);
 }
 
 /**

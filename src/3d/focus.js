@@ -9,7 +9,8 @@ const cameraPos = new THREE.Vector3();
 let cameraStartPos = null; // On focus, this is set to the current camera position
 let targetStartPos = null; // On focus, this is set to a position the camera is currently pointing at
 
-const focusMarginFactor = 3; // Increase to increase the space around the planet.
+const focusMarginFactorConfig = { min: 2, max: 7, default: 3, wheelFactor: 1, pinchFactor: 0.2 };
+let currentFocusMarginFactor = focusMarginFactorConfig.default; // Increase to increase the space around the planet.
 const unfocusAnimationDuration = 1000;
 const minimumCameraAspectRatioForFocusShift = 1.2;
 
@@ -39,7 +40,7 @@ export function focusOnObjectIfValid(object) {
   if (!object || animating) return false; // Don't allow focus if animation is happening
 
   if (object && canObjectBeFocussedOn(object)) {
-    setFollowTarget(object);
+    startFollowing(object);
     return true;
   }
   return false;
@@ -59,11 +60,12 @@ function canObjectBeFocussedOn(object) {
  * Dims quasar, configures controls, and smoothly focuses on the object.
  * @param object {THREE.Object3D} the object to focus on.
  */
-export function setFollowTarget(object) {
+export function startFollowing(object) {
   if (!object) throw `Bad object ${object}`;
   const planetChanged = Boolean(followTarget);
   followTarget = object;
   const { planetConfig } = followTarget.userData;
+  currentFocusMarginFactor = focusMarginFactorConfig.default;
 
   if (planetChanged) {
     document.dispatchEvent(new CustomEvent(EVENTS.PLANET_CHANGED, { detail: planetConfig }));
@@ -79,25 +81,33 @@ export function setFollowTarget(object) {
   cameraStartPos = camera.position.clone();
   targetStartPos = getCameraDirectionAsPos();
 
-  controls.enablePan = false;
-  controls.enableZoom = false;
+  controls.safeEnablePan = false;
+  controls.safeEnableZoom = false;
   updateFocus(false); // Get target values for animation, but don't apply them because it will snap to them
-  smoothlyMoveCamera(cameraStartPos, targetStartPos, cameraPos, targetPos, false);
+  smoothlyMoveCamera(cameraStartPos, targetStartPos, cameraPos, targetPos, false, 1000, false, true,
+    () => { controls.safeEnableZoom = true; });
 }
 
 /**
  * Unfocuses and stops following the object that was currently being followed.
+ * @param animate {boolean} if false, skip smoothly un-focussing.
  */
-export function stopFollowing() {
+export function stopFollowing(animate = true) {
   document.dispatchEvent(new CustomEvent(EVENTS.PLANET_UNFOCUSSED, followTarget.userData.planetConfig));
   followTarget = null;
-
   clearOutline();
-  smoothlyUnfocus(unfocusAnimationDuration);
-  setTimeout(() => {
-    controls.enablePan = true;
-    controls.enableZoom = true;
-  }, unfocusAnimationDuration);
+
+  if (animate) {
+    smoothlyUnfocus(unfocusAnimationDuration);
+    setTimeout(() => {
+      controls.safeEnablePan = true;
+      controls.safeEnableZoom = true;
+    }, unfocusAnimationDuration);
+  }
+  else {
+    controls.safeEnablePan = true;
+    controls.safeEnableZoom = true;
+  }
 }
 
 /**
@@ -110,7 +120,7 @@ export function updateFocus(applyNewValues = true) {
   if (translateCamera) targetPos.copy(getTranslatedTargetPos());
 
   // Calculate camera position
-  const targetDistance = followTarget.userData.planetSize * focusMarginFactor;
+  const targetDistance = followTarget.userData.planetSize * currentFocusMarginFactor;
   const currentDirection = new THREE.Vector3();
   camera.getWorldDirection(currentDirection);
   // Position camera at distance away from target, opposite to viewing direction
@@ -166,4 +176,40 @@ function smoothlyUnfocus(animationDuration) {
 
   smoothlyMoveCamera(camera.position.clone(), controls.target.clone(),
     cameraDistanceFromCentre, sceneOriginPosition, true, animationDuration);
+}
+
+export function setupFocusZooming(threejsCanvas) {
+  let lastTouchDistance;
+
+  threejsCanvas.addEventListener('touchmove', (event) => {
+    if (event.touches.length === 2) {
+      const dx = event.touches[0].pageX - event.touches[1].pageX;
+      const dy = event.touches[0].pageY - event.touches[1].pageY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (lastTouchDistance) {
+        const difference = distance - lastTouchDistance;
+        changeFocusZoom(-difference / 10 * focusMarginFactorConfig.pinchFactor);
+      }
+      lastTouchDistance = distance;
+    }
+  });
+
+  threejsCanvas.addEventListener('touchend', () => {
+    lastTouchDistance = null;
+  });
+
+  threejsCanvas.addEventListener('wheel', (event) => {
+    changeFocusZoom(event.deltaY / 500 * focusMarginFactorConfig.wheelFactor);
+  });
+}
+
+function changeFocusZoom(zoomChange) {
+  if (!followTarget) return;
+  currentFocusMarginFactor += zoomChange;
+  const { min, max } = focusMarginFactorConfig;
+  currentFocusMarginFactor = Math.max(Math.min(currentFocusMarginFactor, max), min); // clamp
+  if (currentFocusMarginFactor === max) {
+    stopFollowing(false);
+  }
 }
