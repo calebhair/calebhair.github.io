@@ -1,4 +1,17 @@
+.project-desc-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .project-desc {
-  margin: 2vw;
-  width: 30vw;
+  width: 20vw;
+  margin: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+  .project-desc {
+    width: 70vw;
+    font-size: 0.8em;
+    margin-inline: auto;
+  }
 }

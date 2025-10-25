@@ -14,9 +14,9 @@ export function setupComponents() {
   const loadingScreenContainer = createRoot(document.getElementsByClassName('loading-screen-container')[0]);
   const projectInfoContainer = createRoot(document.getElementsByClassName('project-info-container')[0]);
 
-  sidebarContainer.render(<Sidebar planetJsonsToShow={planetDefinitions} />);
+  loadingScreenContainer.render(<LoadingScreen />); // must show first
   navBtnContainer.render(<NavBtn />);
-  loadingScreenContainer.render(<LoadingScreen />);
+  sidebarContainer.render(<Sidebar planetJsonsToShow={planetDefinitions} />);
   projectInfoContainer.render(
     <>
       <TitleBox />
