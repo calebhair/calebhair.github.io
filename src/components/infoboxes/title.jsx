@@ -1,11 +1,10 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
-import { createRoot } from 'react-dom/client';
 import { EVENTS } from '../../constants';
 
 const marginEm = 4;
 
-export function TitleBox() {
+export function Title() {
   const [title, setTitle] = useState('placeholder');
   const [visible, setVisible] = useState(false);
   const [widthEm, setWidthEm] = useState(0);
@@ -13,19 +12,13 @@ export function TitleBox() {
   addEventListeners(setTitle, setVisible, setWidthEm, setTextOpacity);
 
   return (
-    <div className="titlebox-container">
-      <div
-        className={`infobox title border ${visible ? 'show-infobox' : ''}`}
-        style={{ width: `${widthEm}em` }}
-      >
-        <h1 className="info" style={{ opacity: textOpacity }}>
-          { title }
-        </h1>
-      </div>
-
-      <div className="scroll-arrow">
-        <i className={'material-symbols-outlined ' + (visible ? 'show-arrow' : '')}>arrow_drop_down</i>
-      </div>
+    <div
+      className={`infobox title border ${visible ? 'show-infobox' : ''}`}
+      style={{ width: `${widthEm}em` }}
+    >
+      <h1 className="info" style={{ opacity: textOpacity }}>
+        { title }
+      </h1>
     </div>
   );
 }

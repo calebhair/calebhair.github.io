@@ -1,0 +1,19 @@
+.title {
+  margin: 10px;
+  font-size: 1.5vw;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: auto;
+}
+
+.title > h1 {
+  transition: opacity 0.2s;
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+  .title {
+    margin-inline: auto;
+    font-size: 1em;
+  }
+}

@@ -1,9 +1,7 @@
-.project-desc-container {
+.project-desc {
   display: flex;
   justify-content: flex-end;
-}
 
-.project-desc {
   width: 20vw;
   margin: 10px;
 }
