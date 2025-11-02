@@ -4,10 +4,14 @@ import { EVENTS } from '../../constants';
 import { Title } from './title';
 import { ProjectDescription } from './projectDescription';
 import { ScrollArrow } from './scrollArrow';
+import { ConditionalScrollSystem } from '../../conditionalScrollSystem';
 
 export function Infoboxes() {
   const [visible, setVisible] = useState(false);
   addEventListeners(setVisible);
+
+  const scrollSystem = new ConditionalScrollSystem(event => event.changedTouches[0].clientY < 300);
+  scrollSystem.addListener(console.warn);
 
   return (
     <>

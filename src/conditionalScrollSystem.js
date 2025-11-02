@@ -1,0 +1,71 @@
+/**
+Custom scrolling that operates on custom conditions instead of element based.
+Always ensure there's only one touch.
+On touch start, check that touch matches some condition, by evaluating a passed function.
+On touch move, if touch started in valid area, calculate change.
+On touch end, reset state to prevent jumps in scroll between touch.
+ */
+export class ConditionalScrollSystem {
+  constructor(touchStartConditionFn) {
+    this.touchStartConditionFn = touchStartConditionFn;
+    this.touchStartedValid = false;
+    this.lastVerticalScroll = null;
+    this.lastVerticalChange = 0;
+    this.onScrollCallbacks = [];
+
+    // Bind event handlers
+    this.onTouchStart = this.onTouchStart.bind(this);
+    this.onTouchMove = this.onTouchMove.bind(this);
+    this.onTouchEnd = this.onTouchEnd.bind(this);
+    this.onWheel = this.onWheel.bind(this);
+    // Add event listeners
+    document.addEventListener('touchstart', this.onTouchStart, { passive: true });
+    document.addEventListener('touchmove', this.onTouchMove, { passive: true });
+    document.addEventListener('touchend', this.onTouchEnd, { passive: true });
+    document.addEventListener('wheel', this.onWheel, { passive: true });
+  }
+
+  /**
+   * Add a listener to be called on scroll updates.
+   * @param callback on a scroll update (such as a touch move or wheel scroll), calls this function with the vertical change value.
+   */
+  addListener(callback) {
+    this.onScrollCallbacks.push(callback);
+  }
+
+  updateScroll() {
+    this.onScrollCallbacks.forEach((callback) => {
+      if (this.touchStartedValid) {
+        callback(this.lastVerticalChange);
+      }
+    });
+  }
+
+  onTouchStart(event) {
+    if (isMultiTouch(event)) return;
+    this.touchStartedValid = this.touchStartConditionFn(event);
+  }
+
+  onTouchMove(event) {
+    if (this.touchStartedValid && isMultiTouch(event)) return;
+
+    const touch = event.changedTouches[0];
+    this.lastVerticalChange = this.lastVerticalScroll === null ? 0 : touch.clientY - this.lastVerticalScroll;
+    this.lastVerticalScroll = touch.clientY;
+    this.updateScroll();
+  }
+
+  onTouchEnd() {
+    this.lastVerticalScroll = null;
+    this.touchStartedValid = false;
+  }
+
+  onWheel(event) {
+    // todo
+    this.updateScroll();
+  }
+}
+
+function isMultiTouch(event) {
+  return event.changedTouches.length !== 1;
+}
