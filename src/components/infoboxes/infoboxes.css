@@ -6,8 +6,8 @@
 
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
+  /*overflow-y: auto;*/
+  /*overflow-x: hidden;*/
   /*pointer-events: auto;*/
 }
 
@@ -44,16 +44,16 @@
   .infobox {
     align-self: center;
   }
+}
 
-  .spacer {
-    /*background-color: red;*/
-    flex: 0 0 65vh;
-    height: 65vh;
-    pointer-events: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    z-index: -1;
-  }
+.spacer {
+  /*background-color: red;*/
+  flex: 0 0 65vh;
+  height: 65vh;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  z-index: -1;
 }
 
 .scrollable {

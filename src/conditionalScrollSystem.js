@@ -6,11 +6,11 @@ On touch move, if touch started in valid area, calculate change.
 On touch end, reset state to prevent jumps in scroll between touch.
  */
 export class ConditionalScrollSystem {
-  constructor(touchStartConditionFn) {
-    this.touchStartConditionFn = touchStartConditionFn;
+  constructor(scrollConditionFn) {
+    this.scrollConditionFn = scrollConditionFn;
     this.touchStartedValid = false;
-    this.lastVerticalScroll = null;
-    this.lastVerticalChange = 0;
+    this.lastTouchY = null;
+    this.lastWheelY = null;
     this.onScrollCallbacks = [];
 
     // Bind event handlers
@@ -33,39 +33,41 @@ export class ConditionalScrollSystem {
     this.onScrollCallbacks.push(callback);
   }
 
-  updateScroll() {
-    this.onScrollCallbacks.forEach((callback) => {
-      if (this.touchStartedValid) {
-        callback(this.lastVerticalChange);
-      }
-    });
-  }
-
   onTouchStart(event) {
     if (isMultiTouch(event)) return;
-    this.touchStartedValid = this.touchStartConditionFn(event);
+    this.touchStartedValid = this.scrollConditionFn(event);
   }
 
   onTouchMove(event) {
-    if (this.touchStartedValid && isMultiTouch(event)) return;
+    if (!this.touchStartedValid || isMultiTouch(event)) return;
 
     const touch = event.changedTouches[0];
-    this.lastVerticalChange = this.lastVerticalScroll === null ? 0 : touch.clientY - this.lastVerticalScroll;
-    this.lastVerticalScroll = touch.clientY;
-    this.updateScroll();
+    const touchChangeY = this.lastTouchY === null ? 0 : touch.clientY - this.lastTouchY;
+    this.lastTouchY = touch.clientY;
+
+    this.onScrollCallbacks.forEach((callback) => {
+      callback(touchChangeY);
+    });
   }
 
   onTouchEnd() {
-    this.lastVerticalScroll = null;
+    this.lastTouchY = null;
     this.touchStartedValid = false;
   }
 
   onWheel(event) {
-    // todo
-    this.updateScroll();
+    if (!this.scrollConditionFn(event)) return;
+
+    const weightedDeltaY = event.deltaY * 0.1;
+    const wheelChangeY = this.lastWheelY === null ? 0 : weightedDeltaY;
+    this.lastWheelY = weightedDeltaY;
+
+    this.onScrollCallbacks.forEach((callback) => {
+      callback(wheelChangeY);
+    });
   }
 }
 
 function isMultiTouch(event) {
-  return event.changedTouches.length !== 1;
+  return event.touches.length !== 1;
 }

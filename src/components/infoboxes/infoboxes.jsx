@@ -10,9 +10,6 @@ export function Infoboxes() {
   const [visible, setVisible] = useState(false);
   addEventListeners(setVisible);
 
-  const scrollSystem = new ConditionalScrollSystem(event => event.changedTouches[0].clientY < 300);
-  scrollSystem.addListener(console.warn);
-
   return (
     <>
       <div className="spacer"></div>
@@ -38,3 +35,12 @@ function addEventListeners(setVisible) {
     setVisible(false);
   });
 }
+
+const scrollSystem = new ConditionalScrollSystem(event => event?.changedTouches?.[0].clientY || event.clientY < 300);
+let scroll = 0;
+scrollSystem.addListener(console.warn);
+scrollSystem.addListener((change) => {
+  console.warn('scroll: ', scroll);
+  scroll += change;
+  document.querySelector('.scrollable').style.marginTop = `${scroll}vh`;
+});
