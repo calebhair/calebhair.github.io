@@ -6,7 +6,7 @@ On touch move, if touch started in valid area, calculate change.
 On touch end, reset state to prevent jumps in scroll between touch.
  */
 export class ConditionalScrollSystem {
-  constructor(scrollConditionFn) {
+  constructor(targetElement = document, scrollConditionFn = () => true) {
     this.scrollConditionFn = scrollConditionFn;
     this.touchStartedValid = false;
     this.lastTouchY = null;
@@ -19,10 +19,14 @@ export class ConditionalScrollSystem {
     this.onTouchEnd = this.onTouchEnd.bind(this);
     this.onWheel = this.onWheel.bind(this);
     // Add event listeners
-    document.addEventListener('touchstart', this.onTouchStart, { passive: true });
-    document.addEventListener('touchmove', this.onTouchMove, { passive: true });
-    document.addEventListener('touchend', this.onTouchEnd, { passive: true });
-    document.addEventListener('wheel', this.onWheel, { passive: true });
+    targetElement.addEventListener('touchstart', this.onTouchStart, { passive: true });
+    targetElement.addEventListener('touchmove', this.onTouchMove, { passive: true });
+    targetElement.addEventListener('touchend', this.onTouchEnd, { passive: true });
+    targetElement.addEventListener('wheel', this.onWheel, { passive: true });
+  }
+
+  setScrollConditionFn(fn) {
+    this.scrollConditionFn = fn;
   }
 
   /**

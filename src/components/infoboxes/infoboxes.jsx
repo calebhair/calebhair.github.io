@@ -4,11 +4,10 @@ import { EVENTS } from '../../constants';
 import { Title } from './title';
 import { ProjectDescription } from './projectDescription';
 import { ScrollArrow } from './scrollArrow';
-import { ConditionalScrollSystem } from '../../conditionalScrollSystem';
 
-export function Infoboxes() {
+export function Infoboxes({ scrollSystem }) {
   const [visible, setVisible] = useState(false);
-  addEventListeners(setVisible);
+  addEventListeners(setVisible, scrollSystem);
 
   return (
     <>
@@ -24,7 +23,7 @@ export function Infoboxes() {
 }
 
 let eventListenersAdded = false;
-function addEventListeners(setVisible) {
+function addEventListeners(setVisible, scrollSystem) {
   if (eventListenersAdded) return;
   eventListenersAdded = true;
 
@@ -34,13 +33,13 @@ function addEventListeners(setVisible) {
   document.addEventListener(EVENTS.PLANET_UNFOCUSSED, () => {
     setVisible(false);
   });
-}
 
-const scrollSystem = new ConditionalScrollSystem(event => event?.changedTouches?.[0].clientY || event.clientY < 300);
-let scroll = 0;
-scrollSystem.addListener(console.warn);
-scrollSystem.addListener((change) => {
-  console.warn('scroll: ', scroll);
-  scroll += change;
-  document.querySelector('.scrollable').style.marginTop = `${scroll}vh`;
-});
+  scrollSystem.setScrollConditionFn(event => (event?.changedTouches?.[0].clientY || event.clientY) < 300);
+  let scroll = 0; /// todo remove some of this
+  scrollSystem.addListener(console.warn);
+  scrollSystem.addListener((change) => {
+    console.warn('scroll: ', scroll);
+    scroll += change;
+    document.querySelector('.scrollable').style.marginTop = `${scroll}vh`;
+  });
+}

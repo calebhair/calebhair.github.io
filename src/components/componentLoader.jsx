@@ -7,7 +7,7 @@ import { LoadingScreen } from './loading/loadingScreen';
 import { planetDefinitions } from '../planets';
 import { Infoboxes } from './infoboxes/infoboxes';
 
-export function setupComponents() {
+export function setupComponents(scrollSystem) {
   const sidebarContainer = createRoot(document.getElementsByClassName('sidebar-container')[0]);
   const navBtnContainer = createRoot(document.getElementsByClassName('nav-btn-container')[0]);
   const loadingScreenContainer = createRoot(document.getElementsByClassName('loading-screen-container')[0]);
@@ -16,5 +16,5 @@ export function setupComponents() {
   loadingScreenContainer.render(<LoadingScreen />); // must show first
   navBtnContainer.render(<NavBtn />);
   sidebarContainer.render(<Sidebar planetJsonsToShow={planetDefinitions} />);
-  projectInfoContainer.render(<Infoboxes />);
+  projectInfoContainer.render(<Infoboxes scrollSystem={scrollSystem} />);
 }

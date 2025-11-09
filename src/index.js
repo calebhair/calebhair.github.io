@@ -12,10 +12,12 @@ import { setupComponents } from './components/componentLoader';
 import { addLight, addCubeMap, makeCamera, makeControls, makeRenderer, onWindowResized, setupPointer } from './3d/sceneSetup';
 import { addTextAccretionDisk } from './3d/quasar/textAccretionDisk';
 import { loading } from './3d/loadingState';
+import { ConditionalScrollSystem } from './conditionalScrollSystem';
 
 // Foundation
 const scene = new THREE.Scene();
 const renderer = makeRenderer();
+const scrollSystem = new ConditionalScrollSystem(renderer.domElement);
 const camera = makeCamera();
 const controls = makeControls(scene, renderer, camera);
 
@@ -30,7 +32,7 @@ const composer = addPostProcessing(scene, camera, renderer); // Do post-processi
 addBlackholeOutline(scene, camera, composer, blackHoleSphere);
 
 // UI
-setupComponents();
+setupComponents(scrollSystem);
 setupPointer(camera);
 setupFocusing(camera, controls);
 setupCameraAnimation(camera, controls);
