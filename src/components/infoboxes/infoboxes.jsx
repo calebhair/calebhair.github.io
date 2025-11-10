@@ -1,45 +1,54 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { EVENTS } from '../../constants';
 import { Title } from './title';
 import { ProjectDescription } from './projectDescription';
 import { ScrollArrow } from './scrollArrow';
 
-export function Infoboxes({ scrollSystem }) {
-  const [visible, setVisible] = useState(false);
-  addEventListeners(setVisible, scrollSystem);
+export class Infoboxes extends React.Component {
+  constructor(props) {
+    super(props);
+    this.scrollSystem = props.scrollSystem;
+    this.scrollableRef = React.createRef();
+    this.state = {
+      visible: false,
+    };
+    this.addEventListeners();
+  }
 
-  return (
-    <>
-      <div className="spacer"></div>
+  addEventListeners() {
+    document.addEventListener(EVENTS.PLANET_FOCUSSED, () => {
+      this.setState({ visible: true });
+    });
+    document.addEventListener(EVENTS.PLANET_UNFOCUSSED, () => {
+      this.setState({ visible: false });
+    });
 
-      <div className="scrollable">
-        <Title />
-        <ScrollArrow visible={visible} />
-        <ProjectDescription visible={visible} />
+    this.scroll = 0;
+    this.scrollSystem.setScrollConditionFn(e => this.scrollCondition(e));
+    this.scrollSystem.addListener((change) => {
+      this.scroll += change;
+      document.querySelector('.scrollable').style.marginTop = `${this.scroll}vh`;
+    });
+  }
+
+  scrollCondition(event) {
+    const clientY = (event?.changedTouches?.[0].clientY || event.clientY);
+    console.warn(this.scrollableRef.current);
+    return clientY < 300;
+  }
+
+  render() {
+    return (
+      <div>
+        <div className="spacer"></div>
+
+        <div className="scrollable" ref={this.scrollableRef}>
+          <Title />
+          <ScrollArrow visible={this.state.visible} />
+          <ProjectDescription visible={this.state.visible} />
+        </div>
       </div>
-    </>
-  );
-}
-
-let eventListenersAdded = false;
-function addEventListeners(setVisible, scrollSystem) {
-  if (eventListenersAdded) return;
-  eventListenersAdded = true;
-
-  document.addEventListener(EVENTS.PLANET_FOCUSSED, () => {
-    setVisible(true);
-  });
-  document.addEventListener(EVENTS.PLANET_UNFOCUSSED, () => {
-    setVisible(false);
-  });
-
-  scrollSystem.setScrollConditionFn(event => (event?.changedTouches?.[0].clientY || event.clientY) < 300);
-  let scroll = 0; /// todo remove some of this
-  scrollSystem.addListener(console.warn);
-  scrollSystem.addListener((change) => {
-    console.warn('scroll: ', scroll);
-    scroll += change;
-    document.querySelector('.scrollable').style.marginTop = `${scroll}vh`;
-  });
+    );
+  }
 }
