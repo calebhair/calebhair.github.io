@@ -17,7 +17,7 @@ import { ConditionalScrollSystem } from './conditionalScrollSystem';
 // Foundation
 const scene = new THREE.Scene();
 const renderer = makeRenderer();
-const scrollSystem = new ConditionalScrollSystem(renderer.domElement);
+const scrollSystem = new ConditionalScrollSystem([renderer.domElement]);
 const camera = makeCamera();
 const controls = makeControls(scene, renderer, camera);
 

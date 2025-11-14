@@ -36,20 +36,22 @@ export class Infoboxes extends React.Component {
 
     this.scroll = 0;
     this.scrollSystem.setScrollConditionFn(e => this.scrollCondition(e));
-    this.scrollSystem.addListener((change, scrollMethod) => {
-      const scrollable = this.scrollableRef.current;
-      this.scroll += scrollMethod === SCROLL_METHOD.TOUCH ? change : -change;
-      const scrollableBottom = scrollable.clientHeight + vhToPx(this.scroll);
+    this.scrollSystem.onScroll(this.onScroll.bind(this));
+  }
 
-      if (scrollableBottom < window.innerHeight - marginPx) {
-        this.scroll = pxToVh(window.innerHeight - scrollable.clientHeight - marginPx);
-      }
-      else if (this.scroll > 0) {
-        this.scroll = 0;
-      }
-      // if (this.scroll < 0) this.scroll = 0;
-      scrollable.style.marginTop = `${this.scroll}vh`;
-    });
+  onScroll(change, scrollMethod) {
+    const scrollable = this.scrollableRef.current;
+    this.scroll += scrollMethod === SCROLL_METHOD.TOUCH ? change : -change;
+    const scrollableBottom = scrollable.clientHeight + vhToPx(this.scroll);
+
+    if (scrollableBottom < window.innerHeight - marginPx) {
+      this.scroll = pxToVh(window.innerHeight - scrollable.clientHeight - marginPx);
+    }
+    else if (this.scroll > 0) {
+      this.scroll = 0;
+    }
+
+    scrollable.style.marginTop = `${this.scroll}vh`;
   }
 
   scrollCondition(event) {
@@ -60,7 +62,7 @@ export class Infoboxes extends React.Component {
   render() {
     return (
       <div>
-        <div className="scrollable" ref={this.scrollableRef}>
+        <div ref={this.scrollableRef}>
           <div className="spacer"></div>
           <Title />
           <ScrollArrow visible={this.state.visible} />
