@@ -1,5 +1,10 @@
 export const MINIMUM_DISTANCE_FROM_PLANET_TO_FOCUS = 8;
 
+export const SCROLL_METHOD = {
+  WHEEL: 'wheel',
+  TOUCH: 'touch',
+};
+
 export const NAV_BTN_STATES = {
   Default: 0,
   Sidebar: 1,

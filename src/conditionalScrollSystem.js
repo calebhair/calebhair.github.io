@@ -1,3 +1,5 @@
+import { SCROLL_METHOD } from './constants';
+
 /**
 Custom scrolling that operates on custom conditions instead of element based.
 Always ensure there's only one touch.
@@ -50,7 +52,7 @@ export class ConditionalScrollSystem {
     this.lastTouchY = touch.clientY;
 
     this.onScrollCallbacks.forEach((callback) => {
-      callback(touchChangeY);
+      callback(touchChangeY, SCROLL_METHOD.TOUCH);
     });
   }
 
@@ -67,7 +69,7 @@ export class ConditionalScrollSystem {
     this.lastWheelY = weightedDeltaY;
 
     this.onScrollCallbacks.forEach((callback) => {
-      callback(wheelChangeY);
+      callback(wheelChangeY, SCROLL_METHOD.WHEEL);
     });
   }
 }
