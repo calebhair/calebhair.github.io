@@ -36,10 +36,10 @@ export class Infoboxes extends React.Component {
 
     this.scroll = 0;
     this.scrollSystem.setScrollConditionFn(e => this.scrollCondition(e));
-    this.scrollSystem.onScroll(this.onScroll.bind(this));
+    this.scrollSystem.setOnScroll(this.customOnScroll.bind(this));
   }
 
-  onScroll(change, scrollMethod) {
+  customOnScroll(change, scrollMethod) {
     const scrollable = this.scrollableRef.current;
     this.scroll += scrollMethod === SCROLL_METHOD.TOUCH ? change : -change;
     const scrollableBottom = scrollable.clientHeight + vhToPx(this.scroll);
@@ -61,13 +61,11 @@ export class Infoboxes extends React.Component {
 
   render() {
     return (
-      <div>
-        <div ref={this.scrollableRef}>
-          <div className="spacer"></div>
-          <Title scrollSystem={this.scrollSystem} />
-          <ScrollArrow visible={this.state.visible} scrollSystem={this.scrollSystem} />
-          <ProjectDescription visible={this.state.visible} scrollSystem={this.scrollSystem} />
-        </div>
+      <div ref={this.scrollableRef} className="scrollable-region">
+        <div className="spacer"></div>
+        <Title scrollSystem={this.scrollSystem} />
+        <ScrollArrow visible={this.state.visible} scrollSystem={this.scrollSystem} />
+        <ProjectDescription visible={this.state.visible} scrollSystem={this.scrollSystem} />
       </div>
     );
   }

@@ -31,6 +31,11 @@
   transform: rotateX(0deg) scaleY(1);
 }
 
+.scrollable-region {
+  display: flex;
+  flex-direction: column;
+}
+
 @media only screen and (max-width: 600px) {
   .project-info-container {
     justify-content: flex-end;

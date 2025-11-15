@@ -41,7 +41,7 @@ export class ConditionalScrollSystem {
    * Add a listener to be called on scroll updates.
    * @param callback on a scroll update (such as a touch move or wheel scroll), calls this function with the vertical change value.
    */
-  onScroll(callback) {
+  setOnScroll(callback) {
     this.onScrollCallbacks.push(callback);
   }
 

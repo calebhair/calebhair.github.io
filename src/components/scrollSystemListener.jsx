@@ -5,6 +5,8 @@ export class ScrollSystemListener extends React.Component {
     const { scrollSystem } = this.props;
     return (
       <div
+        className={this.props.className}
+        style={this.props.style}
         onWheel={scrollSystem.onWheel}
         onTouchStart={scrollSystem.onTouchStart}
         onTouchMove={scrollSystem.onTouchMove}

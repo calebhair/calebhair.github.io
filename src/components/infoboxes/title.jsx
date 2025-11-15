@@ -13,15 +13,14 @@ export function Title({ scrollSystem }) {
   addEventListeners(setTitle, setVisible, setWidthEm, setTextOpacity);
 
   return (
-    <ScrollSystemListener scrollSystem={scrollSystem}>
-      <div
-        className={`infobox title border ${visible ? 'show-infobox' : ''}`}
-        style={{ width: `${widthEm}em` }}
-      >
-        <h1 className="info" style={{ opacity: textOpacity }}>
-          { title }
-        </h1>
-      </div>
+    <ScrollSystemListener
+      className={`infobox title border ${visible ? 'show-infobox' : ''}`}
+      style={{ width: `${widthEm}em` }}
+      scrollSystem={scrollSystem}
+    >
+      <h1 className="info" style={{ opacity: textOpacity }}>
+        { title }
+      </h1>
     </ScrollSystemListener>
   );
 }
