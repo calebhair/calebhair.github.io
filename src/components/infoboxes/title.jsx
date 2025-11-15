@@ -1,10 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { EVENTS } from '../../constants';
+import { ScrollSystemListener } from '../scrollSystemListener';
 
 const marginEm = 4;
 
-export function Title() {
+export function Title({ scrollSystem }) {
   const [title, setTitle] = useState('placeholder');
   const [visible, setVisible] = useState(false);
   const [widthEm, setWidthEm] = useState(0);
@@ -12,14 +13,16 @@ export function Title() {
   addEventListeners(setTitle, setVisible, setWidthEm, setTextOpacity);
 
   return (
-    <div
-      className={`infobox title border ${visible ? 'show-infobox' : ''}`}
-      style={{ width: `${widthEm}em` }}
-    >
-      <h1 className="info" style={{ opacity: textOpacity }}>
-        { title }
-      </h1>
-    </div>
+    <ScrollSystemListener scrollSystem={scrollSystem}>
+      <div
+        className={`infobox title border ${visible ? 'show-infobox' : ''}`}
+        style={{ width: `${widthEm}em` }}
+      >
+        <h1 className="info" style={{ opacity: textOpacity }}>
+          { title }
+        </h1>
+      </div>
+    </ScrollSystemListener>
   );
 }
 

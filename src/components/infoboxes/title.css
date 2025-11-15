@@ -3,6 +3,7 @@
   font-size: 1.5vw;
   text-align: center;
   white-space: nowrap;
+  float: right;
 }
 
 .title > h1 {
@@ -14,5 +15,11 @@
   .title {
     margin-inline: auto;
     font-size: 1em;
+    height: 12vh;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    float: none;
   }
 }

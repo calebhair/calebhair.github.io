@@ -14,7 +14,7 @@
     position: static;
 
     color: white;
-    font-size: 5em;
+    font-size: 10vh;
     text-shadow: 0 0 5px black;
 
     transform: translateY(100%);

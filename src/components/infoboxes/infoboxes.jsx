@@ -55,8 +55,8 @@ export class Infoboxes extends React.Component {
   }
 
   scrollCondition(event) {
-    const clientY = (event?.changedTouches?.[0].clientY || event.clientY);
-    return clientY < 300;
+    // const clientY = (event?.changedTouches?.[0].clientY || event.clientY);
+    return true;
   }
 
   render() {
@@ -64,9 +64,9 @@ export class Infoboxes extends React.Component {
       <div>
         <div ref={this.scrollableRef}>
           <div className="spacer"></div>
-          <Title />
-          <ScrollArrow visible={this.state.visible} />
-          <ProjectDescription visible={this.state.visible} />
+          <Title scrollSystem={this.scrollSystem} />
+          <ScrollArrow visible={this.state.visible} scrollSystem={this.scrollSystem} />
+          <ProjectDescription visible={this.state.visible} scrollSystem={this.scrollSystem} />
         </div>
       </div>
     );
