@@ -1,4 +1,4 @@
-import { SCROLL_METHOD } from './constants';
+import { CUSTOM_MOUSE_SCROLL_FACTOR, CUSTOM_TOUCH_SCROLL_FACTOR, SCROLL_METHOD } from './constants';
 
 /**
 Custom scrolling that operates on custom conditions instead of element based.
@@ -13,7 +13,6 @@ export class ConditionalScrollSystem {
     this.scrollConditionFn = scrollConditionFn;
     this.touchStartedValid = false;
     this.lastTouchY = null;
-    this.lastWheelY = null;
     this.onScrollCallbacks = [];
 
     // Bind event handlers
@@ -58,7 +57,7 @@ export class ConditionalScrollSystem {
     this.lastTouchY = touch.clientY;
 
     this.onScrollCallbacks.forEach((callback) => {
-      callback(touchChangeY, SCROLL_METHOD.TOUCH);
+      callback(touchChangeY * CUSTOM_TOUCH_SCROLL_FACTOR, SCROLL_METHOD.TOUCH);
     });
   }
 
@@ -69,13 +68,8 @@ export class ConditionalScrollSystem {
 
   onWheel(event) {
     if (!this.scrollConditionFn(event)) return;
-
-    const weightedDeltaY = event.deltaY * 0.1;
-    const wheelChangeY = this.lastWheelY === null ? 0 : weightedDeltaY;
-    this.lastWheelY = weightedDeltaY;
-
     this.onScrollCallbacks.forEach((callback) => {
-      callback(wheelChangeY, SCROLL_METHOD.WHEEL);
+      callback(event.deltaY * CUSTOM_MOUSE_SCROLL_FACTOR, SCROLL_METHOD.WHEEL);
     });
   }
 }
