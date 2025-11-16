@@ -1,15 +1,9 @@
 .scroll-arrow.material-symbols-outlined {
   display: none;
-  visibility: hidden;
-}
-
-.show-arrow {
-  transform: translateY(0) !important;
 }
 
 @media only screen and (max-width: 600px) {
   .scroll-arrow.material-symbols-outlined {
-    visibility: visible;
     display: block;
     position: static;
 
@@ -19,5 +13,9 @@
 
     transform: translateY(100%);
     transition: transform 0.2s;
+  }
+
+  .show-arrow {
+    transform: translateY(0) !important;
   }
 }
