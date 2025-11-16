@@ -29,18 +29,24 @@ export class Infoboxes extends React.Component {
   addEventListeners() {
     document.addEventListener(EVENTS.PLANET_FOCUSSED, () => {
       this.setState({ visible: true });
+      this.scroll = 0;
     });
     document.addEventListener(EVENTS.PLANET_UNFOCUSSED, () => {
       this.setState({ visible: false });
+      this.scroll = 0;
+    });
+    document.addEventListener(EVENTS.PLANET_CHANGED, (event) => {
+      this.scroll = 0;
     });
 
     this.scroll = 0;
-    this.scrollSystem.setScrollConditionFn(e => this.scrollCondition(e));
     this.scrollSystem.setOnScroll(this.customOnScroll.bind(this));
   }
 
   customOnScroll(change, scrollMethod) {
     const scrollable = this.scrollableRef.current;
+    if (window.innerHeight > scrollable.clientHeight) return;
+
     this.scroll += scrollMethod === SCROLL_METHOD.TOUCH ? change : -change;
     const scrollableBottom = scrollable.clientHeight + vhToPx(this.scroll);
 
@@ -50,13 +56,15 @@ export class Infoboxes extends React.Component {
     else if (this.scroll > 0) {
       this.scroll = 0;
     }
-
-    scrollable.style.marginTop = `${this.scroll}vh`;
   }
 
-  scrollCondition(event) {
-    // const clientY = (event?.changedTouches?.[0].clientY || event.clientY);
-    return true;
+  set scroll(scrollVh) {
+    this._scroll = scrollVh;
+    if (this.scrollableRef.current) this.scrollableRef.current.style.marginTop = `${this._scroll}vh`;
+  }
+
+  get scroll() {
+    return this._scroll;
   }
 
   render() {

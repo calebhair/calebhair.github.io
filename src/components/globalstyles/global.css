@@ -4,14 +4,6 @@ body {
   overflow: hidden;
 }
 
-.threejs-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
 .above-threejs-canvas {
   position: fixed;
   top: 0;
@@ -38,4 +30,14 @@ body {
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
+}
+
+::-moz-selection { /* Firefox */
+  color: #ffbb22;
+  background: none;
+}
+
+::selection {
+  color: #ffbb22;
+  background: none;
 }

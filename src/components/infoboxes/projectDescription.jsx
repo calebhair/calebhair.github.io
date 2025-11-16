@@ -4,17 +4,28 @@ import { EVENTS } from '../../constants';
 import { ScrollSystemListener } from '../scrollSystemListener';
 
 export function ProjectDescription({ visible, scrollSystem }) {
-  addEventListeners();
+  const [description, setDescription] = useState('placeholder');
+  addEventListeners(setDescription);
 
   return (
     <ScrollSystemListener className={`infobox project-desc border ${visible ? 'show-infobox' : ''}`} scrollSystem={scrollSystem}>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse dictum mollis mauris, nec porttitor metus faucibus a. Integer egestas mauris in porttitor vehicula. Quisque ullamcorper sem sit amet finibus porta. Vestibulum tincidunt est nec lectus luctus, eget condimentum diam dapibus. Donec tempus tellus sit amet lorem ultricies, vitae pharetra ex egestas. Quisque scelerisque erat at ex sollicitudin, sollicitudin finibus mi dapibus. Phasellus ullamcorper tellus non tortor suscipit varius. Vestibulum leo est, laoreet id neque ut, feugiat facilisis enim. Sed non euismod erat. Quisque finibus a lectus tristique rhoncus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse dictum mollis mauris, nec porttitor metus faucibus a. Integer egestas mauris in porttitor vehicula. Quisque ullamcorper sem sit amet finibus porta. Vestibulum tincidunt est nec lectus luctus, eget condimentum diam dapibus. Donec tempus tellus sit amet lorem ultricies, vitae pharetra ex egestas. Quisque scelerisque erat at ex sollicitudin, sollicitudin finibus mi dapibus. Phasellus ullamcorper tellus non tortor suscipit varius. Vestibulum leo est, laoreet id neque ut, feugiat facilisis enim. Sed non euismod erat. Quisque finibus a lectus tristique rhoncus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse dictum mollis mauris, nec porttitor metus faucibus a. Integer egestas mauris in porttitor vehicula. Quisque ullamcorper sem sit amet finibus porta. Vestibulum tincidunt est nec lectus luctus, eget condimentum diam dapibus. Donec tempus tellus sit amet lorem ultricies, vitae pharetra ex egestas. Quisque scelerisque erat at ex sollicitudin, sollicitudin finibus mi dapibus. Phasellus ullamcorper tellus non tortor suscipit varius. Vestibulum leo est, laoreet id neque ut, feugiat facilisis enim. Sed non euismod erat. Quisque finibus a lectus tristique rhoncus.</p>
+      <div className="desc-text" dangerouslySetInnerHTML={{ __html: description }} />
     </ScrollSystemListener>
   );
 }
 
 let eventListenersAdded = false;
-function addEventListeners() {
+function addEventListeners(setTitle) {
   if (eventListenersAdded) return;
   eventListenersAdded = true;
+
+  document.addEventListener(EVENTS.PLANET_FOCUSSED, (event) => {
+    const { description } = event.detail;
+    setTitle(description);
+  });
+
+  document.addEventListener(EVENTS.PLANET_CHANGED, (event) => {
+    const { description } = event.detail;
+    setTitle(description);
+  });
 }
