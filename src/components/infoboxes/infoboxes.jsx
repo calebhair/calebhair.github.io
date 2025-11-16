@@ -13,7 +13,8 @@ function pxToVh(px) {
   return px * 100 / window.innerHeight;
 }
 
-const marginPx = 20;
+const MARGIN_PX = 0;
+const START_SCROLL_PX = MARGIN_PX;
 
 export class Infoboxes extends React.Component {
   constructor(props) {
@@ -29,17 +30,17 @@ export class Infoboxes extends React.Component {
   addEventListeners() {
     document.addEventListener(EVENTS.PLANET_FOCUSSED, () => {
       this.setState({ visible: true });
-      this.scroll = 0;
+      this.resetScroll();
     });
     document.addEventListener(EVENTS.PLANET_UNFOCUSSED, () => {
       this.setState({ visible: false });
-      this.scroll = 0;
+      this.resetScroll();
     });
-    document.addEventListener(EVENTS.PLANET_CHANGED, (event) => {
-      this.scroll = 0;
+    document.addEventListener(EVENTS.PLANET_CHANGED, () => {
+      this.resetScroll();
     });
 
-    this.scroll = 0;
+    this.resetScroll();
     this.scrollSystem.setOnScroll(this.customOnScroll.bind(this));
   }
 
@@ -50,12 +51,16 @@ export class Infoboxes extends React.Component {
     this.scroll += scrollMethod === SCROLL_METHOD.TOUCH ? change : -change;
     const scrollableBottom = scrollable.clientHeight + vhToPx(this.scroll);
 
-    if (scrollableBottom < window.innerHeight - marginPx) {
-      this.scroll = pxToVh(window.innerHeight - scrollable.clientHeight - marginPx);
+    if (scrollableBottom < window.innerHeight - MARGIN_PX) {
+      this.scroll = pxToVh(window.innerHeight - scrollable.clientHeight - MARGIN_PX);
     }
     else if (this.scroll > 0) {
-      this.scroll = 0;
+      this.resetScroll();
     }
+  }
+
+  resetScroll() {
+    this.scroll = pxToVh(START_SCROLL_PX);
   }
 
   set scroll(scrollVh) {
