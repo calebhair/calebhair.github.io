@@ -1,0 +1,60 @@
+.project-info-container {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin-right: 20px;
+
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.infobox {
+  position: relative;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  padding: 0.1em 2em; /* Top and bottom, sides */
+
+  /*display: block;*/
+  transform: rotateX(-90deg) scaleY(0);
+  transition: transform 0.2s, width 0.2s;
+
+  color: white;
+  align-self: flex-end;
+  pointer-events: auto;
+}
+
+.show-infobox {
+  transform: rotateX(0deg) scaleY(1);
+}
+
+.scrollable-region {
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 600px) {
+  .project-info-container {
+    justify-content: flex-end;
+    flex-direction: column-reverse;
+    text-align: center;
+
+    width: 100vw;
+    height: 100%;
+    margin-right: 0;
+  }
+
+  .infobox {
+    align-self: center;
+  }
+
+  .spacer {
+    height: 75vh;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+}

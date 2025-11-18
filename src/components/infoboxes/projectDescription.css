@@ -1,0 +1,21 @@
+.project-desc {
+  display: flex;
+  justify-content: flex-end;
+
+  width: 20vw;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.desc-text {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  .project-desc {
+    width: 70vw;
+    font-size: 0.8em;
+    margin-inline: auto;
+  }
+}

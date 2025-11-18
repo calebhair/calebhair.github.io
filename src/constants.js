@@ -1,5 +1,13 @@
 export const MINIMUM_DISTANCE_FROM_PLANET_TO_FOCUS = 8;
 
+export const CUSTOM_MOUSE_SCROLL_FACTOR = 0.1;
+export const CUSTOM_TOUCH_SCROLL_FACTOR = 0.3;
+
+export const SCROLL_METHOD = {
+  WHEEL: 'wheel',
+  TOUCH: 'touch',
+};
+
 export const NAV_BTN_STATES = {
   Default: 0,
   Sidebar: 1,
@@ -32,5 +40,3 @@ export const PATHS = {
 
   CUBEMAP: '/img/',
 };
-
-export const ENABLE_ANIMATED_GRADIENTS = false;

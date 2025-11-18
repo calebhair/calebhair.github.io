@@ -1,6 +1,5 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
-import { createRoot } from 'react-dom/client';
 import { stopFollowing } from '../../3d/focus';
 import { EVENTS, NAV_BTN_STATES } from '../../constants';
 
@@ -11,7 +10,7 @@ const navBtnIcons = [
   'arrows_output',
 ];
 
-function NavBtn() {
+export function NavBtn() {
   const [navState, setNavState] = useState(NAV_BTN_STATES.Default);
   const [moveOffscreen, setMoveOffscreen] = useState(true);
   addEventListeners(navState, setNavState, setMoveOffscreen);
@@ -63,9 +62,4 @@ function onNavButtonClicked(navState, setNavState) {
       stopFollowing();
       break;
   }
-}
-
-export function addNavBtn() {
-  const sidebarContainer = document.getElementsByClassName('nav-btn-container')[0];
-  createRoot(sidebarContainer).render(<NavBtn />);
 }

@@ -1,11 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
-import { createRoot } from 'react-dom/client';
 import { EVENTS } from '../../constants';
+import { ScrollSystemListener } from '../scrollSystemListener';
 
 const marginEm = 4;
 
-function ProjectTitle() {
+export function Title({ scrollSystem }) {
   const [title, setTitle] = useState('placeholder');
   const [visible, setVisible] = useState(false);
   const [widthEm, setWidthEm] = useState(0);
@@ -13,20 +13,15 @@ function ProjectTitle() {
   addEventListeners(setTitle, setVisible, setWidthEm, setTextOpacity);
 
   return (
-    <div className="titlebox-container">
-      <div
-        className={`infobox title border ${visible ? 'show-infobox' : ''}`}
-        style={{ width: `${widthEm}em` }}
-      >
-        <h1 className="info" style={{ opacity: textOpacity }}>
-          { title }
-        </h1>
-      </div>
-
-      <div className="scroll-arrow">
-        <i className={'material-symbols-outlined ' + (visible ? 'show-arrow' : '')}>arrow_drop_down</i>
-      </div>
-    </div>
+    <ScrollSystemListener
+      className={`infobox title border ${visible ? 'show-infobox' : ''}`}
+      style={{ width: `${widthEm}em` }}
+      scrollSystem={scrollSystem}
+    >
+      <h1 className="info" style={{ opacity: textOpacity }}>
+        { title }
+      </h1>
+    </ScrollSystemListener>
   );
 }
 
@@ -64,12 +59,4 @@ function addEventListeners(setTitle, setVisible, setWidthEm, setTextOpacity) {
       setTextOpacity(1);
     }, secondAnimationDelay);
   });
-}
-
-/**
- * Add info box stuff to DOM.
- */
-export function addTitleBox() {
-  const sidebarNode = document.getElementsByClassName('project-info-container')[0];
-  createRoot(sidebarNode).render(<ProjectTitle />);
 }

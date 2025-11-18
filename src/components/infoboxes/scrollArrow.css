@@ -1,0 +1,21 @@
+.scroll-arrow.material-symbols-outlined {
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .scroll-arrow.material-symbols-outlined {
+    display: block;
+    position: static;
+
+    color: white;
+    font-size: 10vh;
+    text-shadow: 0 0 5px black;
+
+    transform: translateY(100%);
+    transition: transform 0.2s;
+  }
+
+  .show-arrow {
+    transform: translateY(0) !important;
+  }
+}

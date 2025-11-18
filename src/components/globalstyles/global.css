@@ -5,7 +5,9 @@ body {
 }
 
 .above-threejs-canvas {
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
   z-index: 100;
 
   display: flex;
@@ -28,4 +30,14 @@ body {
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
+}
+
+::-moz-selection { /* Firefox */
+  color: #ffbb22;
+  background: none;
+}
+
+::selection {
+  color: #ffbb22;
+  background: none;
 }

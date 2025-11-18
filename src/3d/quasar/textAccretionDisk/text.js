@@ -1,4 +1,4 @@
-const accretionDiskText = await getAccretionDiskText('https://raw.githubusercontent.com/SimonsBrother/simonsbrother.github.io/refs/heads/main/src/3d/focus.js');
+const accretionDiskText = await getAccretionDiskText('https://rwaw.githubusercontent.com/SimonsBrother/simonsbrother.github.io/refs/heads/main/src/3d/focus.js');
 let accretionTextProgress = 0;
 
 /**
@@ -9,7 +9,8 @@ let accretionTextProgress = 0;
 async function getAccretionDiskText(path) {
   return await fetch(path)
     .then(response => response.text())
-    .then(text => text.replaceAll('\n', ''));
+    .then(text => text.replaceAll('\n', ''))
+    .catch(() => 'failed to load ---- '.repeat(100));
 }
 
 /**
