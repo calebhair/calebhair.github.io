@@ -9,9 +9,9 @@ export const SCROLL_METHOD = {
 };
 
 export const NAV_BTN_STATES = {
-  Default: 0,
-  Sidebar: 1,
-  Focussed: 2,
+  Default: 'default',
+  Sidebar: 'sidebar',
+  Focussed: 'focussed',
 };
 
 export const EVENTS = {

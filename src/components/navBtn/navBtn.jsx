@@ -4,11 +4,11 @@ import { stopFollowing } from '../../3d/focus';
 import { EVENTS, NAV_BTN_STATES } from '../../constants';
 
 // The icons to show for each state, where the ID of the state represents the index of the icon name from Google icons
-const navBtnIcons = [
-  'planet',
-  'planet',
-  'arrows_output',
-];
+const navBtnIcons = {
+  [NAV_BTN_STATES.Default]: 'menu',
+  [NAV_BTN_STATES.Sidebar]: 'menu',
+  [NAV_BTN_STATES.Focussed]: 'chevron_left',
+};
 
 export function NavBtn() {
   const [navState, setNavState] = useState(NAV_BTN_STATES.Default);
@@ -23,7 +23,7 @@ export function NavBtn() {
       onClick={() => onNavButtonClicked(navState, setNavState)}
     >
       <i className={`material-symbols-outlined nav-btn-icon prevent-select ${isClicked}`}>
-        {navBtnIcons.at(navState)}
+        {navBtnIcons[navState]}
       </i>
     </button>
   );

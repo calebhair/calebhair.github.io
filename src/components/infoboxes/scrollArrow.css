@@ -9,7 +9,7 @@
 
     color: white;
     font-size: 10dvh;
-    text-shadow: 0 0 5px black;
+    text-shadow: 0 2px 5px black, 0 -2px 5px black;
 
     transform: translateY(100%);
     transition: transform 0.2s;
