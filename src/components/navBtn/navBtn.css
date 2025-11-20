@@ -1,7 +1,7 @@
 .nav-btn {
   margin: 20px;
-  width: 7em;
-  height: 7em;
+  width: 16vmin;
+  height: 16vmin;
 
   cursor: pointer;
 
@@ -19,7 +19,7 @@
 
 /* Icon */
 .material-symbols-outlined.nav-btn-icon { /* Override font size like this, else it doesn't work */
-  font-size: 4em;
+  font-size: 10vmin;
 }
 
 .nav-btn-icon {
@@ -29,12 +29,12 @@
 
 /* When the button is hovered over, change icon style */
 .nav-btn:hover .nav-btn-icon {
-  font-size: 5em;
-  text-shadow: rgba(255,255,255,1) 0px 0px 14px;
+  font-size: 8vmin;
+  text-shadow: rgba(255,255,255,1) 0 0 14px;
 }
 
 .nav-btn:active .nav-btn-icon {
-  font-size: 3em;
+  font-size: 6vmin;
 }
 
 .nav-btn-icon.clicked {

@@ -1,6 +1,7 @@
 .title {
   margin-top: 20px;
   margin-bottom: 10px;
+  padding-inline: 1vw;
   font-size: 1.5vw;
   text-align: center;
   white-space: nowrap;
