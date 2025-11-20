@@ -5,14 +5,6 @@ import { Title } from './title';
 import { ProjectDescription } from './projectDescription';
 import { ScrollArrow } from './scrollArrow';
 
-function vhToPx(vh) {
-  return vh * window.innerHeight / 100;
-}
-
-function pxToVh(px) {
-  return px * 100 / window.innerHeight;
-}
-
 const MARGIN_PX = 0;
 const START_SCROLL_PX = MARGIN_PX;
 
@@ -49,10 +41,10 @@ export class Infoboxes extends React.Component {
     if (window.innerHeight > scrollable.clientHeight) return;
 
     this.scroll += scrollMethod === SCROLL_METHOD.TOUCH ? change : -change;
-    const scrollableBottom = scrollable.clientHeight + vhToPx(this.scroll);
+    const scrollableBottom = scrollable.clientHeight + this.scroll;
 
     if (scrollableBottom < window.innerHeight - MARGIN_PX) {
-      this.scroll = pxToVh(window.innerHeight - scrollable.clientHeight - MARGIN_PX);
+      this.scroll = window.innerHeight - scrollable.clientHeight - MARGIN_PX;
     }
     else if (this.scroll > 0) {
       this.resetScroll();
@@ -60,12 +52,12 @@ export class Infoboxes extends React.Component {
   }
 
   resetScroll() {
-    this.scroll = pxToVh(START_SCROLL_PX);
+    this.scroll = START_SCROLL_PX;
   }
 
-  set scroll(scrollVh) {
-    this._scroll = scrollVh;
-    if (this.scrollableRef.current) this.scrollableRef.current.style.marginTop = `${this._scroll}vh`;
+  set scroll(scrollPx) {
+    this._scroll = scrollPx;
+    if (this.scrollableRef.current) this.scrollableRef.current.style.marginTop = `${this._scroll}px`;
   }
 
   get scroll() {

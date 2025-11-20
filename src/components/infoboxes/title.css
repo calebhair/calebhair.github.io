@@ -15,7 +15,7 @@
   .title {
     margin-inline: auto;
     font-size: 1em;
-    height: 12vh;
+    height: 12dvh;
 
     display: flex;
     justify-content: space-around;

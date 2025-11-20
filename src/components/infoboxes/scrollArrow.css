@@ -8,7 +8,7 @@
     position: static;
 
     color: white;
-    font-size: 10vh;
+    font-size: 10dvh;
     text-shadow: 0 0 5px black;
 
     transform: translateY(100%);
