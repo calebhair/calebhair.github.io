@@ -1,6 +1,26 @@
 .project-image {
-  position: relative;
-  width: 10vw;
+  margin-bottom: 20px;
+}
+
+@media only screen and (min-width: 601px) {
+  .project-image {
+    width: 10vw;
+
+    transform:
+      perspective(1000px)
+      rotateX(-4deg)
+      rotateY(16deg)
+      rotateZ(-4deg);
+    transition: transform 0.4s, margin 0.4s;
+    /*box-shadow: 24px 16px 64px 0 rgba(0, 0, 0, 0.08);*/
+  }
+
+  .project-image:hover {
+    transform: rotateY(0deg) scale(3) translateX(4vw);
+    margin-top: 80px;
+    margin-bottom: 100px;
+    z-index: 1000;
+  }
 }
 
 .project-image > img {
@@ -11,7 +31,7 @@
 @media only screen and (max-width: 600px) {
   .project-image {
     width: 85vw;
-    margin-bottom: 20px;
     margin-inline: auto;
+    transform: none;
   }
 }

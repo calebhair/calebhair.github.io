@@ -17,7 +17,7 @@ export class ImageContainer extends React.Component {
 
   render() {
     return (
-      <ScrollSystemListener className="image-container" scrollSystem={this.props.scrollSystem}>
+      <ScrollSystemListener className={`image-container ${this.props.visible ? 'show-infobox' : ''}`} scrollSystem={this.props.scrollSystem}>
         {this.getImages()}
       </ScrollSystemListener>
     );
