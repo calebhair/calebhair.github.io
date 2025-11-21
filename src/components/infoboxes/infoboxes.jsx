@@ -4,6 +4,7 @@ import { EVENTS, SCROLL_METHOD } from '../../constants';
 import { Title } from './title';
 import { ProjectDescription } from './projectDescription';
 import { ScrollArrow } from './scrollArrow';
+import { ImageContainer } from './imageContainer';
 
 const MARGIN_PX = 0;
 const START_SCROLL_PX = MARGIN_PX;
@@ -65,12 +66,17 @@ export class Infoboxes extends React.Component {
   }
 
   render() {
+    const imgs = [
+      { url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtRB4ywOLz1dsou2BDYl27hn5ymk1V8f6bpA&s' },
+      { url: 'https://hips.hearstapps.com/hmg-prod/images/white-cat-breeds-kitten-in-grass-67bf648a54a3b.jpg?crop=0.668xw:1.00xh;0.167xw,0&resize=1200:*' },
+    ];
     return (
       <div ref={this.scrollableRef} className="scrollable-region">
         <div className="spacer"></div>
         <Title scrollSystem={this.scrollSystem} />
         <ScrollArrow visible={this.state.visible} scrollSystem={this.scrollSystem} />
         <ProjectDescription visible={this.state.visible} scrollSystem={this.scrollSystem} />
+        <ImageContainer images={imgs} visible={this.state.visible} scrollSystem={this.scrollSystem} />
       </div>
     );
   }

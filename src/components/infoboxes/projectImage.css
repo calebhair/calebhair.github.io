@@ -1,0 +1,17 @@
+.project-image {
+  position: relative;
+  width: 10vw;
+}
+
+.project-image > img {
+  width: 100%;
+  object-fit: contain;
+}
+
+@media only screen and (max-width: 600px) {
+  .project-image {
+    width: 85vw;
+    margin-bottom: 20px;
+    margin-inline: auto;
+  }
+}
