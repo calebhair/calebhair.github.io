@@ -3,7 +3,7 @@ import { EVENTS, SCROLL_METHOD } from '../../constants';
 import { Title } from './title';
 import { ProjectDescription } from './projectDescription';
 import { ScrollArrow } from './scrollArrow';
-import { ImageContainer } from './imageContainer';
+import { ImageContainer } from './images/imageContainer';
 
 const MARGIN_PX = 0;
 const START_SCROLL_PX = MARGIN_PX;

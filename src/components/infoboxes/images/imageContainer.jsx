@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollSystemListener } from '../scrollSystemListener';
+import { ScrollSystemListener } from '../../scrollSystemListener';
 import { ProjectImage } from './projectImage';
 
 export class ImageContainer extends React.Component {
