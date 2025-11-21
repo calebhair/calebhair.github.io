@@ -33,6 +33,7 @@ export class Infoboxes extends React.Component {
     document.addEventListener(EVENTS.PLANET_CHANGED, (event) => {
       this.resetScroll();
       this.getImagesFromEvent(event);
+      this.forceUpdate();
     });
 
     this.resetScroll();

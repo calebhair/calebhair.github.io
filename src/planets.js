@@ -34,6 +34,15 @@ export const planetDefinitions = [
     name: 'Monkey',
     description: 'A 3D model of a monkey\'s head, one of the preconfigured meshes in Blender.<br><br>The canonical name of the monkey is Suzanne.',
 
+    images: [
+      { url: 'https://images.unsplash.com/photo-1605559911160-a3d95d213904?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW9ua2V5fGVufDB8fDB8fHww' },
+      { url: 'https://t4.ftcdn.net/jpg/05/29/61/37/360_F_529613760_ZN7wI9c62MyPeFC8ioliQ2wrVohVuRey.jpg' },
+      { url: 'https://media.cnn.com/api/v1/images/stellar/prod/160107100400-monkey-selfie.jpg?q=x_3,y_0,h_1635,w_2905,c_crop/w_800' },
+      { url: 'https://cdn.mos.cms.futurecdn.net/ZRAWdgHeNNPw8PaSxg7kVj-1200-80.jpg' },
+      { url: 'https://transforms.stlzoo.org/production/animals/black-handed-spider-monkey-01-01.jpg?w=1200&h=1200&auto=compress%2Cformat&fit=crop&dm=1658941291&s=1fd6a23080c0efda933cd6c7f2f37be7' },
+      { url: 'https://i.pinimg.com/736x/e1/e0/97/e1e0970f1fd8f6df6f32ca7026d32f6e.jpg' },
+    ],
+
     iconPath: 'img/test.svg',
     modelPath: 'models/monkey.glb',
     planetSize: 10,
