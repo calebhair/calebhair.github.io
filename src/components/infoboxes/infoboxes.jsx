@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { EVENTS, SCROLL_METHOD } from '../../constants';
 import { Title } from './title';
 import { ProjectDescription } from './projectDescription';
@@ -17,24 +16,31 @@ export class Infoboxes extends React.Component {
     this.state = {
       visible: false,
     };
+    this.images = [];
     this.addEventListeners();
   }
 
   addEventListeners() {
-    document.addEventListener(EVENTS.PLANET_FOCUSSED, () => {
+    document.addEventListener(EVENTS.PLANET_FOCUSSED, (event) => {
       this.setState({ visible: true });
       this.resetScroll();
+      this.getImagesFromEvent(event);
     });
     document.addEventListener(EVENTS.PLANET_UNFOCUSSED, () => {
       this.setState({ visible: false });
-      this.resetScroll();
+      this.resetScroll(); // todo maybe remove
     });
-    document.addEventListener(EVENTS.PLANET_CHANGED, () => {
+    document.addEventListener(EVENTS.PLANET_CHANGED, (event) => {
       this.resetScroll();
+      this.getImagesFromEvent(event);
     });
 
     this.resetScroll();
     this.scrollSystem.setOnScroll(this.customOnScroll.bind(this));
+  }
+
+  getImagesFromEvent(event) {
+    this.images = event.detail.images;
   }
 
   customOnScroll(change, scrollMethod) {
@@ -66,17 +72,13 @@ export class Infoboxes extends React.Component {
   }
 
   render() {
-    const imgs = [
-      { url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtRB4ywOLz1dsou2BDYl27hn5ymk1V8f6bpA&s' },
-      { url: 'https://hips.hearstapps.com/hmg-prod/images/white-cat-breeds-kitten-in-grass-67bf648a54a3b.jpg?crop=0.668xw:1.00xh;0.167xw,0&resize=1200:*' },
-    ];
     return (
       <div ref={this.scrollableRef} className="scrollable-region">
         <div className="spacer"></div>
         <Title scrollSystem={this.scrollSystem} />
         <ScrollArrow visible={this.state.visible} scrollSystem={this.scrollSystem} />
         <ProjectDescription visible={this.state.visible} scrollSystem={this.scrollSystem} />
-        <ImageContainer images={imgs} visible={this.state.visible} scrollSystem={this.scrollSystem} />
+        <ImageContainer images={this.images} visible={this.state.visible} scrollSystem={this.scrollSystem} />
       </div>
     );
   }
