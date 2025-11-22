@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React from 'react';
 import { ProjectImage } from './projectImage';
 import { ScrollableElement } from '../../scrollSystem/scrollableElement';
@@ -35,8 +36,23 @@ export class ImageContainer extends ScrollableElement {
   }
 
   customOnScroll(change, scrollMethod) {
-    // if (!this.shouldUseMobileScrollSystem) return;
     return super.customOnScroll(change, scrollMethod);
+  }
+
+  calculateLowestChildBottom() {
+    const { children } = this.scrollableRef.current;
+    const lastChildBottom = children[children.length - 1]?.getBoundingClientRect().bottom;
+    const secondLastChildBottom = children[children.length - 2]?.getBoundingClientRect().bottom;
+    return Math.max(lastChildBottom, secondLastChildBottom);
+  }
+
+  get scrollableBottom() {
+    return this.calculateLowestChildBottom();
+  }
+
+  get scrollLowerLimit() {
+    const distanceFromBottom = window.innerHeight - this.calculateLowestChildBottom();
+    return this.scroll + distanceFromBottom;
   }
 
   onImageClicked(index) {

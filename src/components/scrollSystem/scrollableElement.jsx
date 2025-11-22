@@ -2,15 +2,14 @@ import React from 'react';
 import { EVENTS, SCROLL_METHOD } from '../../constants';
 import { ConditionalScrollSystem } from './conditionalScrollSystem';
 
-const MARGIN_PX = 0;
-const START_SCROLL_PX = MARGIN_PX;
-
 /**
  * A React component that provides scroll functionality to a component that extends it.
  */
 export class ScrollableElement extends React.Component {
   constructor(props) {
     super(props);
+    this.bottomMarginPx = props.bottomMarginPx || 0;
+    this.startScrollPx = props.startScrollPx || this.bottomMarginPx;
     this.scrollSystem = props.scrollSystem || new ConditionalScrollSystem();
     this.scrollableRef = React.createRef();
 
@@ -26,18 +25,24 @@ export class ScrollableElement extends React.Component {
     if (window.innerHeight > scrollable.clientHeight) return;
 
     this.scroll += scrollMethod === SCROLL_METHOD.TOUCH ? change : -change;
-    const scrollableBottom = scrollable.clientHeight + this.scroll;
-
-    if (scrollableBottom < window.innerHeight - MARGIN_PX) {
-      this.scroll = window.innerHeight - scrollable.clientHeight - MARGIN_PX;
+    if (this.scrollableBottom < window.innerHeight - this.bottomMarginPx) {
+      this.scroll = this.scrollLowerLimit - this.bottomMarginPx;
     }
     else if (this.scroll > 0) {
       this.resetScroll();
     }
   }
 
+  get scrollableBottom() {
+    return this.scrollableRef.current.clientHeight + this.scroll;
+  }
+
+  get scrollLowerLimit() {
+    return window.innerHeight - this.scrollableRef.current.clientHeight;
+  }
+
   resetScroll() {
-    this.scroll = START_SCROLL_PX;
+    this.scroll = this.startScrollPx;
   }
 
   set scroll(scrollPx) {
