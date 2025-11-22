@@ -16,6 +16,7 @@ export class ScrollableElement extends React.Component {
     document.addEventListener(EVENTS.PLANET_FOCUSSED, () => this.resetScroll());
     document.addEventListener(EVENTS.PLANET_UNFOCUSSED, () => this.resetScroll());
     document.addEventListener(EVENTS.PLANET_CHANGED, () => this.resetScroll());
+    window.addEventListener('resize', () => this.resetScroll());
     this.resetScroll();
     this.scrollSystem.setOnScroll(this.customOnScroll.bind(this));
   }
