@@ -12,7 +12,7 @@ import { setupComponents } from './components/componentLoader';
 import { addLight, addCubeMap, makeCamera, makeControls, makeRenderer, onWindowResized, setupPointer } from './3d/sceneSetup';
 import { addTextAccretionDisk } from './3d/quasar/textAccretionDisk';
 import { loading } from './3d/loadingState';
-import { ConditionalScrollSystem } from './conditionalScrollSystem';
+import { ConditionalScrollSystem } from './components/scrollSystem/conditionalScrollSystem';
 
 // Foundation
 const scene = new THREE.Scene();

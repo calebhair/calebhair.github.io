@@ -1,4 +1,4 @@
-import { CUSTOM_MOUSE_SCROLL_FACTOR, CUSTOM_TOUCH_SCROLL_FACTOR, SCROLL_METHOD } from './constants';
+import { CUSTOM_MOUSE_SCROLL_FACTOR, CUSTOM_TOUCH_SCROLL_FACTOR, SCROLL_METHOD } from '../../constants';
 
 /**
 Custom scrolling that operates on custom conditions instead of element based.

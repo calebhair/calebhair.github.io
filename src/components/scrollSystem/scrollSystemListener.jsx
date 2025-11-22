@@ -1,5 +1,8 @@
 import React from 'react';
 
+/**
+ * A React component that listens to scroll events and delegates them to the provided scroll system.
+ */
 export class ScrollSystemListener extends React.Component {
   render() {
     const { scrollSystem } = this.props;

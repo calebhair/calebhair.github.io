@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
-import { ScrollSystemListener } from '../scrollSystemListener';
+import { ScrollSystemListener } from '../scrollSystem/scrollSystemListener';
 
 export function ScrollArrow({ visible, scrollSystem }) {
   return (

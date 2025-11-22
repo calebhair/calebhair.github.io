@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { EVENTS } from '../../constants';
-import { ScrollSystemListener } from '../scrollSystemListener';
+import { ScrollSystemListener } from '../scrollSystem/scrollSystemListener';
 
 export function ProjectDescription({ visible, scrollSystem }) {
   const [description, setDescription] = useState('placeholder');
