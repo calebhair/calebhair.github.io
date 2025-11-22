@@ -2,9 +2,13 @@
   position: fixed;
   top: 30vmin;
   left: 5vw;
+  max-width: 30vw;
 
   transition: transform 0.5s ease-in-out;
   transform: translateX(-30vw);
+
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .image-container.show-infobox {
@@ -14,6 +18,8 @@
 @media only screen and (max-width: 600px) {
   .image-container {
     position: inherit;
+    max-width: 100vw;
+    display: block;
   }
   .image-container.show-infobox {
     transform: translateX(0);

@@ -1,5 +1,6 @@
 .project-image {
   margin-bottom: 20px;
+  margin-right: 20px;
 }
 
 @media only screen and (min-width: 601px) {
@@ -11,15 +12,12 @@
       rotateX(-4deg)
       rotateY(16deg)
       rotateZ(-4deg);
-    transition: transform 0.4s, margin 0.4s;
-    /*box-shadow: 24px 16px 64px 0 rgba(0, 0, 0, 0.08);*/
+    transition: transform 0.4s, width 0.4s;
   }
 
-  .project-image:hover {
+  .project-image.focused {
     transform: rotateY(0deg) scale(3) translateX(4vw);
-    margin-top: 80px;
-    margin-bottom: 100px;
-    z-index: 1000;
+    z-index: 300;
   }
 }
 
