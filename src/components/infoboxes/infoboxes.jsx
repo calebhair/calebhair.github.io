@@ -42,7 +42,7 @@ export class Infoboxes extends ScrollableElement {
         <Title scrollSystem={this.scrollSystem} />
         <ScrollArrow visible={this.state.visible} scrollSystem={this.scrollSystem} />
         <ProjectDescription visible={this.state.visible} scrollSystem={this.scrollSystem} />
-        <ImageContainer images={this.images} visible={this.state.visible} scrollSystem={this.scrollSystem} />
+        <ImageContainer images={this.images} visible={this.state.visible} mobileScrollSystem={this.scrollSystem} />
       </div>
     );
   }

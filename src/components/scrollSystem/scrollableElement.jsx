@@ -1,5 +1,6 @@
 import React from 'react';
 import { EVENTS, SCROLL_METHOD } from '../../constants';
+import { ConditionalScrollSystem } from './conditionalScrollSystem';
 
 const MARGIN_PX = 0;
 const START_SCROLL_PX = MARGIN_PX;
@@ -10,9 +11,8 @@ const START_SCROLL_PX = MARGIN_PX;
 export class ScrollableElement extends React.Component {
   constructor(props) {
     super(props);
-    this.scrollSystem = props.scrollSystem;
+    this.scrollSystem = props.scrollSystem || new ConditionalScrollSystem();
     this.scrollableRef = React.createRef();
-    this.addEventListeners();
 
     document.addEventListener(EVENTS.PLANET_FOCUSSED, () => this.resetScroll());
     document.addEventListener(EVENTS.PLANET_UNFOCUSSED, () => this.resetScroll());

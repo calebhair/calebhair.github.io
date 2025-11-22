@@ -1,8 +1,9 @@
 import React from 'react';
-import { ScrollSystemListener } from '../../scrollSystem/scrollSystemListener';
 import { ProjectImage } from './projectImage';
+import { ScrollableElement } from '../../scrollSystem/scrollableElement';
+import { ScrollSystemListener } from '../../scrollSystem/scrollSystemListener';
 
-export class ImageContainer extends React.Component {
+export class ImageContainer extends ScrollableElement {
   constructor(props) {
     super(props);
     this.state = { selectedIndex: null, lastSelected: null };
@@ -33,6 +34,11 @@ export class ImageContainer extends React.Component {
     ));
   }
 
+  customOnScroll(change, scrollMethod) {
+    // if (!this.shouldUseMobileScrollSystem) return;
+    return super.customOnScroll(change, scrollMethod);
+  }
+
   onImageClicked(index) {
     const selectedIndex = index === this.state.selectedIndex ? null : index;
     this.setState({ selectedIndex, lastSelected: this.state.selectedIndex });
@@ -44,9 +50,18 @@ export class ImageContainer extends React.Component {
     return null;
   }
 
+  get shouldUseMobileScrollSystem() {
+    return window.innerWidth > 600;
+  }
+
   render() {
+    const scrollSystem = this.shouldUseMobileScrollSystem ? this.scrollSystem : this.props.mobileScrollSystem;
     return (
-      <ScrollSystemListener className={`image-container ${this.props.visible ? 'show-infobox' : ''}`} scrollSystem={this.props.scrollSystem}>
+      <ScrollSystemListener
+        internalRef={this.scrollableRef}
+        className={`image-container ${this.props.visible ? 'show-infobox' : ''}`}
+        scrollSystem={scrollSystem}
+      >
         {this.getImages()}
       </ScrollSystemListener>
     );

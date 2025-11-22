@@ -9,6 +9,7 @@
 
   display: flex;
   flex-wrap: wrap;
+  pointer-events: auto;
 }
 
 .image-container.show-infobox {
