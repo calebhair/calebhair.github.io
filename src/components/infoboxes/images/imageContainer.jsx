@@ -6,11 +6,14 @@ export class ImageContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = { selectedIndex: null, lastSelected: null };
-    document.addEventListener('mousedown', () => this.unfocusImages());
-    document.addEventListener('touchstart', () => this.unfocusImages());
+    document.addEventListener('mousedown', event => this.unfocusImages(event));
+    document.addEventListener('touchstart', event => this.unfocusImages(event));
   }
 
-  unfocusImages() {
+  unfocusImages(event) {
+    // If the clicked element is an image, do not unfocus
+    const clickedImageId = event.target.getAttribute('data-index');
+    if (clickedImageId !== null) return;
     this.setState({ selectedIndex: null, lastSelected: this.state.selectedIndex });
   }
 
@@ -31,7 +34,8 @@ export class ImageContainer extends React.Component {
   }
 
   onImageClicked(index) {
-    this.setState({ selectedIndex: index, lastSelected: this.state.selectedIndex });
+    const selectedIndex = index === this.state.selectedIndex ? null : index;
+    this.setState({ selectedIndex, lastSelected: this.state.selectedIndex });
   }
 
   getZIndex(index) {
