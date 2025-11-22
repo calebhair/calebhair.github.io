@@ -39,9 +39,9 @@ export class ImageContainer extends React.Component {
   }
 
   getZIndex(index) {
-    if (this.state.selectedIndex === index) return 301;
-    if (this.state.lastSelected === index) return 300;
-    return 'inherit';
+    if (this.state.selectedIndex === index) return 320;
+    if (this.state.lastSelected === index) return 310;
+    return null;
   }
 
   render() {

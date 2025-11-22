@@ -15,9 +15,18 @@
     transition: transform 0.4s, width 0.4s;
   }
 
+  .project-image:hover {
+    transform:
+      rotateX(-2deg)
+      rotateY(8deg)
+      rotateZ(-2deg)
+      scale(1.5) translateX(1vw);
+    z-index: 330;
+  }
+
   .project-image.focused {
-    transform: rotateY(0deg) scale(3) translateX(4vw);
-    z-index: 300;
+    transform: scale(3) translateX(4vw);
+    /* z-index handled by react */
   }
 }
 
