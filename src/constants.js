@@ -39,4 +39,10 @@ export const PATHS = {
   QUASAR_ICON: '/img/sidebar/quasar.svg',
 
   CUBEMAP: '/img/',
+
+  LOADING: {
+    QUASAR: '/img/loading/loading_quasar.svg',
+    PLANETS: '/img/loading/loading_planets.svg',
+    STARS: '/img/loading/loading_stars.svg',
+  },
 };
