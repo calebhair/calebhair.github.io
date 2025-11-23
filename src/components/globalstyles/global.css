@@ -2,6 +2,11 @@ body {
   background: black;
   font-family: "Source Code Pro", "Courier New", monospace;
   overflow: hidden;
+  cursor: grab;
+}
+
+body:active {
+  cursor: grabbing;
 }
 
 .above-threejs-canvas {
