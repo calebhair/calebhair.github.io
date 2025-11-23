@@ -1,13 +1,12 @@
 import React from 'react';
 import { EVENTS, PATHS } from '../../constants';
 
-const TRANSITION_SPEED = 500; // ms
-
 export class LoadingScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      totalProgress: 0,
       allLoaded: false,
       planetsLoaded: false,
       blackHoleLoaded: false,
@@ -22,6 +21,9 @@ export class LoadingScreen extends React.Component {
     });
     document.addEventListener(EVENTS.BACKGROUND_LOADED, () => {
       this.updateState({ backgroundLoaded: true });
+    });
+    document.addEventListener(EVENTS.LOADING_UPDATE, (event) => {
+      this.updateState({ totalProgress: event.detail.progress });
     });
 
     document.addEventListener(EVENTS.LOADING_COMPLETE, () => {
@@ -43,6 +45,7 @@ export class LoadingScreen extends React.Component {
     return (
       <div className={`loading-screen ${allLoaded ? 'hide-loading-screen' : ''}`}>
         <div className="content">
+          <div className="loading-msg">Loading...</div>
           <img src={PATHS.LOADING.BLACK_HOLE} alt="" className="blackhole-img" style={this.getStyle(blackHoleLoaded)} />
           <img src={PATHS.LOADING.PLANETS} alt="" className="planets-img" style={this.getStyle(planetsLoaded)} />
           <img src={PATHS.LOADING.STARS} alt="" className="stars-img" style={this.getStyle(backgroundLoaded)} />

@@ -43,6 +43,14 @@ export const loading = {
     },
   },
 
+  get progress() {
+    const totalProgress = this.planets.progress
+      + this.blackHole.progress
+      + this.sceneSetup.progress
+      + this.background.progress;
+    return totalProgress / 4;
+  },
+
   get isCompleted() {
     return this.planets.isCompleted
       && this.blackHole.isCompleted
@@ -52,7 +60,7 @@ export const loading = {
 };
 
 const loadingInterval = setInterval(() => {
-  console.log('loading');
+  document.dispatchEvent(new CustomEvent(EVENTS.LOADING_UPDATE, { detail: { progress: loading.progress } }));
   if (loading.blackHole.isCompleted) document.dispatchEvent(new Event(EVENTS.BLACKHOLE_LOADED));
   if (loading.planets.isCompleted) document.dispatchEvent(new Event(EVENTS.PLANETS_LOADED));
   if (loading.background.isCompleted) document.dispatchEvent(new Event(EVENTS.BACKGROUND_LOADED));
