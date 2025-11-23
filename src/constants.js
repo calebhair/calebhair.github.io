@@ -27,6 +27,9 @@ export const EVENTS = {
 
   INTRO_COMPLETE: 'introComplete',
   LOADING_COMPLETE: 'loadingComplete',
+  BLACKHOLE_LOADED: 'blackHoleLoaded',
+  PLANETS_LOADED: 'planetsLoaded',
+  BACKGROUND_LOADED: 'backgroundLoaded',
 };
 
 export const PATHS = {
@@ -41,7 +44,7 @@ export const PATHS = {
   CUBEMAP: '/img/',
 
   LOADING: {
-    QUASAR: '/img/loading/loading_quasar.svg',
+    BLACK_HOLE: '/img/loading/loading_quasar.svg',
     PLANETS: '/img/loading/loading_planets.svg',
     STARS: '/img/loading/loading_stars.svg',
   },

@@ -12,12 +12,14 @@ const finalTarget = new Vector3().copy(introTarget);
 export function runIntroAnimation() {
   allowUserToControlCamera(false);
   document.addEventListener(EVENTS.LOADING_COMPLETE, () => {
-    smoothlyMoveCamera(initialCameraPos, introTarget,
-      finalCameraPos, finalTarget,
-      true, 4000, true, false,
-      () => {
-        document.dispatchEvent(new Event(EVENTS.INTRO_COMPLETE));
-      });
+    setTimeout(() => {
+      smoothlyMoveCamera(initialCameraPos, introTarget,
+        finalCameraPos, finalTarget,
+        true, 4000, true, false,
+        () => {
+          document.dispatchEvent(new Event(EVENTS.INTRO_COMPLETE));
+        });
+    }, 1500);
   });
 }
 

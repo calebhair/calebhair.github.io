@@ -14,7 +14,7 @@ const loader = new FontLoader();
 
 export function addTextAccretionDisk(scene) {
   loader.load('/SourceCodePro.json', (font) => {
-    let radius = BLACK_HOLE_RADIUS;
+    let radius = BLACK_HOLE_RADIUS + 2;
     loading.blackHole.accretionDiskSize = ACCRETION_WIDTH - BLACK_HOLE_RADIUS;
 
     while (radius < ACCRETION_WIDTH * WIDTH_SCALE_FACTOR) {

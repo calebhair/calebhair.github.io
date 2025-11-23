@@ -7,6 +7,9 @@ export const loading = {
     get progress() {
       return this.planetsLoaded / this.totalPlanets || 0;
     },
+    get isCompleted() {
+      return this.progress >= 1;
+    },
   },
 
   blackHole: {
@@ -21,27 +24,40 @@ export const loading = {
       return this.accretionDiskProgress + this.eventHorizon * 0.1
         || 0;
     },
+    get isCompleted() {
+      return this.progress >= 1;
+    },
   },
 
   sceneSetup: {
     progress: 0,
+    get isCompleted() {
+      return this.progress >= 1;
+    },
   },
 
   background: {
     progress: 0,
+    get isCompleted() {
+      return this.progress >= 1;
+    },
   },
 
   get isCompleted() {
-    return this.planets.progress >= 1
-      && this.blackHole.progress >= 1
-      && this.sceneSetup.progress >= 1
-      && this.background.progress >= 1;
+    return this.planets.isCompleted
+      && this.blackHole.isCompleted
+      && this.sceneSetup.isCompleted
+      && this.background.isCompleted;
   },
 };
 
 const loadingInterval = setInterval(() => {
   console.log('loading');
+  if (loading.blackHole.isCompleted) document.dispatchEvent(new Event(EVENTS.BLACKHOLE_LOADED));
+  if (loading.planets.isCompleted) document.dispatchEvent(new Event(EVENTS.PLANETS_LOADED));
+  if (loading.background.isCompleted) document.dispatchEvent(new Event(EVENTS.BACKGROUND_LOADED));
   if (!loading.isCompleted) return;
+
   clearInterval(loadingInterval);
   document.dispatchEvent(new Event(EVENTS.LOADING_COMPLETE));
 }, 100);
