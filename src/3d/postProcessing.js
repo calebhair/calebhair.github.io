@@ -5,6 +5,9 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass';
 import { OutlinePass } from 'three/addons/postprocessing/OutlinePass';
 import { SMAAPass } from 'three/addons/postprocessing/SMAAPass';
 
+let focusOutlinePass = null;
+let planetsOutlinePass = null;
+
 /**
  * @return {EffectComposer} the post-processing effect composer, so that it can be updated in the main animation loop.
  */
@@ -15,8 +18,11 @@ export function addPostProcessing(scene, camera, renderer) {
   const bloomPass = getBloom();
   composer.addPass(bloomPass);
 
-  outlinePass = getOutlinePass(scene, camera);
-  composer.addPass(outlinePass);
+  focusOutlinePass = getFocusOutlinePass(scene, camera);
+  composer.addPass(focusOutlinePass);
+
+  planetsOutlinePass = getPlanetsOutlinePass(scene, camera);
+  composer.addPass(planetsOutlinePass);
 
   const antialiasing = new SMAAPass();
   composer.addPass(antialiasing);
@@ -25,7 +31,7 @@ export function addPostProcessing(scene, camera, renderer) {
     const resolution = getScreenResolution();
     composer.setSize(resolution.x, resolution.y);
     bloomPass.resolution.copy(resolution);
-    outlinePass.resolution.copy(resolution);
+    focusOutlinePass.resolution.copy(resolution);
   });
 
   return composer;
@@ -42,17 +48,16 @@ export function addBlackholeOutline(scene, camera, composer, blackholeSphere) {
   composer.addPass(blackHoleOutline);
 }
 
-let outlinePass = null; // Expose outline pass for focus
 /**
  * Sets the outline post-processing to only be applied to the provided object.
  * @param object {THREE.Object3D} the object to apply the outline to.
  */
 export function setOutlinedObject(object) {
-  outlinePass.selectedObjects = [object];
+  focusOutlinePass.selectedObjects = [object];
 }
 
 export function clearOutline() {
-  outlinePass.selectedObjects = [];
+  focusOutlinePass.selectedObjects = [];
 }
 
 /**
@@ -71,7 +76,7 @@ function getBloom() {
   );
 }
 
-function getOutlinePass(scene, camera) {
+function getFocusOutlinePass(scene, camera) {
   const outlinePass = new OutlinePass(getScreenResolution(), scene, camera);
   outlinePass.edgeStrength = 3;
   outlinePass.edgeGlow = 1;
@@ -79,4 +84,22 @@ function getOutlinePass(scene, camera) {
   outlinePass.visibleEdgeColor = new THREE.Color(0xffffff);
   outlinePass.hiddenEdgeColor = new THREE.Color(0xffffff);
   return outlinePass;
+}
+
+function getPlanetsOutlinePass(scene, camera) {
+  const outlinePass = new OutlinePass(getScreenResolution(), scene, camera);
+  outlinePass.edgeStrength = 2;
+  outlinePass.edgeGlow = 0;
+  outlinePass.edgeThickness = 0.2;
+  outlinePass.visibleEdgeColor = new THREE.Color(0xaaaaaa);
+  outlinePass.hiddenEdgeColor = new THREE.Color(0x000000);
+  return outlinePass;
+}
+
+/**
+ * Adds an outline to all planets
+ * @param {[Planet]} planets Planet objects
+ */
+export function setPlanetsOutline(planets) {
+  planetsOutlinePass.selectedObjects = planets.map(planet => planet.model);
 }

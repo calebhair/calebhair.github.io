@@ -21,13 +21,13 @@ setupComponents(scrollSystem);
 document.addEventListener(EVENTS.AFTER_PRIORITISED, afterPrioritised, { once: true });
 
 function afterPrioritised() {
-// Foundation
+  // Foundation
   const scene = new THREE.Scene();
   const renderer = makeRenderer();
   const camera = makeCamera();
   const controls = makeControls(scene, renderer, camera);
 
-// Environment
+  // Environment
   addCubeMap(scene);
   addLight(scene);
   const batchedRenderer = new QUARKS.BatchedRenderer();
@@ -37,13 +37,13 @@ function afterPrioritised() {
   const composer = addPostProcessing(scene, camera, renderer); // Do post-processing last
   addBlackholeOutline(scene, camera, composer, blackHoleSphere);
 
-// UI
+  // UI
   setupPointer(camera);
   setupFocusing(camera, controls);
   setupCameraAnimation(camera, controls);
   setupCameraInitialStateForIntroduction(camera, controls);
 
-// Handle window resizing
+  // Handle window resizing
   window.addEventListener('resize', () => {
     onWindowResized(renderer, camera);
   });
@@ -51,11 +51,11 @@ function afterPrioritised() {
   const clock = new THREE.Clock();
   let delta;
 
-  logCameraPosAndRotation(camera);
+  logCameraPosAndRotation(camera); // For testing; must be enabled from variable
 
   loading.sceneSetup.progress = 1;
 
-// Main loop
+  // Main loop
   runIntroAnimation();
 
   function animate() {

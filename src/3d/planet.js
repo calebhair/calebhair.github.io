@@ -1,6 +1,7 @@
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';
 import * as THREE from 'three';
 import { loading } from './loadingState';
+import { setPlanetsOutline } from './postProcessing';
 
 const loader = new GLTFLoader();
 const timePageLoaded = performance.now();
@@ -98,6 +99,9 @@ export class Planet {
     this.scene.add(this.centreParent);
 
     loading.planets.planetsLoaded++;
+    if (loading.planets.planetsLoaded === loading.planets.totalPlanets) {
+      setPlanetsOutline(Planet.planets);
+    }
   }
 
   // Updates the orbit position and rotation
