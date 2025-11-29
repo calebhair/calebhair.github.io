@@ -37,7 +37,11 @@ export class LoadingScreen extends React.Component {
 
   getStyle(loaded) {
     if (this.state.allLoaded) return { opacity: 1 };
-    return { opacity: loaded ? 0.5 : 0.05 };
+    return { opacity: loaded ? 0.5 : 0.1 };
+  }
+
+  componentDidMount() {
+    document.dispatchEvent(new Event(EVENTS.AFTER_PRIORITISED));
   }
 
   render() {

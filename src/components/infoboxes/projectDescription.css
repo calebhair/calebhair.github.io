@@ -1,6 +1,7 @@
 .project-desc {
   display: flex;
   justify-content: center;
+  align-self: center;
 
   width: 24vw;
   margin-top: 10px;

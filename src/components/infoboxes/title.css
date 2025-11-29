@@ -5,6 +5,7 @@
   font-size: 1.5vw;
   text-align: center;
   white-space: nowrap;
+  align-self: center;
 }
 
 .title > h1 {
