@@ -4,7 +4,7 @@ import { ScrollSystemListener } from '../scrollSystem/scrollSystemListener';
 
 export function ScrollArrow({ visible, scrollSystem }) {
   return (
-    <ScrollSystemListener scrollSystem={scrollSystem}>
+    <ScrollSystemListener scrollSystem={scrollSystem} style={{ pointerEvents: 'auto' }}>
       <i className={'scroll-arrow material-symbols-outlined ' + (visible ? 'show-arrow' : '')}>arrow_drop_down</i>
     </ScrollSystemListener>
   );
