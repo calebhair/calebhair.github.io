@@ -83,9 +83,10 @@ export function setupPointer(camera) {
     pointer.y = -(clientY / window.innerHeight) * 2 + 1;
 
     raycaster.setFromCamera(pointer, camera);
-    const { closestModel, closestDistance } = findClosestPlanet(raycaster.ray);
-    if (closestDistance > MINIMUM_DISTANCE_FROM_PLANET_TO_FOCUS) return;
-    focusOnObjectIfValid(closestModel);
+    const { closestPlanet, closestDistance } = findClosestPlanet(raycaster.ray);
+    const leniency = Math.sqrt(camera.position.distanceTo(closestPlanet.model.position) / closestPlanet.planetSize);
+    if (closestDistance - leniency > MINIMUM_DISTANCE_FROM_PLANET_TO_FOCUS) return;
+    focusOnObjectIfValid(closestPlanet.model);
   };
 
   const canvas = document.querySelector('#threejs-canvas');
@@ -97,22 +98,23 @@ export function setupPointer(camera) {
  * Finds the closest planet to a ray from a raycaster, allowing for the planet size,
  * excluding the already focussed planet.
  * @param ray {THREE.Ray} the ray from a raycaster
- * @return {{closestModel: object, closestDistance: number | null}} the closest planet and the distance from its edge to the ray
+ * @return {{closestPlanet: Planet, closestDistance: number | null}} the closest planet and the distance from its edge to the ray
  */
 function findClosestPlanet(ray) {
-  let closestModel = null;
+  let closestPlanet = null;
   let closestDistance = Infinity;
 
-  for (const model of Planet.models) {
+  for (const planet of Planet.planets) {
+    const { model } = planet;
     if (model === followTarget) continue;
     const distanceFromFromPlanetEdgeToRay = ray.distanceToPoint(model.position) - model.userData.planetSize;
     if (distanceFromFromPlanetEdgeToRay > closestDistance) continue;
 
     closestDistance = distanceFromFromPlanetEdgeToRay;
-    closestModel = model;
+    closestPlanet = planet;
   }
 
-  return { closestModel, closestDistance };
+  return { closestPlanet, closestDistance };
 }
 
 function getClientCoords(event) {
