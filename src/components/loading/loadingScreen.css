@@ -16,10 +16,6 @@
   align-items: center;
 }
 
-.hide-loading-screen {
-  opacity: 0;
-}
-
 .content {
   color: white;
   font-family: monospace;
@@ -33,6 +29,7 @@
   width: 100%;
   height: 100%;
   transition: opacity 0.5s;
+  opacity: 0.1;
 }
 
 .blackhole-img {

@@ -13,59 +13,57 @@ import { addLight, addCubeMap, makeCamera, makeControls, makeRenderer, onWindowR
 import { addTextAccretionDisk } from './3d/quasar/textAccretionDisk';
 import { loading } from './3d/loadingState';
 import { ConditionalScrollSystem } from './components/scrollSystem/conditionalScrollSystem';
-import { EVENTS } from './constants';
 
 // Prioritised
 const scrollSystem = new ConditionalScrollSystem();
-setupComponents(scrollSystem);
-document.addEventListener(EVENTS.AFTER_PRIORITISED, afterPrioritised, { once: true });
+document.addEventListener('DOMContentLoaded', () => {
+  setupComponents(scrollSystem);
+});
 
-function afterPrioritised() {
-  // Foundation
-  const scene = new THREE.Scene();
-  const renderer = makeRenderer();
-  const camera = makeCamera();
-  const controls = makeControls(scene, renderer, camera);
+// Foundation
+const scene = new THREE.Scene();
+const renderer = makeRenderer();
+const camera = makeCamera();
+const controls = makeControls(scene, renderer, camera);
 
-  // Environment
-  addCubeMap(scene);
-  addLight(scene);
-  const batchedRenderer = new QUARKS.BatchedRenderer();
-  const updateAccretionDiskFlows = addTextAccretionDisk(scene);
-  addPlanets(scene);
-  const blackHoleSphere = addBlackHole(scene, camera);
-  const composer = addPostProcessing(scene, camera, renderer); // Do post-processing last
-  addBlackholeOutline(scene, camera, composer, blackHoleSphere);
+// Environment
+addCubeMap(scene);
+addLight(scene);
+const batchedRenderer = new QUARKS.BatchedRenderer();
+const updateAccretionDiskFlows = addTextAccretionDisk(scene);
+addPlanets(scene);
+const blackHoleSphere = addBlackHole(scene, camera);
+const composer = addPostProcessing(scene, camera, renderer); // Do post-processing last
+addBlackholeOutline(scene, camera, composer, blackHoleSphere);
 
-  // UI
-  setupPointer(camera);
-  setupFocusing(camera, controls);
-  setupCameraAnimation(camera, controls);
-  setupCameraInitialStateForIntroduction(camera, controls);
+// UI
+setupPointer(camera);
+setupFocusing(camera, controls);
+setupCameraAnimation(camera, controls);
+setupCameraInitialStateForIntroduction(camera, controls);
 
-  // Handle window resizing
-  window.addEventListener('resize', () => {
-    onWindowResized(renderer, camera);
-  });
+// Handle window resizing
+window.addEventListener('resize', () => {
+  onWindowResized(renderer, camera);
+});
 
-  const clock = new THREE.Clock();
-  let delta;
+const clock = new THREE.Clock();
+let delta;
 
-  logCameraPosAndRotation(camera); // For testing; must be enabled from variable
+logCameraPosAndRotation(camera); // For testing; must be enabled from variable
 
-  loading.sceneSetup.progress = 1;
+loading.sceneSetup.progress = 1;
 
-  // Main loop
-  runIntroAnimation();
+// Main loop
+runIntroAnimation();
 
-  function animate() {
-    delta = clock.getDelta();
-    Planet.updateAllPlanets();
-    updateFocus();
-    updateAccretionDiskFlows(delta);
-    batchedRenderer.update(delta); // Update black hole particles
-    composer.render(delta); // Render with post-processing
-  }
-
-  renderer.setAnimationLoop(animate);
+function animate() {
+  delta = clock.getDelta();
+  Planet.updateAllPlanets();
+  updateFocus();
+  updateAccretionDiskFlows(delta);
+  batchedRenderer.update(delta); // Update black hole particles
+  composer.render(delta); // Render with post-processing
 }
+
+renderer.setAnimationLoop(animate);

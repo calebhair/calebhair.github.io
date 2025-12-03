@@ -5,6 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About Caleb Hair</title>
+
+  <script src="src/components/loading/loadingScreen.js"></script>
+
   <link rel="stylesheet" href="src/components/globalstyles/global.css">
   <link rel="stylesheet" href="src/components/globalstyles/boilerplate.css">
   <link rel="stylesheet" href="src/components/infoboxes/infoboxes.css">
@@ -17,7 +20,7 @@
   <link rel="stylesheet" href="src/components/navBtn/navBtn.css">
   <link rel="stylesheet" href="src/components/globalstyles/borders.css">
   <link rel="stylesheet" href="src/components/globalstyles/scrollbar.css">
-  <link rel="stylesheet" href="src/components/loading/loading.css">
+  <link rel="stylesheet" href="src/components/loading/loadingScreen.css">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,7 +47,16 @@
   <script type="module" src="src/index.js"></script>
 
   <div class="above-threejs-canvas">
-    <div class="loading-screen-container"></div>
+    <div class="loading-screen-container">
+      <div class="loading-screen">
+        <div class="content">
+          <div class="loading-msg">Loading...</div>
+          <img src="/img/loading/loading_quasar.svg" alt="" class="blackhole-img" />
+          <img src="/img/loading/loading_planets.svg" alt="" class="planets-img" />
+          <img src="/img/loading/loading_stars.svg" alt="" class="stars-img" />
+        </div>
+      </div>
+    </div>
     <div class="nav-btn-container"></div>
     <div class="sidebar-container"></div>
     <div class="project-info-container"></div>

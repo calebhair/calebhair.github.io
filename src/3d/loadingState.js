@@ -1,5 +1,7 @@
 import { EVENTS } from '../constants';
 
+// todo refactor
+
 export const loading = {
   planets: {
     planetsLoaded: 0,
@@ -59,8 +61,8 @@ export const loading = {
   },
 };
 
+// Use polling to allow for more precise loading, if I add that
 const loadingInterval = setInterval(() => {
-  document.dispatchEvent(new CustomEvent(EVENTS.LOADING_UPDATE, { detail: { progress: loading.progress } }));
   if (loading.blackHole.isCompleted) document.dispatchEvent(new Event(EVENTS.BLACKHOLE_LOADED));
   if (loading.planets.isCompleted) document.dispatchEvent(new Event(EVENTS.PLANETS_LOADED));
   if (loading.background.isCompleted) document.dispatchEvent(new Event(EVENTS.BACKGROUND_LOADED));
