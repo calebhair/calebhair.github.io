@@ -1,4 +1,7 @@
-document.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setupLoading);
+else setupLoading();
+
+function setupLoading() {
   const loadingScreen = document.querySelector('.loading-screen');
   const blackholeImg = document.querySelector('.blackhole-img');
   const planetsImg = document.querySelector('.planets-img');
@@ -40,4 +43,4 @@ document.addEventListener('DOMContentLoaded', () => {
   function onLoadingComplete(element) {
     element.style.opacity = LOADING_COMPLETE_OPACITY;
   }
-});
+}

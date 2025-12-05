@@ -16,9 +16,14 @@ import { ConditionalScrollSystem } from './components/scrollSystem/conditionalSc
 
 // Prioritised
 const scrollSystem = new ConditionalScrollSystem();
-document.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    setupComponents(scrollSystem);
+  });
+}
+else {
   setupComponents(scrollSystem);
-});
+}
 
 // Foundation
 const scene = new THREE.Scene();
