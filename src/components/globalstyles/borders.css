@@ -11,12 +11,12 @@
   mask-composite: exclude;
   border-radius: 10px;
 
-  background: linear-gradient(45deg,
-  #000000 0%,
-  #ffff99 8%,
-  #ffbb22 14%,
-  #aaaaaa 15%,
-  #fff 100%
+  background: linear-gradient(var(--border-angle),
+    #000000 0%,
+    #ffff99 8%,
+    #ffbb22 14%,
+    #aaaaaa 15%,
+    #fff 100%
   );
 }
 

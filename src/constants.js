@@ -30,6 +30,7 @@ export const EVENTS = {
   BLACKHOLE_LOADED: 'blackHoleLoaded',
   PLANETS_LOADED: 'planetsLoaded',
   BACKGROUND_LOADED: 'backgroundLoaded',
+  UPDATE_BORDERS: 'updateBorders',
 };
 
 export const PATHS = {

@@ -4,6 +4,7 @@ import { focusOnObjectIfValid, followTarget, setupFocusZooming } from './focus';
 import { MINIMUM_DISTANCE_FROM_PLANET_TO_FOCUS, PATHS } from '../constants';
 import { loading } from './loadingState';
 import { CustomArcballControls } from './controller';
+import { getClientCoords } from '../common';
 
 export async function addCubeMap(scene) {
   // Background (made with https://jaxry.github.io/panorama-to-cubemap/ and https://www.spacespheremaps.com/silver-and-gold-nebulae-spheremaps/)
@@ -115,17 +116,4 @@ function findClosestPlanet(ray) {
   }
 
   return { closestPlanet, closestDistance };
-}
-
-function getClientCoords(event) {
-  let clientX, clientY;
-  if (event.changedTouches) {
-    clientX = event.changedTouches[0].clientX;
-    clientY = event.changedTouches[0].clientY;
-  }
-  else {
-    clientX = event.clientX;
-    clientY = event.clientY;
-  }
-  return { clientX, clientY };
 }

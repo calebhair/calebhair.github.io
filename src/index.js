@@ -13,16 +13,16 @@ import { addLight, addCubeMap, makeCamera, makeControls, makeRenderer, onWindowR
 import { addTextAccretionDisk } from './3d/quasar/textAccretionDisk';
 import { loading } from './3d/loadingState';
 import { ConditionalScrollSystem } from './components/scrollSystem/conditionalScrollSystem';
+import { setupBorders } from './components/borders';
 
 // Prioritised
 const scrollSystem = new ConditionalScrollSystem();
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    setupComponents(scrollSystem);
-  });
-}
-else {
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', onDOMContentLoaded);
+else onDOMContentLoaded();
+
+function onDOMContentLoaded() {
   setupComponents(scrollSystem);
+  setupBorders();
 }
 
 // Foundation
