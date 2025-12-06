@@ -1,3 +1,7 @@
+.nav-btn-container {
+  z-index: 100;
+}
+
 .nav-btn {
   margin: 20px;
   width: 12vmin;
@@ -8,9 +12,11 @@
   background: rgba(0, 0, 0, 0.5);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
+  box-shadow: 2px 0 15px 7px #222222;
   transition: opacity 0.3s linear, transform 1s ease-in-out;
 
   pointer-events: auto;
+  z-index: 100;
 }
 
 .nav-btn.clicked {

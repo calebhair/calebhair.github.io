@@ -38,6 +38,7 @@ export class Infoboxes extends ScrollableElement {
   render() {
     return (
       <div ref={this.scrollableRef} className="scrollable-region">
+        <div className={`mobile-fade ${this.state.visible ? 'show' : ''}`}></div>
         <div className="spacer"></div>
         <Title scrollSystem={this.scrollSystem} />
         <ScrollArrow visible={this.state.visible} scrollSystem={this.scrollSystem} />

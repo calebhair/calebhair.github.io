@@ -12,7 +12,7 @@
 
 .infobox {
   position: relative;
-  z-index: 200;
+  z-index: 50;
   background: rgba(0, 0, 0, 0.5);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
@@ -36,6 +36,10 @@
   flex-direction: column;
 }
 
+.mobile-fade {
+  visibility: hidden;
+}
+
 @media only screen and (max-width: 600px) {
   .project-info-container {
     justify-content: flex-end;
@@ -56,5 +60,22 @@
     pointer-events: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+  }
+
+  .mobile-fade {
+    visibility: visible;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 20vh;
+    z-index: 75;
+    opacity: 0;
+    background: linear-gradient(to bottom, black, rgba(0, 0, 0, 0));
+    transition: opacity 1s;
+  }
+
+  .mobile-fade.show {
+    opacity: 1;
   }
 }
