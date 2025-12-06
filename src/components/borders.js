@@ -15,7 +15,6 @@ export function setupBorders() {
   document.addEventListener('touchmove', updateFromPointerEvent);
   document.addEventListener('mousedown', event => lastPointerDownEvent = event);
   document.addEventListener('touchstart', event => lastPointerDownEvent = event);
-  setInterval(updateBorderedElements, 500); // todo TEMPORARY
 }
 
 function updateFromPointerEvent(event) {
