@@ -66,11 +66,12 @@ export function makeControls(scene, renderer, camera) {
 }
 
 export function addLight(scene) {
-  const light = new THREE.PointLight(0xffffff, 1, 0, 0);
-  light.position.set(0, 0, 0);
-  scene.add(light);
+  const blackHoleLight = new THREE.PointLight(0xffffff, 2, 0, 0);
+  blackHoleLight.position.set(0, 0, 0);
+  scene.add(blackHoleLight);
 
-  return light;
+  const ambientLight = new THREE.AmbientLight(0xaaaaaa);
+  scene.add(ambientLight);
 }
 
 export function setupPointer(camera) {
