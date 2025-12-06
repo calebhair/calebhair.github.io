@@ -3,6 +3,7 @@ import React from 'react';
 import { ProjectImage } from './projectImage';
 import { ScrollableElement } from '../../scrollSystem/scrollableElement';
 import { ScrollSystemListener } from '../../scrollSystem/scrollSystemListener';
+import { EVENTS } from '../../../constants';
 
 export class ImageContainer extends ScrollableElement {
   constructor(props) {
@@ -20,6 +21,7 @@ export class ImageContainer extends ScrollableElement {
   }
 
   getImages() {
+    // TODO optimise
     return this.props.images?.map((image, index) => (
       <ProjectImage
         key={index}
@@ -68,6 +70,10 @@ export class ImageContainer extends ScrollableElement {
 
   get shouldUseMobileScrollSystem() {
     return window.innerWidth > 600;
+  }
+
+  componentDidUpdate() {
+    document.dispatchEvent(new Event(EVENTS.UPDATE_BORDERS));
   }
 
   render() {

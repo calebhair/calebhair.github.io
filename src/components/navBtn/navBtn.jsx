@@ -19,12 +19,8 @@ export class NavBtn extends React.Component {
     this.addEventListeners();
   }
 
-  updateState(newState) {
-    this.setState({ ...this.state, ...newState });
-  }
-
   setNavState(newNavState) {
-    this.updateState({ navState: newNavState });
+    this.setState({ navState: newNavState });
   }
 
   addEventListeners() {
@@ -41,7 +37,7 @@ export class NavBtn extends React.Component {
     });
 
     document.addEventListener(EVENTS.INTRO_COMPLETE, () => {
-      this.updateState({ moveOffscreen: false });
+      this.setState({ moveOffscreen: false });
     });
   }
 

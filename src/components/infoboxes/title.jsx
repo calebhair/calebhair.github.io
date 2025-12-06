@@ -1,62 +1,67 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react';
+import React from 'react';
 import { EVENTS } from '../../constants';
 import { ScrollSystemListener } from '../scrollSystem/scrollSystemListener';
 
 const marginEm = 4;
 
-export function Title({ scrollSystem }) {
-  const [title, setTitle] = useState('placeholder');
-  const [visible, setVisible] = useState(false);
-  const [widthEm, setWidthEm] = useState(0);
-  const [textOpacity, setTextOpacity] = useState(0);
-  addEventListeners(setTitle, setVisible, setWidthEm, setTextOpacity);
+export class Title extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: 'placeholder',
+      visible: false,
+      widthEm: 0,
+      textOpacity: 0,
+    };
+    this.scrollSystem = props.scrollSystem;
+    this.addEventListeners();
+  }
 
-  return (
-    <ScrollSystemListener
-      className={`infobox title border ${visible ? 'show-infobox' : ''}`}
-      style={{ width: `${widthEm}em` }}
-      scrollSystem={scrollSystem}
-    >
-      <h1 className="info" style={{ opacity: textOpacity }}>
-        { title }
-      </h1>
-    </ScrollSystemListener>
-  );
-}
+  addEventListeners() {
+    // Showing or hiding the title has two parts, the box and the text
+    const secondAnimationDelay = 200;
+    document.addEventListener(EVENTS.PLANET_FOCUSSED, (event) => {
+      const { name } = event.detail;
+      this.setState({
+        visible: true, widthEm: name.length + marginEm
+      });
+      setTimeout(() => {
+        this.setState({ title: name, textOpacity: 1 });
+      }, secondAnimationDelay);
+    });
 
-let eventListenersAdded = false;
-function addEventListeners(setTitle, setVisible, setWidthEm, setTextOpacity) {
-  if (eventListenersAdded) return;
-  eventListenersAdded = true;
+    document.addEventListener(EVENTS.PLANET_UNFOCUSSED, () => {
+      this.setState({ textOpacity: 0 });
+      setTimeout(() => {
+        this.setState({ widthEm: 0, visible: false });
+      }, secondAnimationDelay / 2);
+    });
 
-  // Showing or hiding the title has two parts, the box and the text
-  const secondAnimationDelay = 200;
-  document.addEventListener(EVENTS.PLANET_FOCUSSED, (event) => {
-    const { name } = event.detail;
-    setVisible(true);
-    setWidthEm(name.length + marginEm);
-    setTimeout(() => {
-      setTitle(name);
-      setTextOpacity(1);
-    }, secondAnimationDelay);
-  });
+    document.addEventListener(EVENTS.PLANET_CHANGED, (event) => {
+      const { name } = event.detail;
+      this.setState({ textOpacity: 0, widthEm: name.length + marginEm });
+      setTimeout(() => {
+        this.setState({ title: name, textOpacity: 1 });
+      }, secondAnimationDelay);
+    });
+  }
 
-  document.addEventListener(EVENTS.PLANET_UNFOCUSSED, () => {
-    setTextOpacity(0);
-    setTimeout(() => {
-      setWidthEm(0);
-      setVisible(false);
-    }, secondAnimationDelay / 2);
-  });
+  componentDidMount() {
+    document.dispatchEvent(new Event(EVENTS.UPDATE_BORDERS));
+  }
 
-  document.addEventListener(EVENTS.PLANET_CHANGED, (event) => {
-    const { name } = event.detail;
-    setTextOpacity(0);
-    setWidthEm(name.length + marginEm);
-    setTimeout(() => {
-      setTitle(name);
-      setTextOpacity(1);
-    }, secondAnimationDelay);
-  });
+  render() {
+    const { visible, widthEm, textOpacity, title } = this.state;
+    return (
+      <ScrollSystemListener
+        className={`infobox title border ${visible ? 'show-infobox' : ''}`}
+        style={{ width: `${widthEm}em` }}
+        scrollSystem={this.scrollSystem}
+      >
+        <h1 className="info" style={{ opacity: textOpacity }}>
+          { title }
+        </h1>
+      </ScrollSystemListener>
+    );
+  }
 }
