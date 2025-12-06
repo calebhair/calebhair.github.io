@@ -5,13 +5,16 @@ import { NavBtn } from './navBtn/navBtn';
 import { Sidebar } from './sidebar/sidebar';
 import { planetDefinitions } from '../planets';
 import { Infoboxes } from './infoboxes/infoboxes';
+import { Tutorial } from './tutorial/tutorial';
 
 export function setupComponents(scrollSystem) {
-  const sidebarContainer = createRoot(document.getElementsByClassName('sidebar-container')[0]);
-  const navBtnContainer = createRoot(document.getElementsByClassName('nav-btn-container')[0]);
-  const projectInfoContainer = createRoot(document.getElementsByClassName('project-info-container')[0]);
+  const sidebarContainer = createRoot(document.querySelector('.sidebar-container'));
+  const navBtnContainer = createRoot(document.querySelector('.nav-btn-container'));
+  const projectInfoContainer = createRoot(document.querySelector('.project-info-container'));
+  const tutorialContainer = createRoot(document.querySelector('.tutorial-container'));
 
   navBtnContainer.render(<NavBtn />);
   sidebarContainer.render(<Sidebar planetJsonsToShow={planetDefinitions} />);
   projectInfoContainer.render(<Infoboxes scrollSystem={scrollSystem} />);
+  tutorialContainer.render(<Tutorial />);
 }
