@@ -268,7 +268,10 @@ body {
   }
 }
 
+.tutorial-icons {
+  transition: opacity 1s;
+}
+
 .hide-tutorial {
   opacity: 0;
-  transition: opacity 1s;
 }
