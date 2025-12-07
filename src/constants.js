@@ -14,6 +14,19 @@ export const NAV_BTN_STATES = {
   Focussed: 'focussed',
 };
 
+export const TUTORIAL_STATE = {
+  UNSTARTED: 0,
+  ROTATION_COMPLETE: 1,
+  ZOOM_COMPLETE: 2,
+  PAN_COMPLETE: 3,
+};
+
+export const MOUSE_BTNS = {
+  LEFT: 0,
+  MIDDLE: 1,
+  RIGHT: 2,
+};
+
 export const EVENTS = {
   SIDEBAR_OPENED: 'sidebarOpened',
   SIDEBAR_CLOSED: 'sidebarClosed',

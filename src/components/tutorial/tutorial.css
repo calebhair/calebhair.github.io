@@ -83,6 +83,7 @@ body {
   top: 50px;
 }
 
+
 .reference-object.rotate-animation {
   animation-name: reference-rotate;
 }
@@ -265,4 +266,9 @@ body {
   to {
     content: var(--two-finger-icon);
   }
+}
+
+.hide-tutorial {
+  opacity: 0;
+  transition: opacity 1s;
 }
