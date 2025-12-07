@@ -2,7 +2,7 @@
   position: fixed;
   left: 50%;
   bottom: 20px;
-  transform: translateX(-50%);
+  transform: translateX(-75%);
 }
 
 .static-floor {
@@ -36,7 +36,6 @@
   transform-style: preserve-3d;
   border-radius: 5px;
 
-  animation-name: reference-rotate;
   animation-iteration-count: infinite;
   animation-duration: 2s;
 }
@@ -67,12 +66,11 @@ body {
 .tutorial-icon {
   color: white;
   position: absolute;
-  left: 150%;
+  left: 120%;
 
   width: 50px;
   height: 50px;
 
-  animation-name: mouse-rotate;
   animation-iteration-count: infinite;
   animation-duration: 2s;
 }
@@ -83,6 +81,17 @@ body {
 
 .touch-icon {
   top: 50px;
+}
+
+.reference-object.rotate-animation {
+  animation-name: reference-rotate;
+}
+
+.mouse-icon.rotate-animation {
+  animation-name: mouse-rotate;
+}
+
+.touch-icon.rotate-animation {
   animation-name: mouse-rotate, touch-rotate-override;
 }
 
@@ -128,5 +137,132 @@ body {
   }
   to {
     content: var(--one-finger-icon);
+  }
+}
+
+
+.reference-object.zoom-animation {
+  animation-name: reference-zoom;
+}
+
+.mouse-icon.zoom-animation {
+  animation-name: mouse-zoom;
+}
+
+.touch-icon.zoom-animation {
+  animation-name: mouse-zoom, touch-zoom-override;
+}
+
+@keyframes reference-zoom {
+  0% {
+    opacity: 0;
+    transform:
+      scale(1)
+      translate(-50%, -50%)
+      rotateX(50deg)
+      rotateZ(0deg);
+  }
+  10% {
+    opacity: 1;
+    transform:
+      scale(1)
+      translate(-50%, -50%)
+      rotateX(50deg)
+      rotateZ(0deg);
+  }
+  90%, 100% {
+    opacity: 1;
+    transform:
+      scale(2)
+      translate(-25%, -25%)
+      rotateX(50deg)
+      rotateZ(0deg);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes mouse-zoom {
+  0% {
+    opacity: 0;
+    content: var(--mouse-scroll-icon);
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    content: var(--mouse-scroll-icon);
+  }
+}
+
+@keyframes touch-zoom-override {
+  from {
+    content: var(--pinch-zoom-in);
+  }
+  to {
+    content: var(--pinch-zoom-in);
+  }
+}
+
+
+.reference-object.pan-animation {
+  animation-name: reference-pan;
+}
+
+.mouse-icon.pan-animation {
+  animation-name: mouse-pan;
+}
+
+.touch-icon.pan-animation {
+  animation-name: mouse-pan, touch-pan-override;
+}
+
+@keyframes reference-pan {
+  0%, 10% {
+    transform:
+      translate(-50%, -50%)
+      rotateX(50deg)
+      rotateZ(0deg);
+  }
+  90%, 100% {
+    transform:
+      translate(-100%, -50%)
+      rotateX(50deg)
+      rotateZ(0deg);
+  }
+}
+
+@keyframes mouse-pan {
+  0% {
+    left: 150%;
+    opacity: 0;
+    content: var(--right-click-icon);
+  }
+  10% {
+    left: 150%;
+    opacity: 1;
+  }
+  90% {
+    left: 110%;
+    opacity: 1;
+  }
+  100% {
+    left: 110%;
+    opacity: 0;
+    content: var(--right-click-icon);
+  }
+}
+
+@keyframes touch-pan-override {
+  from {
+    content: var(--two-finger-icon);
+  }
+  to {
+    content: var(--two-finger-icon);
   }
 }

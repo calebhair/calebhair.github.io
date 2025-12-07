@@ -6,12 +6,13 @@ export class Tutorial extends React.Component {
   }
 
   render() {
+    const animation = 'pan';
     return (
       <>
         <div className="static-floor"></div>
-        <div className="reference-object"></div>
-        <div className="tutorial-icon mouse-icon"></div>
-        <div className="tutorial-icon touch-icon"></div>
+        <div className={`reference-object ${animation}-animation`}></div>
+        <div className={`tutorial-icon mouse-icon ${animation}-animation`}></div>
+        <div className={`tutorial-icon touch-icon ${animation}-animation`}></div>
       </>
     );
   }
