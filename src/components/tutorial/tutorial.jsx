@@ -1,5 +1,5 @@
 import React from 'react';
-import { MOUSE_BTNS, TUTORIAL_STATE, EVENTS } from '../../constants';
+import { MOUSE_BTNS, TUTORIAL_STATE, EVENTS, COOKIES } from '../../constants';
 
 const progressEvents = [
   {
@@ -41,6 +41,8 @@ const progressAnimations = {
   [TUTORIAL_STATE.PAN_COMPLETE]: 'hide',
 };
 
+const COMPLETE_STATE = TUTORIAL_STATE.PAN_COMPLETE;
+
 export class Tutorial extends React.Component {
   constructor(props) {
     super(props);
@@ -48,8 +50,16 @@ export class Tutorial extends React.Component {
       progress: TUTORIAL_STATE.UNSTARTED,
       hide: true,
     };
-    document.addEventListener(EVENTS.INTRO_COMPLETE, () => this.setState({ hide: false }));
-    progressEvents.forEach((...args) => this.setupProgressEvent(...args));
+
+    if (document.cookie.includes('tutorial_complete=true')) {
+      this.state.prototype = COMPLETE_STATE;
+      return;
+    }
+
+    document.addEventListener(EVENTS.INTRO_COMPLETE, () => {
+      progressEvents.forEach((...args) => this.setupProgressEvent(...args));
+      this.setState({ hide: false });
+    });
     document.addEventListener('touchstart', () => this.touchDown = true);
     document.addEventListener('touchend', () => this.touchDown = false);
   }
@@ -81,14 +91,21 @@ export class Tutorial extends React.Component {
       if (this.touchDown) {
         setTimeout(() => this.updateProgress(tutorialState), 500);
       }
-      else this.setState({ progress: tutorialState });
+      else {
+        this.setState({ progress: tutorialState });
+        if (tutorialState === COMPLETE_STATE) this.onComplete();
+      }
     }
     return tutorialState <= this.state.progress;
   }
 
+  onComplete() {
+    document.cookie = `${COOKIES.TUTORIAL_COMPLETE}=true`;
+  }
+
   render() {
     const animation = progressAnimations[this.state.progress];
-    const hide = this.state.hide || this.state.progress === TUTORIAL_STATE.PAN_COMPLETE;
+    const hide = this.state.hide || this.state.progress === COMPLETE_STATE;
     return (
       <div className={`tutorial-icons ${hide ? 'hide-tutorial' : ''}`}>
         <div className="static-floor"></div>

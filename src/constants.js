@@ -63,3 +63,7 @@ export const PATHS = {
     STARS: '/img/loading/loading_stars.svg',
   },
 };
+
+export const COOKIES = {
+  TUTORIAL_COMPLETE: 'tutorial_complete',
+};
