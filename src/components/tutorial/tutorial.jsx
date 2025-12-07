@@ -10,7 +10,8 @@ export class Tutorial extends React.Component {
       <>
         <div className="static-floor"></div>
         <div className="reference-object"></div>
-        <i className="material-symbols-outlined prevent-select hand-icon">pan_tool</i>
+        <div className="tutorial-icon mouse-icon"></div>
+        <div className="tutorial-icon touch-icon"></div>
       </>
     );
   }
