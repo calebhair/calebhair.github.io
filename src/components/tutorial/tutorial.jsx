@@ -48,8 +48,10 @@ export class Tutorial extends React.Component {
       progress: TUTORIAL_STATE.UNSTARTED,
       hide: true,
     };
-    progressEvents.forEach((...args) => this.setupProgressEvent(...args));
     document.addEventListener(EVENTS.INTRO_COMPLETE, () => this.setState({ hide: false }));
+    progressEvents.forEach((...args) => this.setupProgressEvent(...args));
+    document.addEventListener('touchstart', () => this.touchDown = true);
+    document.addEventListener('touchend', () => this.touchDown = false);
   }
 
   /**
@@ -75,7 +77,11 @@ export class Tutorial extends React.Component {
   updateProgress(tutorialState) {
     // If the new tutorial state is one step after the current
     if (tutorialState - 1 === this.state.progress) {
-      this.setState({ progress: tutorialState });
+      // If touch is down, wait until it is no longer down, via timeout and recursion
+      if (this.touchDown) {
+        setTimeout(() => this.updateProgress(tutorialState), 500);
+      }
+      else this.setState({ progress: tutorialState });
     }
     return tutorialState <= this.state.progress;
   }
