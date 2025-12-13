@@ -5,6 +5,9 @@
   color: white;
   z-index: 1000;
 
+  display: flex;
+  flex-direction: column;
+
   position: fixed; /* Force sidebar to overlap nav button*/
   top: 0;
   left: 0;
@@ -19,9 +22,32 @@
 }
 
 .sidebar-search {
+  width: 90%;
+  align-self: center;
+  padding: 10px;
+  margin-top: 10px;
+  box-sizing: border-box;
+
   background: none;
-  width: 100%;
-  /*border: none;*/
+  color: white;
+
+  /*border: solid 1px white;*/
+  border: none;
+  border-bottom: #555 1px solid;
+  border-top: #555 1px solid;
+
+  /*border-radius: 10px;*/
+}
+.sidebar-search::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+
+  border-bottom: #555 1px solid;
+  border-top: #555 1px solid;
+}
+.sidebar-search:focus {
+
 }
 
 @media only screen and (max-width: 600px) {
@@ -44,6 +70,7 @@
 
 .material-symbols-outlined.sidebar-top-btn { /* Override font size like this, else it doesn't work */
   font-size: 300%;
+  cursor: pointer;
   transition: font-size 0.3s, opacity 0.1s;
 }
 .material-symbols-outlined.sidebar-top-btn:hover {

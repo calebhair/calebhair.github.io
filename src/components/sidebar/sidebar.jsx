@@ -88,7 +88,7 @@ export class Sidebar extends React.Component {
             />
           </div>
 
-          <input type="text" className="sidebar-search" placeholder="Search..." />
+          <input type="text" className="sidebar-search" placeholder="Search projects by tag or name" />
 
           {this.planetEntries}
         </div>
