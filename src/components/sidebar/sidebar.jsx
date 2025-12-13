@@ -4,18 +4,18 @@ import {
 } from '../../3d/focus';
 import { Planet } from '../../3d/planet';
 import { moveToOverviewPos, animating } from '../../3d/cameraAnimation';
-import { EVENTS, PATHS } from '../../constants';
+import { EVENTS } from '../../constants';
 import { SidebarEntry } from './sidebarEntry';
-import {SidebarBtn} from "./sidebarBtn";
+import { SidebarBtn } from './sidebarBtn';
 
 export class Sidebar extends React.Component {
   constructor(props) {
     super(props);
+    this.addEventListeners();
     this.state = {
       visible: false,
+      planetEntriesToDisplay: this.makePlanetEntries(props.planetJsonsToShow),
     };
-    this.addEventListeners();
-    this.planetEntries = this.makePlanetEntries(props.planetJsonsToShow);
   }
 
   addEventListeners() {
@@ -49,6 +49,16 @@ export class Sidebar extends React.Component {
     this.setState({ visible: false });
     document.dispatchEvent(new Event(EVENTS.SET_NAV_BTN_DEFAULT));
   };
+
+  onSearchbarChange(searchQuery) {
+    const results = this.props.planetJsonsToShow.filter((planet) => {
+      const formattedSearchQuery = searchQuery.trim().toLowerCase();
+      const nameMatches = planet.name.toLowerCase().includes(formattedSearchQuery);
+      const tagMatches = planet.tags?.some(tag => tag.name.toLowerCase().includes(formattedSearchQuery));
+      return nameMatches || tagMatches;
+    });
+    this.setState({ planetEntriesToDisplay: this.makePlanetEntries(results) });
+  }
 
   makePlanetEntries(planetJsons) {
     return planetJsons.map((planetJson, planetIndex) => (
@@ -88,9 +98,15 @@ export class Sidebar extends React.Component {
             />
           </div>
 
-          <input type="text" className="sidebar-search" placeholder="Search projects by tag or name" />
+          <input
+            type="text"
+            className="sidebar-search"
+            placeholder="Search projects by tag or name"
+            onChange={event => this.onSearchbarChange(event.target.value)}
+            autoComplete="off"
+          />
 
-          {this.planetEntries}
+          {this.state.planetEntriesToDisplay}
         </div>
       </div>
     );
