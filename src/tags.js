@@ -1,8 +1,8 @@
 export const tagDefinitions = {
   PYTHON: {
     name: 'Python',
-    primaryColor: '#08f',
-    secondaryColor: '#cc0',
+    primaryColor: '#00f',
+    secondaryColor: '#ff0',
     textColor: '#fff',
   },
 };

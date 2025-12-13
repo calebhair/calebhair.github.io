@@ -10,7 +10,18 @@ export class TagContainer extends React.Component {
 
   makeTags() {
     return this.props.tags?.map((tag, index) => (
-      <p key={index} className="tag">{tag.name}</p>
+      <div
+        key={index}
+        className="tag-background"
+        style={{
+          '--primary-color': tag.primaryColor,
+          '--secondary-color': tag.secondaryColor,
+        }}
+      >
+        <p className="tag" style={{ color: tag.textColor }}>
+          {tag.name}
+        </p>
+      </div>
     ));
   }
 
