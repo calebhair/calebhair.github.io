@@ -1,0 +1,14 @@
+.tag-container {
+  margin: 10px;
+  margin-bottom: 0;
+}
+
+.tag {
+  width: fit-content;
+  padding: 4px;
+  font-size: 7px;
+
+  border: solid 1px #ccc;
+  border-radius: 20px;
+
+}

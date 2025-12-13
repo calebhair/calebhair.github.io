@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { Planet } from './3d/planet';
 import { loading } from './3d/loadingState';
+import { tagDefinitions as TAGS } from './tags';
 
 export const planetDefinitions = [
   {
@@ -15,6 +16,11 @@ export const planetDefinitions = [
         altText: 'Test image 2' },
       { url: 'https://t4.ftcdn.net/jpg/05/70/07/89/360_F_570078904_cVFitnrIQifQcltWMVTuxTfX67uZy0Av.jpg',
         altText: 'Test image 3' },
+    ],
+
+    tags: [
+      TAGS.PYTHON,
+      TAGS.PYTHON,
     ],
 
     iconPath: 'img/test.svg',

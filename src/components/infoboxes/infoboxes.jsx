@@ -14,25 +14,27 @@ export class Infoboxes extends ScrollableElement {
       visible: false,
     };
     this.images = [];
+    this.tags = [];
     this.addEventListeners();
   }
 
   addEventListeners() {
     document.addEventListener(EVENTS.PLANET_FOCUSSED, (event) => {
       this.setState({ visible: true });
-      this.getImagesFromEvent(event);
+      this.onPlanetUpdate(event);
     });
     document.addEventListener(EVENTS.PLANET_UNFOCUSSED, () => {
       this.setState({ visible: false });
     });
     document.addEventListener(EVENTS.PLANET_CHANGED, (event) => {
-      this.getImagesFromEvent(event);
+      this.onPlanetUpdate(event);
       this.forceUpdate();
     });
   }
 
-  getImagesFromEvent(event) {
+  onPlanetUpdate(event) {
     this.images = event.detail.images;
+    this.tags = event.detail.tags;
   }
 
   render() {
@@ -42,7 +44,7 @@ export class Infoboxes extends ScrollableElement {
         <div className="spacer"></div>
         <Title scrollSystem={this.scrollSystem} />
         <ScrollArrow visible={this.state.visible} scrollSystem={this.scrollSystem} />
-        <ProjectDescription visible={this.state.visible} scrollSystem={this.scrollSystem} />
+        <ProjectDescription visible={this.state.visible} scrollSystem={this.scrollSystem} tags={this.tags} />
         <ImageContainer images={this.images} visible={this.state.visible} mobileScrollSystem={this.scrollSystem} bottomMarginPx={20} />
       </div>
     );

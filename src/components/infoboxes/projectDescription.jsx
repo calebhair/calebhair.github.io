@@ -1,6 +1,7 @@
 import React from 'react';
 import { EVENTS } from '../../constants';
 import { ScrollSystemListener } from '../scrollSystem/scrollSystemListener';
+import { TagContainer } from './tagContainer';
 
 export class ProjectDescription extends React.Component {
   constructor(props) {
@@ -28,10 +29,11 @@ export class ProjectDescription extends React.Component {
   }
 
   render() {
-    const { visible, scrollSystem } = this.props;
+    const { visible, scrollSystem, tags } = this.props;
     const { description } = this.state;
     return (
       <ScrollSystemListener className={`infobox project-desc border ${visible ? 'show-infobox' : ''}`} scrollSystem={scrollSystem}>
+        <TagContainer tags={tags} />
         <div className="desc-text" dangerouslySetInnerHTML={{ __html: description }} />
       </ScrollSystemListener>
     );
