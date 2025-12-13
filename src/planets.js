@@ -20,19 +20,8 @@ export const planetDefinitions = [
 
     tags: [
       TAGS.PYTHON,
-      TAGS.PYTHON,
-      TAGS.PYTHON,
-      TAGS.PYTHON,
-      TAGS.PYTHON,
-      TAGS.PYTHON,
-      TAGS.PYTHON,
-      TAGS.PYTHON,
-      TAGS.PYTHON,
-      TAGS.PYTHON,
-      TAGS.PYTHON,
-      TAGS.PYTHON,
-      TAGS.PYTHON,
-      TAGS.PYTHON,
+      TAGS.JAVASCRIPT,
+      TAGS.CPP,
     ],
 
     iconPath: 'img/test.svg',
