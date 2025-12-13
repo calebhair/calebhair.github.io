@@ -16,7 +16,7 @@
 
 .tag-background {
   margin-right: 5px;
-  margin-bottom: 5px;
+  margin-top: 5px;
   padding: 1px;
 
   background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));

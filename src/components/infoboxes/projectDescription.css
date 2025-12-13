@@ -13,7 +13,6 @@
 .desc-text {
   font-size: 1.1vmax;
   margin: 1vw;
-  margin-top: 0;
 }
 
 @media only screen and (max-width: 600px) {
