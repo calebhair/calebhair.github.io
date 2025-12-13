@@ -6,6 +6,7 @@ import { Planet } from '../../3d/planet';
 import { moveToOverviewPos, animating } from '../../3d/cameraAnimation';
 import { EVENTS, PATHS } from '../../constants';
 import { SidebarEntry } from './sidebarEntry';
+import {SidebarBtn} from "./sidebarBtn";
 
 export class Sidebar extends React.Component {
   constructor(props) {
@@ -43,20 +44,20 @@ export class Sidebar extends React.Component {
     document.dispatchEvent(new Event(EVENTS.SET_NAV_BTN_DEFAULT));
   }
 
-  onOverviewClick() {
+  onRecentreClick() {
     moveToOverviewPos();
     this.setState({ visible: false });
     document.dispatchEvent(new Event(EVENTS.SET_NAV_BTN_DEFAULT));
   };
 
-  makePlanetEntries(planetJsons, setVisible) {
+  makePlanetEntries(planetJsons) {
     return planetJsons.map((planetJson, planetIndex) => (
       <SidebarEntry
         text={planetJson.name}
         onClick={() => {
           if (animating) return;
           focusOnObjectIfValid(Planet.planets[planetIndex].model);
-          setVisible(false);
+          this.setState({ visible: false });
         }}
         classes="planet-entry"
         imageUrl={planetJson.iconPath}
@@ -69,12 +70,26 @@ export class Sidebar extends React.Component {
     return (
       <div style={{ position: 'relative' }}>
         <div className={`sidebar prevent-select ${this.state.visible ? 'show-sidebar' : ''}`}>
-          {/* Back button and re-centre */}
-          <SidebarEntry
-            imageUrl={window.innerWidth < 600 ? PATHS.UP_ARROW : PATHS.BACK_ARROW}
-            onClick={() => this.onCloseBtnClicked()}
-          />
-          <SidebarEntry text="Re-centre" imageUrl={PATHS.QUASAR_ICON} onClick={() => this.onOverviewClick()} classes="overview-entry" />
+          <div className="sidebar-header-buttons">
+            <SidebarBtn
+              iconName={window.innerWidth < 600 ? 'arrow_upward' : 'arrow_back'}
+              title="Back"
+              onClick={() => this.onCloseBtnClicked()}
+            />
+            <SidebarBtn
+              iconName="orbit"
+              title="Re-centre"
+              className="re-centre-btn"
+              onClick={() => this.onRecentreClick()}
+            />
+            <SidebarBtn
+              iconName="settings"
+              title="Settings"
+            />
+          </div>
+
+          <input type="text" className="sidebar-search" placeholder="Search..." />
+
           {this.planetEntries}
         </div>
       </div>

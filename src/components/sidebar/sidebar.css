@@ -18,6 +18,12 @@
   height: 100%;
 }
 
+.sidebar-search {
+  background: none;
+  width: 100%;
+  /*border: none;*/
+}
+
 @media only screen and (max-width: 600px) {
   .sidebar {
     width: 100vw;
@@ -29,42 +35,31 @@
   transform: none;
 }
 
-.sidebar-item {
-  font-size: 0.7em;
-  padding: 1em;
-  padding-right: 3em;
-  border-bottom: #555 1px solid;
-  cursor: pointer;
-
-  transition: font-size 0.3s, text-shadow 0.3s;
+.sidebar-header-buttons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 5px;
 }
 
-.sidebar-item:hover {
-  text-shadow: rgba(255,255,255,1) 0 0 20px;
-  font-size: 1.1em;
+.material-symbols-outlined.sidebar-top-btn { /* Override font size like this, else it doesn't work */
+  font-size: 300%;
+  transition: font-size 0.3s, opacity 0.1s;
+}
+.material-symbols-outlined.sidebar-top-btn:hover {
+  font-size: 400%;
+}
+.material-symbols-outlined.sidebar-top-btn:active {
+  opacity: 0.5;
 }
 
-.sidebar-item-text {
-  display: inline-block;
-}
-
-.sidebar-item-image {
-  width: 4em;
-  height: 4em;
-  margin-right: 2em;
-  transition: transform 0.3s;
-}
-
-.planet-entry:hover .sidebar-item-image {
-  transform: rotateZ(-5deg);
-}
-
-.overview-entry .sidebar-item-image {
+/* Re-centre button TODO apply */
+.re-centre-btn {
   animation: spin 1s linear infinite reverse;
   animation-play-state: paused;
 }
 
-.overview-entry:hover .sidebar-item-image {
+.re-centre-btn:hover {
   animation-play-state: running;
 }
 

@@ -1,0 +1,29 @@
+.sidebar-item {
+  font-size: 0.7em;
+  padding: 1em;
+  padding-right: 3em;
+  border-bottom: #555 1px solid;
+  cursor: pointer;
+
+  transition: font-size 0.3s, text-shadow 0.3s;
+}
+
+.sidebar-item:hover {
+  text-shadow: rgba(255,255,255,1) 0 0 20px;
+  font-size: 1.1em;
+}
+
+.sidebar-item-text {
+  display: inline-block;
+}
+
+.sidebar-item-image {
+  width: 4em;
+  height: 4em;
+  margin-right: 2em;
+  transition: transform 0.3s;
+}
+
+.planet-entry:hover .sidebar-item-image {
+  transform: rotateZ(-5deg);
+}
