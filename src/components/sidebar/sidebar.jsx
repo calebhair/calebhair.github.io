@@ -92,10 +92,10 @@ export class Sidebar extends React.Component {
               className="re-centre-btn"
               onClick={() => this.onRecentreClick()}
             />
-            <SidebarBtn
-              iconName="settings"
-              title="Settings"
-            />
+            {/*<SidebarBtn*/}
+            {/*  iconName="settings"*/}
+            {/*  title="Settings"*/}
+            {/*/>*/}
           </div>
 
           <input
