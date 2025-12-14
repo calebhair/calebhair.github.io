@@ -1,5 +1,5 @@
 .tag-container {
-  margin: 10px;
+  margin: 1vw;
   margin-bottom: 0;
 
   display: flex;
@@ -7,18 +7,18 @@
 }
 
 .tag {
-  font-size: 7px;
-  padding: 4px;
+  font-size: 0.8vw;
+  padding: 0.3vw;
   margin: 0;
   background: rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
+  border-radius: 5vw;
 }
 
 .tag-background {
-  margin-right: 5px;
-  margin-top: 5px;
-  padding: 1px;
+  margin-right: 0.5vw;
+  margin-top: 0.5vw;
+  padding: 0.1vw;
 
   background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  border-radius: 10px;
+  border-radius: 5vw;
 }
