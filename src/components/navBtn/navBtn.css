@@ -7,8 +7,6 @@
   width: 12vmin;
   height: 12vmin;
 
-  cursor: pointer;
-
   border: none;
   background: rgba(0, 0, 0, 0.5);
   -webkit-backdrop-filter: blur(10px);
@@ -17,7 +15,11 @@
   transition: opacity 0.3s linear, transform 1s ease-in-out;
 
   pointer-events: auto;
+  cursor: pointer;
   z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .nav-btn.clicked {
