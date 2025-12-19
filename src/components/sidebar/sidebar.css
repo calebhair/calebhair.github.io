@@ -31,23 +31,14 @@
   background: none;
   color: white;
 
-  /*border: solid 1px white;*/
   border: none;
   border-bottom: #555 1px solid;
   border-top: #555 1px solid;
-
-  /*border-radius: 10px;*/
 }
 .sidebar-search::before {
   content: "";
   position: absolute;
   inset: 5px;
-
-  border-bottom: #555 1px solid;
-  border-top: #555 1px solid;
-}
-.sidebar-search:focus {
-
 }
 
 @media only screen and (max-width: 600px) {

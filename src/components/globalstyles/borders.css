@@ -4,12 +4,12 @@
   position: absolute;
   inset: 0;
 
-  padding: 4px;
+  padding: 0.1vmax;
   mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   mask-composite: exclude;
-  border-radius: 10px;
+  border-radius: 1vmax;
 
   background: linear-gradient(var(--border-angle),
     #000000 0%,
@@ -20,10 +20,6 @@
   );
 }
 
-.nav-btn::before {
-  inset: -5px;
-}
-
-.infobox::before {
-  inset: -3px;
+.border {
+  border-radius: 1vmax;
 }

@@ -1,5 +1,5 @@
-import { EVENTS } from '../constants';
-import { getClientCoords } from '../common';
+import { EVENTS } from '../../constants';
+import { getClientCoords } from '../../common';
 
 let borderedElementsToUpdate = [];
 let lastPointerDownEvent;
