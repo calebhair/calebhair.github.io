@@ -1,9 +1,16 @@
 .project-image {
-  margin-bottom: 20px;
-  margin-right: 20px;
+  margin-bottom: 2vh;
+  margin-right: 2vw;
   cursor: pointer;
 }
 
+.project-image > img {
+  width: 100%;
+  object-fit: contain;
+  border-radius: 1vmax;
+}
+
+/* Note that this is for landscape view! */
 @media only screen and (min-width: 601px) {
   .project-image {
     width: 10vw;
@@ -26,15 +33,10 @@
   }
 
   .project-image.focused {
-    transform: scale(3) translateX(4vw);
+    /* Use scale to avoid flex boundaries */
+    transform: scale(2) translateX(4vw);
     /* z-index handled by react */
   }
-}
-
-.project-image > img {
-  width: 100%;
-  object-fit: contain;
-  border-radius: 1vmax;
 }
 
 @media only screen and (max-width: 600px) {
