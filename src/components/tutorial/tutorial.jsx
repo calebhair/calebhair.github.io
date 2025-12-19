@@ -100,18 +100,22 @@ export class Tutorial extends React.Component {
   }
 
   onComplete() {
-    document.cookie = `${COOKIES.TUTORIAL_COMPLETE}=true`;
+    // document.cookie = `${COOKIES.TUTORIAL_COMPLETE}=true`;
   }
 
   render() {
     const animation = progressAnimations[this.state.progress];
     const hide = this.state.hide || this.state.progress === COMPLETE_STATE;
     return (
-      <div className={`tutorial-icons ${hide ? 'hide-tutorial' : ''}`}>
-        <div className="static-floor"></div>
-        <div className={`reference-object ${animation}-animation`}></div>
-        <div className={`tutorial-icon mouse-icon ${animation}-animation`}></div>
-        <div className={`tutorial-icon touch-icon ${animation}-animation`}></div>
+      <div className={`tutorial ${hide ? 'hide-tutorial' : ''}`}>
+        <div className="reference-environment">
+          <div className="static-floor"></div>
+          <div className={`reference-object ${animation}-animation`}></div>
+        </div>
+        <div className="tutorial-peripheral-icon-container">
+          <div className={`tutorial-peripheral-icon mouse-icon ${animation}-animation`}></div>
+          <div className={`tutorial-peripheral-icon touch-icon ${animation}-animation`}></div>
+        </div>
       </div>
     );
   }

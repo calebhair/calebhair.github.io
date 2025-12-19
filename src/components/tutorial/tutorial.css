@@ -2,39 +2,48 @@
   position: fixed;
   left: 50%;
   bottom: 20px;
-  transform: translateX(-75%);
+  transform: translateX(-50%);
+}
+
+.tutorial {
+  display: flex;
+  flex-direction: row;
+}
+
+.reference-environment {
+  display: flex;
+  flex-flow: row nowrap;
 }
 
 .static-floor {
-  width: 101px;
-  height: 101px;
-  background-size: 10px 10px;
+  width: 20.2vmin;
+  height: 20.2vmin;
+  background-size: 2vmin 2vmin;
+  --grid-line-thickness: 0.2vmin;
   background-image:
-    linear-gradient(to right, grey 1px, transparent 1px),
-    linear-gradient(to bottom, grey 1px, transparent 1px);
+    linear-gradient(to right, grey var(--grid-line-thickness), transparent var(--grid-line-thickness)),
+    linear-gradient(to bottom, grey var(--grid-line-thickness), transparent var(--grid-line-thickness));
 
   transform:
     rotateX(50deg)
     rotateZ(45deg);
   transform-style: preserve-3d;
-  border-radius: 32px;
+  border-radius: 20vmin;
 }
 
 .reference-object {
-  position: absolute;
-  left: 50%;
-  top: 50%;
+  margin-left: -50%;
+  margin-top: 24%;
 
-  width: 40px;
-  height: 40px;
+  width: 7vmin;
+  height: 7vmin;
   background-color: white;
 
   transform:
-    translate(-50%, -50%)
     rotateX(50deg)
     rotateZ(45deg);
   transform-style: preserve-3d;
-  border-radius: 5px;
+  border-radius: 1vmin;
 
   animation-iteration-count: infinite;
   animation-duration: 2s;
@@ -63,24 +72,18 @@ body {
   --pinch-zoom-in: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M3.55 10.5h1.7q.325 0 .538.213T6 11.25t-.213.538T5.25 12H2q-.425 0-.712-.288T1 11V7.75q0-.325.213-.537T1.75 7t.538.213t.212.537v1.7L4.95 7q.225-.225.525-.225T6 7t.225.525T6 8.05zm6.95-6.95L8.05 6q-.225.225-.525.225T7 6t-.225-.525T7 4.95L9.45 2.5h-1.7q-.325 0-.538-.213T7 1.75t.213-.537T7.75 1H11q.425 0 .713.288T12 2v3.25q0 .325-.213.538T11.25 6t-.537-.213t-.213-.537zM14.825 23q-.6 0-1.15-.225t-.975-.65L8.3 17.7q-.3-.3-.275-.737t.325-.738q.4-.4.938-.538t1.062.013l1.65.475V8q0-.425.288-.712T13 7t.713.288T14 8v9.5q0 .5-.4.8t-.875.175l-1.15-.325l2.55 2.55q.125.125.313.213t.387.087H19q.825 0 1.413-.587T21 19v-4q0-.425.288-.712T22 14t.713.288T23 15v4q0 1.65-1.175 2.825T19 23zM16 11q.425 0 .713.288T17 12v3q0 .425-.288.713T16 16t-.712-.288T15 15v-3q0-.425.288-.712T16 11m3 1q.425 0 .713.288T20 13v2q0 .425-.288.713T19 16t-.712-.288T18 15v-2q0-.425.288-.712T19 12'/%3E%3C/svg%3E");
 }
 
-.tutorial-icon {
-  color: white;
-  position: absolute;
-  left: 120%;
+.tutorial-peripheral-icon-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
 
-  width: 50px;
-  height: 50px;
+.tutorial-peripheral-icon {
+  color: white;
+  width: 7vmin;
 
   animation-iteration-count: infinite;
   animation-duration: 2s;
-}
-
-.mouse-icon {
-  top: 0;
-}
-
-.touch-icon {
-  top: 50px;
 }
 
 
@@ -99,13 +102,11 @@ body {
 @keyframes reference-rotate {
   0%, 10% {
     transform:
-      translate(-50%, -50%)
       rotateX(50deg)
       rotateZ(0deg);
   }
   90%, 100% {
     transform:
-      translate(-50%, -50%)
       rotateX(50deg)
       rotateZ(90deg);
   }
@@ -113,20 +114,18 @@ body {
 
 @keyframes mouse-rotate {
   0% {
-    left: 150%;
+    transform: translateX(150%);
     opacity: 0;
     content: var(--left-click-icon);
   }
   10% {
-    left: 150%;
+    transform: translateX(150%);
     opacity: 1;
   }
   90% {
-    left: 110%;
     opacity: 1;
   }
   100% {
-    left: 110%;
     opacity: 0;
     content: var(--left-click-icon);
   }
@@ -159,7 +158,6 @@ body {
     opacity: 0;
     transform:
       scale(1)
-      translate(-50%, -50%)
       rotateX(50deg)
       rotateZ(0deg);
   }
@@ -167,7 +165,6 @@ body {
     opacity: 1;
     transform:
       scale(1)
-      translate(-50%, -50%)
       rotateX(50deg)
       rotateZ(0deg);
   }
@@ -175,7 +172,6 @@ body {
     opacity: 1;
     transform:
       scale(2)
-      translate(-25%, -25%)
       rotateX(50deg)
       rotateZ(0deg);
   }
@@ -226,13 +222,12 @@ body {
 @keyframes reference-pan {
   0%, 10% {
     transform:
-      translate(-50%, -50%)
       rotateX(50deg)
       rotateZ(0deg);
   }
   90%, 100% {
     transform:
-      translate(-100%, -50%)
+      translateX(-150%)
       rotateX(50deg)
       rotateZ(0deg);
   }
@@ -240,20 +235,18 @@ body {
 
 @keyframes mouse-pan {
   0% {
-    left: 150%;
+    transform: translateX(150%);
     opacity: 0;
     content: var(--right-click-icon);
   }
   10% {
-    left: 150%;
+    transform: translateX(150%);
     opacity: 1;
   }
   90% {
-    left: 110%;
     opacity: 1;
   }
   100% {
-    left: 110%;
     opacity: 0;
     content: var(--right-click-icon);
   }
@@ -268,7 +261,7 @@ body {
   }
 }
 
-.tutorial-icons {
+.tutorial {
   transition: opacity 1s;
 }
 
