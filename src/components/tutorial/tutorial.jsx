@@ -53,14 +53,26 @@ export class Tutorial extends React.Component {
       progress: TUTORIAL_STATE.UNSTARTED,
       indicateProgressMade: false,
       hidden: true,
+      planetFocussed: false,
     };
+    this.addEventListeners();
+  }
 
+  addEventListeners() {
     document.addEventListener(EVENTS.INTRO_COMPLETE, () => {
       progressEvents.forEach((...args) => this.setupProgressEvent(...args));
       this.setState({ hidden: false });
     });
+
     document.addEventListener('touchstart', () => this.touchDown = true);
     document.addEventListener('touchend', () => this.touchDown = false);
+
+    document.addEventListener(EVENTS.PLANET_FOCUSSED, () => {
+      this.setState({ planetFocussed: true });
+    });
+    document.addEventListener(EVENTS.PLANET_UNFOCUSSED, () => {
+      this.setState({ planetFocussed: false });
+    });
   }
 
   /**
@@ -116,9 +128,9 @@ export class Tutorial extends React.Component {
   }
 
   render() {
-    const { progress, indicateProgressMade, hidden } = this.state;
+    const { progress, indicateProgressMade, hidden, planetFocussed } = this.state;
     const animation = progressAnimations[progress];
-    const hide = hidden || progress === COMPLETE_STATE;
+    const hide = hidden || planetFocussed || progress === COMPLETE_STATE;
     const progressClass = indicateProgressMade ? 'progress-made' : '';
     return (
       <div className={`tutorial ${hide ? 'hide-tutorial' : ''}`}>
