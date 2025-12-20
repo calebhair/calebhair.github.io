@@ -1,4 +1,5 @@
 import React from 'react';
+import { Tag } from './tag';
 
 export class TagContainer extends React.Component {
   constructor(props) {
@@ -10,18 +11,7 @@ export class TagContainer extends React.Component {
 
   makeTags() {
     return this.props.tags?.map((tag, index) => (
-      <div
-        key={index}
-        className="tag-background"
-        style={{
-          '--primary-color': tag.primaryColor,
-          '--secondary-color': tag.secondaryColor,
-        }}
-      >
-        <p className="tag" style={{ color: tag.textColor }}>
-          {tag.name}
-        </p>
-      </div>
+      <Tag key={index} tag={tag} />
     ));
   }
 

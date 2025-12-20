@@ -18,3 +18,7 @@ export const tagDefinitions = {
     textColor: '#fff',
   },
 };
+// Add IDs to tags to avoid React key issues
+Object.values(tagDefinitions).forEach((tag, index) => {
+  tag.id = index * 100000;
+});

@@ -8,6 +8,8 @@ import { EVENTS } from '../../constants';
 import { SidebarEntry } from './sidebarEntry';
 import { SidebarBtn } from './sidebarBtn';
 
+let sidebarEntryIds = 0;
+
 export class Sidebar extends React.Component {
   constructor(props) {
     super(props);
@@ -54,9 +56,15 @@ export class Sidebar extends React.Component {
   onSearchbarChange(searchQuery) {
     const results = this.props.planetJsonsToShow.filter((planet) => {
       const formattedSearchQuery = searchQuery.trim().toLowerCase();
+      if (searchQuery === '') {
+        delete planet.firstMatchedTag;
+        return true;
+      }
+
       const nameMatches = planet.name.toLowerCase().includes(formattedSearchQuery);
-      const tagMatches = planet.tags?.some(tag => tag.name.toLowerCase().includes(formattedSearchQuery));
-      return nameMatches || tagMatches;
+      const firstMatchedTag = planet.tags?.find(tag => tag.name.toLowerCase().includes(formattedSearchQuery));
+      planet.firstMatchedTag = firstMatchedTag;
+      return nameMatches || firstMatchedTag;
     });
     this.setState({ planetEntriesToDisplay: this.makePlanetEntries(results) });
   }
@@ -72,7 +80,8 @@ export class Sidebar extends React.Component {
         }}
         classes="planet-entry"
         imageUrl={planetJson.iconPath}
-        key={planetIndex}
+        tag={planetJson.firstMatchedTag}
+        key={++sidebarEntryIds}
       />
     ));
   }
