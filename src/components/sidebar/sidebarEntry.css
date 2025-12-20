@@ -6,6 +6,7 @@
   cursor: pointer;
 
   transition: font-size 0.3s, text-shadow 0.3s;
+  display: flex;
 }
 
 .sidebar-item:hover {
@@ -26,4 +27,16 @@
 
 .planet-entry:hover .sidebar-item-image {
   transform: rotateZ(-10deg);
+}
+
+.sidebar-entry-tag {
+  margin-left: 2rem;
+}
+
+.sidebar-entry-tag > * {
+  margin: 0;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

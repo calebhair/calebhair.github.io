@@ -28,7 +28,7 @@ export class SidebarEntry extends React.Component {
   makeTag() {
     const { tag } = this.state;
     if (!tag) return <></>;
-    return <Tag tag={tag} />;
+    return <div className="sidebar-entry-tag"><Tag tag={tag} /></div>;
   }
 
   render() {
