@@ -16,6 +16,7 @@ export class Sidebar extends React.Component {
       visible: false,
       planetEntriesToDisplay: this.makePlanetEntries(props.planetJsonsToShow),
     };
+    this.searchbarRef = React.createRef();
   }
 
   addEventListeners() {
@@ -76,6 +77,13 @@ export class Sidebar extends React.Component {
     ));
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    // Must have previously been visible and currently not be visible
+    if (!prevState.visible || this.state.visible) return;
+    this.searchbarRef.current.value = '';
+    this.onSearchbarChange('');
+  }
+
   render() {
     return (
       <div style={{ position: 'relative' }}>
@@ -104,6 +112,7 @@ export class Sidebar extends React.Component {
             placeholder="Search projects by tag or name"
             onChange={event => this.onSearchbarChange(event.target.value)}
             autoComplete="off"
+            ref={this.searchbarRef}
           />
 
           {this.state.planetEntriesToDisplay}
