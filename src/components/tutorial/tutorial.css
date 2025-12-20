@@ -208,6 +208,7 @@ body {
   }
   to {
     content: var(--pinch-zoom-in);
+    transform: scale(1.5);
   }
 }
 
@@ -225,12 +226,27 @@ body {
 }
 
 @keyframes reference-pan {
-  0%, 10% {
+  0% {
+    opacity: 0;
     transform:
       rotateX(50deg)
       rotateZ(0deg);
   }
-  90%, 100% {
+  10% {
+    opacity: 1;
+    transform:
+      rotateX(50deg)
+      rotateZ(0deg);
+  }
+  90%{
+    opacity: 1;
+    transform:
+      translateX(-150%)
+      rotateX(50deg)
+      rotateZ(0deg);
+  }
+  100% {
+    opacity: 0;
     transform:
       translateX(-150%)
       rotateX(50deg)
