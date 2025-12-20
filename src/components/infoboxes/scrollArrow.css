@@ -16,6 +16,18 @@
   }
 
   .show-arrow {
-    transform: translateY(0) !important;
+    animation: pulse 2s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: translateY(-10%);
+  }
+  50% {
+    transform: translateY(10%);
+  }
+  100% {
+    transform: translateY(-10%);
   }
 }
