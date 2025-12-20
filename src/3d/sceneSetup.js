@@ -24,15 +24,27 @@ export async function addCubeMap(scene) {
 }
 
 export function makeRenderer() {
-  const renderer = new THREE.WebGLRenderer({
-    antialias: true,
-  });
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+  }
+  catch (error) {
+    alert('Could not create WebGL renderer. '
+      + 'Please ensure your browser supports WebGL and that it is enabled. '
+      + 'You may need to use a different browser, or restart your device.');
+    throw error;
+  }
   renderer.toneMapping = THREE.ReinhardToneMapping;
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.domElement.classList.add('prevent-select');
   renderer.domElement.id = 'threejs-canvas';
   document.body.appendChild(renderer.domElement);
   renderer.capabilities.logarithmicDepthBuffer = true;
+
+  // Error handling for context loss
+  renderer.domElement.addEventListener('webglcontextlost', () => {
+    alert('WebGL context lost. Please restart your browser. Consider zooming out less.');
+  }, { once: true });
 
   setupFocusZooming(renderer.domElement);
   return renderer;
