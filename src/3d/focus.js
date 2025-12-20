@@ -11,8 +11,8 @@ let targetStartPos = null; // On focus, this is set to a position the camera is 
 
 const focusMarginFactorConfig = { min: 2, max: 7, default: 3, wheelFactor: 1, pinchFactor: 0.2 };
 let currentFocusMarginFactor = focusMarginFactorConfig.default; // Increase to increase the space around the planet.
-const unfocusAnimationDuration = 1000;
-const minimumCameraAspectRatioForFocusShift = 1.2;
+const UNFOCUS_ANIMATION_DURATION = 1000;
+const MIN_CAMERA_ASPECT_RATIO_FOR_FOCUS_SHIFT = 1.2;
 
 const translateCamera = false;
 
@@ -29,6 +29,14 @@ export function setupFocusing(camera_, controls_) {
   controls = controls_;
 
   controls.addEventListener('change', updateFocus); // Fixes snapping issue
+}
+
+export function setupDoubleClickUnfocus() {
+  // This works for both double click and double tap
+  document.addEventListener('dblclick', () => {
+    if (!followTarget) return;
+    stopFollowing();
+  });
 }
 
 /**
@@ -98,11 +106,11 @@ export function stopFollowing(animate = true) {
   clearOutline();
 
   if (animate) {
-    smoothlyUnfocus(unfocusAnimationDuration);
+    smoothlyUnfocus(UNFOCUS_ANIMATION_DURATION);
     setTimeout(() => {
       controls.safeEnablePan = true;
       controls.safeEnableZoom = true;
-    }, unfocusAnimationDuration);
+    }, UNFOCUS_ANIMATION_DURATION);
   }
   else {
     controls.safeEnablePan = true;
@@ -143,7 +151,7 @@ export function updateFocus(applyNewValues = true) {
  */
 function getTranslatedTargetPos() {
   // Only translate if the aspect ratio is wide enough
-  if (camera.aspect < minimumCameraAspectRatioForFocusShift) return targetPos;
+  if (camera.aspect < MIN_CAMERA_ASPECT_RATIO_FOR_FOCUS_SHIFT) return targetPos;
 
   // The vector work is by Claude, so beware (structure was tweaked)
   const dir = new THREE.Vector3();
@@ -170,7 +178,7 @@ export function getCameraDirectionAsPos(distance = 100) {
 /**
  * Smoothly unfocuses to look at the quasar.
  */
-function smoothlyUnfocus(animationDuration) {
+function smoothlyUnfocus(animationDuration = UNFOCUS_ANIMATION_DURATION) {
   const cameraDistanceFromCentre = camera.position.clone();
   cameraDistanceFromCentre.multiplyScalar(1.5);
 

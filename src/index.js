@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import * as QUARKS from 'three.quarks';
 
 import { Planet } from './3d/planet';
-import { setupFocusing, updateFocus } from './3d/focus';
+import { setupDoubleClickUnfocus, setupFocusing, updateFocus } from './3d/focus';
 import { addBlackHole } from './3d/quasar/blackHole';
 import { addPlanets } from './planets';
 import { addBlackholeOutline, addPostProcessing } from './3d/postProcessing';
@@ -44,6 +44,7 @@ addBlackholeOutline(scene, camera, composer, blackHoleSphere);
 // UI
 setupPointer(camera);
 setupFocusing(camera, controls);
+setupDoubleClickUnfocus();
 setupCameraAnimation(camera, controls);
 setupCameraInitialStateForIntroduction(camera, controls);
 
