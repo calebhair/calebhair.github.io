@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { Planet } from './planet';
 import { focusOnObjectIfValid, followTarget, setupFocusZooming } from './focus';
-import { MINIMUM_DISTANCE_FROM_PLANET_TO_FOCUS, PATHS } from '../constants';
+import { EVENTS, MINIMUM_DISTANCE_FROM_PLANET_TO_FOCUS, PATHS } from '../constants';
 import { loading } from './loadingState';
 import { CustomArcballControls } from './controller';
 import { getClientCoords } from '../common';
@@ -103,9 +103,11 @@ export function setupPointer(camera) {
     focusOnObjectIfValid(closestPlanet.model);
   };
 
-  const canvas = document.querySelector('#threejs-canvas');
-  canvas.addEventListener('mousedown', onInteraction);
-  canvas.addEventListener('touchstart', onInteraction);
+  document.addEventListener(EVENTS.PLANETS_LOADED, () => {
+    const canvas = document.querySelector('#threejs-canvas');
+    canvas.addEventListener('mousedown', onInteraction);
+    canvas.addEventListener('touchstart', onInteraction);
+  }, { once: true });
 }
 
 /**
