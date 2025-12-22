@@ -72,6 +72,12 @@ export class ConditionalScrollSystem {
       callback(event.deltaY * CUSTOM_MOUSE_SCROLL_FACTOR, SCROLL_METHOD.WHEEL);
     });
   }
+
+  changeScroll(change) {
+    this.onScrollCallbacks.forEach((callback) => {
+      callback(change, SCROLL_METHOD.CUSTOM);
+    });
+  }
 }
 
 function isMultiTouch(event) {

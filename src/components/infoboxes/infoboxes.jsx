@@ -37,13 +37,24 @@ export class Infoboxes extends ScrollableElement {
     this.tags = event.detail.tags;
   }
 
+  onScrollArrowClick() {
+    const scrollAmount = 100;
+    const increase = 20;
+    let progress = 0;
+    const animationInterval = setInterval(() => {
+      this.scrollSystem.changeScroll(increase);
+      progress += increase;
+      if (progress >= scrollAmount) clearInterval(animationInterval);
+    }, 50);
+  }
+
   render() {
     return (
       <div ref={this.scrollableRef} className="scrollable-region">
         <div className={`mobile-fade ${this.state.visible ? 'show' : ''}`}></div>
         <div className="spacer"></div>
         <Title scrollSystem={this.scrollSystem} />
-        <ScrollArrow visible={this.state.visible} scrollSystem={this.scrollSystem} />
+        <ScrollArrow visible={this.state.visible} scrollSystem={this.scrollSystem} onClick={() => this.onScrollArrowClick()} />
         <ProjectDescription visible={this.state.visible} scrollSystem={this.scrollSystem} tags={this.tags} />
         <ImageContainer images={this.images} visible={this.state.visible} mobileScrollSystem={this.scrollSystem} bottomMarginPx={20} />
       </div>

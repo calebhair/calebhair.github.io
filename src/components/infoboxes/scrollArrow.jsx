@@ -2,9 +2,9 @@
 import React from 'react';
 import { ScrollSystemListener } from '../scrollSystem/scrollSystemListener';
 
-export function ScrollArrow({ visible, scrollSystem }) {
+export function ScrollArrow({ visible, scrollSystem, onClick }) {
   return (
-    <ScrollSystemListener scrollSystem={scrollSystem} style={{ pointerEvents: 'auto' }}>
+    <ScrollSystemListener scrollSystem={scrollSystem} style={{ pointerEvents: 'auto' }} onClick={onClick}>
       <i className={'scroll-arrow material-symbols-outlined ' + (visible ? 'show-arrow' : '')}>arrow_drop_down</i>
     </ScrollSystemListener>
   );

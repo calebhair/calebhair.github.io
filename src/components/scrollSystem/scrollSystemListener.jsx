@@ -5,7 +5,7 @@ import React from 'react';
  */
 export class ScrollSystemListener extends React.Component {
   render() {
-    const { scrollSystem, internalRef } = this.props;
+    const { scrollSystem, internalRef, onClick } = this.props;
     return (
       <div
         className={this.props.className}
@@ -15,6 +15,7 @@ export class ScrollSystemListener extends React.Component {
         onTouchMove={scrollSystem.onTouchMove}
         onTouchEnd={scrollSystem.onTouchEnd}
         ref={internalRef}
+        onClick={onClick}
       >
         {this.props.children}
       </div>
