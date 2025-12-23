@@ -39,13 +39,13 @@ export class Infoboxes extends ScrollableElement {
 
   onScrollArrowClick() {
     const scrollAmount = 100;
-    const increase = 20;
+    const increase = 10;
     let progress = 0;
     const animationInterval = setInterval(() => {
       this.scrollSystem.changeScroll(increase);
       progress += increase;
       if (progress >= scrollAmount) clearInterval(animationInterval);
-    }, 50);
+    }, 25);
   }
 
   render() {
