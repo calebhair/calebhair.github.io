@@ -23,12 +23,16 @@ export class ScrollableElement extends React.Component {
 
   customOnScroll(change, scrollMethod) {
     const scrollable = this.scrollableRef.current;
-    if (window.innerHeight > scrollable.clientHeight) return;
+    const scrollableRect = scrollable.getBoundingClientRect();
+    // Determine if element needs scrolled at all
+    if (window.innerHeight > scrollableRect.height + scrollableRect.y - this.scroll) return;
 
     this.scroll += scrollMethod === SCROLL_METHOD.TOUCH ? change : -change;
+    // If scroll has reached bottom of element, lock it to bottom margin
     if (this.scrollableBottom < window.innerHeight - this.bottomMarginPx) {
       this.scroll = this.scrollLowerLimit - this.bottomMarginPx;
     }
+    // If scroll has reached top of element, lock it to top
     else if (this.scroll > 0) {
       this.resetScroll();
     }
