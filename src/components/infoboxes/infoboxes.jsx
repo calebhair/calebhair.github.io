@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
-import { EVENTS } from '../../constants';
+import { ANIMATION_TIMES, EVENTS } from '../../constants';
 import { Title } from './title';
 import { ProjectDescription } from './projectDescription';
 import { ScrollArrow } from './scrollArrow';
@@ -22,6 +22,7 @@ export class Infoboxes extends ScrollableElement {
     document.addEventListener(EVENTS.PLANET_FOCUSSED, (event) => {
       this.setState({ visible: true });
       this.onPlanetUpdate(event);
+      this.images = event.detail.images;
     });
     document.addEventListener(EVENTS.PLANET_UNFOCUSSED, () => {
       this.setState({ visible: false });
@@ -29,11 +30,14 @@ export class Infoboxes extends ScrollableElement {
     document.addEventListener(EVENTS.PLANET_CHANGED, (event) => {
       this.onPlanetUpdate(event);
       this.forceUpdate();
+      setTimeout(() => {
+        this.images = event.detail.images;
+        this.forceUpdate();
+      }, ANIMATION_TIMES.PLANET_CHANGE_FADE_TIME);
     });
   }
 
   onPlanetUpdate(event) {
-    this.images = event.detail.images;
     this.tags = event.detail.tags;
   }
 

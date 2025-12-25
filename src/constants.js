@@ -64,6 +64,11 @@ export const PATHS = {
   },
 };
 
+// TODO add other animation times
+export const ANIMATION_TIMES = {
+  PLANET_CHANGE_FADE_TIME: 250,
+};
+
 export const COOKIES = {
   TUTORIAL_COMPLETE: 'tutorial_complete',
 };

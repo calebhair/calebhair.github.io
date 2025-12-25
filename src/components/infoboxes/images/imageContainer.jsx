@@ -3,21 +3,19 @@ import React from 'react';
 import { ProjectImage } from './projectImage';
 import { ScrollableElement } from '../../scrollSystem/scrollableElement';
 import { ScrollSystemListener } from '../../scrollSystem/scrollSystemListener';
-import { EVENTS } from '../../../constants';
+import { ANIMATION_TIMES, EVENTS } from '../../../constants';
 
+// TODO documentation
 export class ImageContainer extends ScrollableElement {
   constructor(props) {
     super(props);
-    this.state = { selectedIndex: null, lastSelected: null };
+    this.state = { selectedIndex: null, lastSelected: null, opacity: 1 };
     document.addEventListener('mousedown', event => this.unfocusImages(event));
     document.addEventListener('touchstart', event => this.unfocusImages(event));
-  }
-
-  unfocusImages(event) {
-    // If the clicked element is an image, do not unfocus
-    const clickedImageId = event.target.getAttribute('data-index');
-    if (clickedImageId !== null) return;
-    this.setState({ selectedIndex: null, lastSelected: this.state.selectedIndex });
+    document.addEventListener(EVENTS.PLANET_CHANGED, () => {
+      this.setState({ opacity: 0 });
+      setTimeout(() => this.setState({ opacity: 1 }), ANIMATION_TIMES.PLANET_CHANGE_FADE_TIME + 50);
+    });
   }
 
   getImages() {
@@ -35,6 +33,13 @@ export class ImageContainer extends ScrollableElement {
       >
       </ProjectImage>
     ));
+  }
+
+  unfocusImages(event) {
+    // If the clicked element is an image, do not unfocus
+    const clickedImageId = event.target.getAttribute('data-index');
+    if (clickedImageId !== null) return;
+    this.setState({ selectedIndex: null, lastSelected: this.state.selectedIndex });
   }
 
   calculateLowestChildBottom() {
@@ -79,6 +84,7 @@ export class ImageContainer extends ScrollableElement {
         internalRef={this.scrollableRef}
         className={`image-container ${this.props.visible ? 'show-infobox' : ''}`}
         scrollSystem={scrollSystem}
+        style={{ opacity: this.state.opacity }}
       >
         {this.getImages()}
       </ScrollSystemListener>

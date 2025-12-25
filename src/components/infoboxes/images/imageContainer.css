@@ -4,7 +4,7 @@
   left: 5vw;
   max-width: 30vw;
 
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out, opacity 0.25s ease-in-out;
   transform: translateX(-30vw);
 
   display: flex;
