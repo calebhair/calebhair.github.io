@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React from 'react';
 import { ProjectImage } from './projectImage';
 import { ScrollableElement } from '../../scrollSystem/scrollableElement';
@@ -10,6 +9,7 @@ export class ImageContainer extends ScrollableElement {
   constructor(props) {
     super(props);
     this.state = { selectedIndex: null, lastSelected: null, opacity: 1 };
+    this.imageRefs = [];
     document.addEventListener('mousedown', event => this.unfocusImages(event));
     document.addEventListener('touchstart', event => this.unfocusImages(event));
     document.addEventListener(EVENTS.PLANET_CHANGED, () => {
@@ -20,19 +20,25 @@ export class ImageContainer extends ScrollableElement {
 
   getImages() {
     // TODO optimise
-    return this.props.images?.map((image, index) => (
-      <ProjectImage
-        key={index}
-        imageUrl={image.url}
-        altText={image.altText}
-        visible={this.props.visible}
-        index={index}
-        focused={this.state.selectedIndex === index}
-        onClick={index => this.onImageClicked(index)}
-        style={{ zIndex: this.getZIndex(index) }}
-      >
-      </ProjectImage>
-    ));
+    this.imageRefs = [];
+    return this.props.images?.map((image, index) => {
+      const imgRef = React.createRef();
+      this.imageRefs.push(imgRef);
+      return (
+        <ProjectImage
+          key={index}
+          imageUrl={image.url}
+          altText={image.altText}
+          visible={this.props.visible}
+          index={index}
+          focused={this.state.selectedIndex === index}
+          onClick={index => this.onImageClicked(index)}
+          style={{ zIndex: this.getZIndex(index) }}
+          ref={imgRef}
+        >
+        </ProjectImage>
+      );
+    });
   }
 
   unfocusImages(event) {
@@ -61,6 +67,9 @@ export class ImageContainer extends ScrollableElement {
   onImageClicked(index) {
     const selectedIndex = index === this.state.selectedIndex ? null : index;
     this.setState({ selectedIndex, lastSelected: this.state.selectedIndex });
+    if (selectedIndex !== null) {
+      this.imageRefs[selectedIndex].current.onClick();
+    }
   }
 
   getZIndex(index) {

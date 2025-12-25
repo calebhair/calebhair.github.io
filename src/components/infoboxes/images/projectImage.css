@@ -34,7 +34,8 @@
 
   .project-image.focused {
     /* Use scale to avoid flex boundaries */
-    transform: scale(2) translateX(4vw);
+    /*--scale-factor: 2;*/
+    transform: scale(var(--scale-factor)) translateX(4vw);
     /* z-index handled by react */
   }
 }
