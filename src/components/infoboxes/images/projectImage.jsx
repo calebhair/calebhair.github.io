@@ -11,7 +11,7 @@ export class ProjectImage extends React.Component {
 
   onClick() {
     const marginXPx = window.innerWidth / 2;
-    const marginYPx = 200;
+    const marginYPx = window.innerWidth / 5;
     const scaleFactorX = (window.innerWidth - marginXPx) / this.ref.current.offsetWidth;
     const scaleFactorY = (window.innerHeight - marginYPx) / this.ref.current.offsetHeight;
     this.setState({ scaleFactor: Math.min(scaleFactorX, scaleFactorY) });
