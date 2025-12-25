@@ -37,10 +37,6 @@ export class ImageContainer extends ScrollableElement {
     ));
   }
 
-  customOnScroll(change, scrollMethod) {
-    return super.customOnScroll(change, scrollMethod);
-  }
-
   calculateLowestChildBottom() {
     const { children } = this.scrollableRef.current;
     const lastChildBottom = children[children.length - 1]?.getBoundingClientRect().bottom;

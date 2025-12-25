@@ -33,7 +33,7 @@ export class ScrollableElement extends React.Component {
       this.scroll = this.scrollLowerLimit - this.bottomMarginPx;
     }
     // If scroll has reached top of element, lock it to top
-    else if (this.scroll > 0) {
+    else if (this.scroll > this.startScrollPx) {
       this.resetScroll();
     }
   }
