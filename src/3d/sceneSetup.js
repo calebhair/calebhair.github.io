@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { Planet } from './planet';
-import { focusOnObjectIfValid, followTarget, setupFocusZooming } from './focus';
-import { EVENTS, MINIMUM_DISTANCE_FROM_PLANET_TO_FOCUS, PATHS } from '../constants';
+import { focusOnObjectIfValid, setupFocusZooming } from './focus';
+import { EVENTS, PATHS } from '../constants';
 import { loading } from './loadingState';
 import { CustomArcballControls } from './controller';
 import { getClientCoords } from '../common';
