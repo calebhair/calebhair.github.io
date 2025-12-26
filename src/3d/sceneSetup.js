@@ -122,8 +122,6 @@ function findClosestPlanet(ray) {
   let closestDistance = Infinity;
 
   for (const planet of Planet.planets) {
-    const { model } = planet;
-    if (model === followTarget) continue;
     const distanceFromFromPlanetEdgeToRay = ray.distanceToPoint(planet.globalPos) - planet.planetSize;
     if (distanceFromFromPlanetEdgeToRay > closestDistance) continue;
 
