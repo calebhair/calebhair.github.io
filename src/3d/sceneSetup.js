@@ -98,8 +98,9 @@ export function setupPointer(camera) {
 
     raycaster.setFromCamera(pointer, camera);
     const { closestPlanet, closestDistance } = findClosestPlanet(raycaster.ray);
-    const leniency = Math.sqrt(camera.position.distanceTo(closestPlanet.model.position) / closestPlanet.planetSize);
-    if (closestDistance - leniency > MINIMUM_DISTANCE_FROM_PLANET_TO_FOCUS) return;
+    const leniency = Math.sqrt(camera.position.distanceTo(closestPlanet.model.position) / closestPlanet.planetSize) / 2;
+    // makeTestCircle(closestPlanet.planetSize + leniency, closestPlanet.globalPos, scene, 0x00ffff);
+    if (closestDistance - leniency > closestPlanet.planetSize) return;
     focusOnObjectIfValid(closestPlanet.model);
   };
 
@@ -123,7 +124,7 @@ function findClosestPlanet(ray) {
   for (const planet of Planet.planets) {
     const { model } = planet;
     if (model === followTarget) continue;
-    const distanceFromFromPlanetEdgeToRay = ray.distanceToPoint(model.position) - model.userData.planetSize;
+    const distanceFromFromPlanetEdgeToRay = ray.distanceToPoint(planet.globalPos) - planet.planetSize;
     if (distanceFromFromPlanetEdgeToRay > closestDistance) continue;
 
     closestDistance = distanceFromFromPlanetEdgeToRay;
@@ -131,4 +132,19 @@ function findClosestPlanet(ray) {
   }
 
   return { closestPlanet, closestDistance };
+}
+
+/**
+ * Makes a transparent test sphere at a position in the scene, which can be removed by pressing any key.
+ */
+function makeTestCircle(radius, pos, scene, color = 0xffff00) {
+  const geometry = new THREE.SphereGeometry(radius, 32, 16);
+  const material = new THREE.MeshBasicMaterial({ color: color, opacity: 0.5, transparent: true });
+  const sphere = new THREE.Mesh(geometry, material);
+  sphere.position.copy(pos);
+
+  scene.add(sphere);
+  addEventListener('keydown', () => {
+    scene.remove(sphere);
+  });
 }

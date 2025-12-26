@@ -122,6 +122,16 @@ export class Planet {
     this.model.rotation.z = this.planetRotationSpeedRadians.z * time;
   }
 
+  /**
+   * Gets the global position of the planet, taking into account the orbit centre.
+   * @return {THREE.Vector3} the global position of the planet
+   */
+  get globalPos() {
+    const modelPos = this.model.position.clone();
+    modelPos.y += this.orbitCentre.y;
+    return modelPos;
+  }
+
   static baseOrbitLineWidth = 0.03;
   makeOrbitLine() {
     const geometry = new THREE.TorusGeometry(this.orbitRadius, Planet.baseOrbitLineWidth * this.planetSize, 10, 100);
