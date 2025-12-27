@@ -5,7 +5,6 @@ import { BLACK_HOLE_RADIUS } from '../quasarConfig';
 
 const rad = deg => (deg * Math.PI) / 180.0;
 const flows = [];
-const warpedGeometries = [];
 
 const warpedDisksParent = new THREE.Object3D();
 export function setupWarpedDisks(scene) {
@@ -20,18 +19,23 @@ const baseRotationSpeed = 0.1;
  * @param camera
  */
 export function updateFlows(delta, camera) {
+  const rotationMatrix = new THREE.Matrix4();
+  rotationMatrix.lookAt(new THREE.Vector3(), camera.position, new THREE.Vector3(0, 1, 0));
+
   flows.forEach((flow) => {
     flow.moveAlongCurve(flow.orbitSpeed * delta);
-    // warpedDisksParent.translateZ(delta * 0.1)
-    // warpedDisksParent.lookAt(camera.position);
-    // if (!flow.isWarpedDisk) {
-    //   pointFlowTowardsCamera(flow, camera);
-    // }
+    if (flow.isWarpedDisk) {
+      pointFlowTowardsCamera(flow, rotationMatrix);
+    }
   });
 }
 
-function pointFlowTowardsCamera(flow, camera) {
-  flow.object3D.lookAt(camera.position);
+function pointFlowTowardsCamera(flow, cameraRotationMatrix) {
+  const curve = flow.curveArray[0];
+  curve.originalCurve.points.forEach((point, index) => {
+    curve.points[index] = point.clone().applyMatrix4(cameraRotationMatrix);
+  });
+  flow.updateCurve(0, curve);
 }
 
 const NUM_CIRCLE_POINTS = 16;
@@ -83,6 +87,7 @@ export function createTextFlow(scene, text, font, fontSize, fontMaterial, radius
   if (warpedDisk) {
     flow.object3D.scale.set(scaleFactor, scaleFactor, 1);
     warpedDisksParent.add(flow.object3D);
+    curve.originalCurve = curve.clone();
   }
 
   return flow;
