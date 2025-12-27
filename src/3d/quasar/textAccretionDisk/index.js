@@ -25,10 +25,15 @@ export function addTextAccretionDisk(scene) {
       const depth = getDepthForDistance(radius);
 
       const flow = createTextFlow(scene, text, font, fontSize, material, radius, depth, orbitSpeed);
+      flow.object3D.frustumCulled = false;
+
+      if (radius <= 110) {
+        const warpedFlow = createTextFlow(scene, text.repeat(2), font, fontSize, material, radius, depth, orbitSpeed, true);
+        warpedFlow.object3D.frustumCulled = false;
+      }
+
       radius += fontSize;
       loading.blackHole.accretionDiskDistanceLoaded += fontSize;
-      const { object3D } = flow;
-      object3D.frustumCulled = false;
     }
   });
 

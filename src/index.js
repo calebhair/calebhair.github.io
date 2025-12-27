@@ -15,6 +15,7 @@ import { loading } from './3d/loadingState';
 import { ConditionalScrollSystem } from './components/scrollSystem/conditionalScrollSystem';
 import { setupBorders } from './components/globalstyles/borders';
 import { addSideAccretionDiskShape, updateSideAccretionDisk } from './3d/quasar/sideAccretionDisks';
+import {setupWarpedDisks} from "./3d/quasar/textAccretionDisk/orbitingText";
 
 // Prioritised
 const scrollSystem = new ConditionalScrollSystem();
@@ -40,8 +41,9 @@ const updateAccretionDiskFlows = addTextAccretionDisk(scene);
 addPlanets(scene);
 const blackHoleSphere = addBlackHole(scene, camera);
 const composer = addPostProcessing(scene, camera, renderer); // Do post-processing last
+setupWarpedDisks(scene);
 // addBlackholeOutline(scene, camera, composer, blackHoleSphere);
-addSideAccretionDiskShape(scene);
+// addSideAccretionDiskShape(scene);
 
 // UI
 setupPointer(camera);
@@ -69,8 +71,7 @@ function animate() {
   delta = clock.getDelta();
   Planet.updateAllPlanets();
   updateFocus();
-  updateAccretionDiskFlows(delta);
-  updateSideAccretionDisk(camera);
+  updateAccretionDiskFlows(delta, camera);
   batchedRenderer.update(delta); // Update black hole particles
   composer.render(delta); // Render with post-processing
 }
