@@ -29,6 +29,12 @@ export const tagDefinitions = {
     secondaryColor: '#fff',
     textColor: '#fff',
   },
+  TYPESCRIPT: {
+    name: 'TypeScript',
+    primaryColor: '#4d74ba',
+    secondaryColor: '#fff',
+    textColor: '#fff',
+  },
   JAVA: {
     name: 'Java',
     primaryColor: '#d34237',
@@ -64,6 +70,13 @@ export const tagDefinitions = {
     name: 'Selenium',
     primaryColor: '#5e5e5e',
     secondaryColor: '#25491f',
+    textColor: '#fff',
+  },
+
+  XR: {
+    name: 'XR',
+    primaryColor: '#ffffff',
+    secondaryColor: '#000000',
     textColor: '#fff',
   },
 

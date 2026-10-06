@@ -264,6 +264,32 @@ export const projectContent = [
   },
 
   {
+    name: 'WebXR Tremor Sim',
+    description: bulletPoints([
+      `Developed a ${b('full-stack')} ${b('WebXR')} tool for simulating tremors so developers can experience websites as users with motor disabilities, using ${b('A-Frame, TypeScript, Playwright and Socket.IO')} to simulate a browser in a virtual environment`,
+      `Independently evaluated ${b('XR SDKs and UX')} and proposed features beyond the initial brief (e.g. grip calibration); work led to co-authorship on a forthcoming paper`,
+    ]) + github('https://github.com/calebhair/webxr-motor-disability-media') + date(2026),
+
+    images: [
+      { url: 'https://github.com/calebhair/webxr-motor-disability-media/blob/main/media/1_setup-ezgif.com-optimize.gif?raw=true', altText: 'Setup and height adjustment' },
+      { url: 'https://github.com/calebhair/webxr-motor-disability-media/blob/main/media/2_phone-ezgif.com-optimize.gif?raw=true', altText: 'Virtual phone' },
+      { url: 'https://github.com/calebhair/webxr-motor-disability-media/blob/main/media/3_tremor-ezgif.com-optimize.gif?raw=true', altText: 'Tremor' },
+      { url: 'https://github.com/calebhair/webxr-motor-disability-media/blob/main/media/4_calibration-ezgif.com-optimize.gif?raw=true', altText: 'Calibration setup for palm grip' },
+      { url: 'https://github.com/calebhair/webxr-motor-disability-media/blob/main/media/5_calibrated_use-ezgif.com-optimize.gif?raw=true', altText: 'Use of calibration with tremor' },
+    ],
+    tags: [
+      TAGS.XR,
+      TAGS.TYPESCRIPT,
+    ],
+    iconPath: 'projects/webxrtremorsim/icon.svg',
+    modelPath: 'projects/webxrtremorsim/model.glb',
+
+    planetSize: 5,
+    orbitRadius: 185,
+    orbitStartingAngle: 270,
+  },
+
+  {
     name: 'MacUp',
     description: bulletPoints([
       'Created backup software for copying files from one location to another, with a complex filtering system and GUI',

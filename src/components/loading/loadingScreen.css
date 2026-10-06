@@ -76,3 +76,18 @@
     opacity: 0.2;
   }
 }
+
+.credit {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+
+  font-size: 0.7rem;
+  opacity: 50%;
+  font-style: italic;
+  pointer-events: auto;
+}
+
+.credit > a {
+  color: white;
+}
